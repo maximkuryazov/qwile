@@ -1,8 +1,10 @@
 (function() {
 
+	// this file needs serious refactor! :)
+
 	var Blue = '#0287a9';
 	var time = 700;
-	
+
 	$('#circle').animate({ transform: 'scale(1)' }, 1000);
 	$('.reglink').click(function() {
 		$('#circle').stop().css('transform', 'rotate(0deg)').animate({
@@ -17,6 +19,7 @@
 			}, time);
 		});
 	});
+	
 	if ((navigator.userAgent.toLowerCase().indexOf('firefox') > -1) || navigator.userAgent.indexOf('.NET') > -1) {
 		$('#login input[type="password"]').focus(function() {
 			$('#forgot').css({
@@ -30,23 +33,23 @@
 			});
 		});
 	}
-	
+
 	var restoreHTML = '<div onclick="$(this).remove();" class="shadow"><div class="inner-shadow"> \
 	<form id="restore-form"><input id="restore-input" onclick="event.stopPropagation()" type="text" placeholder="Type your E-Mail address here"></input><button onclick="event.stopPropagation()" class="btn btn-primary" id="restore-button">Restore</button></form></div></div>';
 	$('#forgot').tooltip().click(function() {
 
 		$(restoreHTML).appendTo('body').fadeIn();
-		$('#restore-input').tooltip().focus(function() { 
-			$(this).css('text-align', 'left').attr('placeholder', ''); 
+		$('#restore-input').tooltip().focus(function() {
+			$(this).css('text-align', 'left').attr('placeholder', '');
 		});
 		function closeShadow() {
-			$('.shadow').fadeOut(function() { 
-				$(this).remove(); 
+			$('.shadow').fadeOut(function() {
+				$(this).remove();
 			});
 			$('.modal-body').css({ 'font-size': '12px', 'color': Blue }).html('Instructions were sent to your E-Mail.');
 			$('.modal').modal('show');
 			setTimeout(function() {
-				$('.modal').modal('hide'); 
+				$('.modal').modal('hide');
 			}, 2500);
 			return false;
 		}
@@ -140,14 +143,20 @@
 						}, 2000);
 
 					} else {
+
 						var errorText = "";
-						data.errors.forEach(function(error, i) {
-							errorText += "Field <b>" + error + "</b> contains inappropriate symbols.<br />";
-							$('input[name="' + error + '"]')
-								.addClass("wrong")
+						if (data.occupied) {
+							errorText = "This E-Mail address already exists."
+						} else {
+							data.errors.forEach(function(error, i) {
+								errorText += "Field <b>" + error + "</b> contains inappropriate symbols.<br />";
+								$('input[name="' + error + '"]')
+									.addClass("wrong")
 									.parent().parent().find("td.check img").attr('src', 'img/incorrect.png');
-						});
+							});
+						}
 						showErrorModal(errorText);
+
 					}
 
 				}
@@ -158,7 +167,7 @@
 		}
 		return false;
 	});
-	
+
 	function validateEmail(email) {
    	 	var re = /\S+@\S+\.\S+/;
    	 	return re.test(email);
@@ -176,6 +185,7 @@
 	});
 
 	var userPassword = new String();
+
 	$("#password-input").on("change keyup blur", function() {
 		var $img = $(".check img", this.parentNode.parentNode);
 		var confirm = $("#confirm-password-input").val();

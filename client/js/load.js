@@ -1,10 +1,10 @@
 $(window).ready(function() {
 
-	var scaleAnimateTime 	= 0;  		// 1000
-	var loadingAnimateTime 	= 0; 		// 5000
-	var logoAnimateTime 	= 0;		// 1800
+	var scaleAnimateTime 	= 1000;  		// 1000
+	var loadingAnimateTime 	= 5000; 		// 5000
+	var logoAnimateTime 	= 1800;			// 1800
 
-	var SOUND = false;
+	var SOUND = true;
 
 	var inithtml = $('div#digits').html();
 	var interval;

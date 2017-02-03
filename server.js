@@ -91,17 +91,18 @@
         });
 
         app.get("/user/remove", function(req, res) {
-
-            user.remove(req.query.id);
-            res.set('Access-Control-Allow-Origin', '*');
-            res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify({ success: true }));
-
+            user.remove(req.query.id, function() {
+                res.set('Access-Control-Allow-Origin', '*');
+                res.setHeader('Content-Type', 'application/json');
+                res.send(JSON.stringify({ success: true }));
+            });
         });
 
         app.post("/user/new", function (req, res) {
 
             res.set('Access-Control-Allow-Origin', '*');
+            res.setHeader('Content-Type', 'application/json');
+
             console.log("User create post params: ", util.inspect(req.body, false, null));
 
             function inappropriateSymbolsCheck(string) {
@@ -120,11 +121,21 @@
                 if (!userData[key]) errors.push(key);
             }
 
-            res.setHeader('Content-Type', 'application/json');
             if (errors.length === 0) {
 
-                user.create(userData);
-                res.send(JSON.stringify({ success: true }));
+                user.getByMail(userData.email, function(doc) {
+                    if (doc) {
+                        console.log("This email is already occupied.");
+                        res.send(JSON.stringify({
+                            success: false,
+                            occupied: true,
+                            errors: []
+                        }));
+                    } else {
+                        user.create(userData);
+                        res.send(JSON.stringify({ success: true }));
+                    }
+                });
 
             } else {
                 res.send(JSON.stringify({

@@ -40,10 +40,18 @@ module.exports = (function() {
 
 	constructor.prototype = {
 
-		remove: function(id) {
+		getByMail: function(email, callback) {
+			private.UserModel.findOne({ email: email }, function (error, doc){
+				if (!error) callback(doc);
+				else console.log("Error " + error + " occurred.");
+			});
+		},
+
+		remove: function(id, callback) {
 			private.UserModel.remove({ "_id": id }, function(error) {
 				if (!error) {
 					console.log("User with id " + id + "had been removed.");
+					callback();
 				} else {
 					console.log("Error " + error + " occurred during the deletion.");
 				}
