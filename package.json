@@ -37,7 +37,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://qwile.com/dev/qwile.git"
+    "url": "git@github.com:maximkuryazov/qwile.git"
   },
   "engines": {
     "node": "6.9.2"
