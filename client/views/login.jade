@@ -1,0 +1,110 @@
+title Qwile OS - Login page
+link(rel='shortcut icon', href='img/favicon.ico')
+link(rel='stylesheet', href='css/lib/bootstrap.min.css')
+link(rel='stylesheet', href='css/lib/bubbles.css')
+link(rel='stylesheet', href='css/style.css')
+script(src='js/lib/bootstrap.min.js')
+script(src='js/lib/jquery.transform2d.js')
+.bubbles
+	.bubble-container(style='left: 2%; animation-duration: 6s; animation-delay: 3s;')
+		.bubble(style='width: 9px; height: 9px;')
+	.bubble-container(style='left: 4%; animation-duration: 3s; animation-delay: 11s;')
+		.bubble(style='width: 8px; height: 8px;')
+	.bubble-container(style='left: 71%; animation-duration: 5s; animation-delay: 8s;')
+		.bubble(style='width: 5px; height: 5px;')
+	.bubble-container(style='left: 11%; animation-duration: 10s; animation-delay: 15s;')
+		.bubble(style='width: 7px; height: 7px;')
+	.bubble-container(style='left: 21%; animation-duration: 6s; animation-delay: 1s;')
+		.bubble(style='width: 6px; height: 6px;')
+	.bubble-container(style='left: 79%; animation-duration: 11s; animation-delay: 14s;')
+		.bubble(style='width: 11px; height: 11px;')
+	.bubble-container(style='left: 45%; animation-duration: 6s; animation-delay: 7s;')
+		.bubble(style='width: 5px; height: 5px;')
+	.bubble-container(style='left: 50%; animation-duration: 9s; animation-delay: 15s;')
+		.bubble(style='width: 7px; height: 7px;')
+	.bubble-container(style='left: 75%; animation-duration: 5s; animation-delay: 12s;')
+		.bubble(style='width: 10px; height: 10px;')
+	.bubble-container(style='left: 93%; animation-duration: 5s; animation-delay: 8s;')
+		.bubble(style='width: 3px; height: 3px;')
+	.bubble-container(style='left: 73%; animation-duration: 5s; animation-delay: 2s;')
+		.bubble(style='width: 6px; height: 6px;')
+	.bubble-container(style='left: 72%; animation-duration: 10s; animation-delay: 13s;')
+		.bubble(style='width: 11px; height: 11px;')
+	.bubble-container(style='left: 24%; animation-duration: 7s; animation-delay: 12s;')
+		.bubble(style='width: 8px; height: 8px;')
+	.bubble-container(style='left: 50%; animation-duration: 7s; animation-delay: 8s;')
+		.bubble(style='width: 9px; height: 9px;')
+	.bubble-container(style='left: 3%; animation-duration: 11s; animation-delay: 12s;')
+		.bubble(style='width: 10px; height: 10px;')
+	.bubble-container(style='left: 80%; animation-duration: 7s; animation-delay: 3s;')
+		.bubble(style='width: 3px; height: 3px;')
+	.bubble-container(style='left: 34%; animation-duration: 6s; animation-delay: 14s;')
+		.bubble(style='width: 7px; height: 7px;')
+	.bubble-container(style='left: 43%; animation-duration: 4s; animation-delay: 14s;')
+		.bubble(style='width: 9px; height: 9px;')
+	.bubble-container(style='left: 93%; animation-duration: 8s; animation-delay: 5s;')
+		.bubble(style='width: 4px; height: 4px;')
+	.bubble-container(style='left: 74%; animation-duration: 4s; animation-delay: 6s;')
+		.bubble(style='width: 6px; height: 6px;')
+a.bubble-toggle(href='#') Bubbles Off
+#circle-parent
+	#circle
+		.mini-circle
+		.mini-circle
+			img#logo(src='img/logo.png')
+			form#login
+				input(type='text', placeholder='Your E-Mail adress')
+				br
+				input(type='password', placeholder='Your password')
+				br
+				#forgot(title='Forgot your password?', data-toggle='tooltip', data-placement='top')
+					img(src='img/forgot.png')
+				button#enter.btn.btn-primary Log in
+				br
+				input#remember(type='checkbox', checked='')
+				label(for='remember') Remember me
+				span.reglink Registration
+				footer.login
+					| &copy 2015 Qwile.com
+					br
+					| All rights reserved.
+			form#register(name="register")
+				table
+					tr
+						td.label E-Mail address:
+						td
+							input#email-input(type='text', autofocus='', name="email")
+						td.check
+							img(style='margin-left:5px;', src='img/complete.png')
+					tr
+						td.label Password:
+						td
+							input#password-input(type='password', name="password")
+						td.check
+							img(style='margin-left:5px;', src='img/incorrect.png')
+					tr
+						td.label Confirm password:
+						td
+							input#confirm-password-input(type='password', name="confirmation")
+						td.check
+							img(style='margin-left:5px;', src='img/complete.png')
+					tr
+						td.label Text from the picture:
+						td
+							input#capture-input(type='text', name="capture")
+						td.check
+							img(style='margin-left:5px;', src='img/incorrect.png')
+				button#registration.btn.btn-primary.regbutton(type="submit") Sign in
+				button#back.btn.btn-warning.regbutton Back
+				footer.register
+					| &copy 2015 Qwile.com
+					br
+					| All rights reserved.
+// Modal
+#myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+	.modal-dialog
+		.modal-content
+			.modal-body
+				| Incorrect password or E-Mail address.
+script(src='js/lib/bubbles.js')
+script(src='js/login.js')

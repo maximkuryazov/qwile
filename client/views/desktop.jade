@@ -1,0 +1,325 @@
+doctype html
+html
+	head
+		meta(charset='UTF-8')
+		title Qwile - OS that changes your life
+		link(rel='shortcut icon', href='img/favicon.ico')
+		link(rel='stylesheet', type='text/css', href='css/lib/bootstrap.buttons.min.css')
+		link(rel='stylesheet', type='text/css', href='css/lib/resizable.css')
+		link(rel='stylesheet', type='text/css', href='css/widget/clock.css')
+		link(rel='stylesheet', type='text/css', href='css/widget/calc.css')
+		link(rel='stylesheet', type='text/css', href='css/lib/tipped.css')
+		link(rel='stylesheet', type='text/css', href='css/desktop.css')
+		script(src='js/test.js')
+		script(src='js/lib/jquery.transform2d.js')
+		script(src='js/lib/howler.js')
+		script(src='js/load.js')
+	body
+		// ********************** SYSTEM BLOCKS *******************
+		#shadow
+			.inner-shadow
+				.dialog-content
+					img.dialog-icon(src='img/exclaim.png')
+					.dialog-close(title='Close')
+					.dialog-text
+						| Are you sure you want to sign out?
+					.buttons(align='right')
+						button.btn.btn-sm.btn-warning.exit Sign out
+						button.btn.btn-sm.btn-primary.cancel Cancel
+		// //////////// SYSTEM BLOCKS END /////////////////////////
+		.wrapper
+			#toppanel
+				table
+					tr
+						td
+							#start(title='Click here to open menu')
+						td#search-td
+							div(align='center')
+								form.search
+									input.search(type='text', placeholder='Start typing to search...')
+									.button(title='Start search')
+						td#email
+							span maximkuryazov@gmail.com
+						td#photo
+							div
+						td(width='42')
+							#settings
+						td(width='42')
+							#quit
+			// **************** LEFT PANEL START ******************
+			aside#leftpanel
+				table
+					tr(height='20%', title='Mute')
+						td.bordered(align='center')
+							.sound(class='<!--disabled-->')
+					tr(height='20%', title='Make me invisible to others')
+						td.bordered(align='center')
+							.visible
+					tr(height='20%', title='Widget customization')
+						td.bordered(align='center', width='100%')
+							.add-widget
+						td(width='4', align='center', style='cursor: w-resize;')
+							img.lock(src='img/panellock.png')
+					tr(height='20%', title='Drop item here to put it in menu')
+						td.bordered(align='center')
+							.to-start
+					tr(height='20%', title='Drop item here to delete it')
+						td(align='center')
+							.to-bin
+			// //////////////// LEFT PANEL END ///////////////
+			// **************** USER START ******************
+			aside#profile
+				table(cellspacing='0', cellpadding='0')
+					tr
+						td.header
+							| Profile
+					tr.area.open
+						td.photo
+							.profile-photo(title="Click on the image to change your profile photo!")
+							input#profile-photo-uploader(type="file")
+					tr
+						td.header
+							| Info
+					tr.area
+						td.info
+							.profile-personal-row
+								span.name Name:
+								span.value Maxim
+							.profile-personal-row
+								span.name Lastname:
+								span.value Kuryazov
+							.profile-personal-row
+								span.name Middlename:
+								span.value Rahimovich
+							.profile-personal-row
+								span.name Age:
+								span.value 24
+					tr
+						td.header
+							| Link
+					tr.area
+						td.link
+							.profile-link-row
+								span.name Mobile:
+								span.value +7 (915) 272-17-15
+							.profile-link-row
+								span.name ICQ:
+								span.value 390-291-581
+							.profile-link-row
+								span.name ICQ:
+								span.value 390-291-581
+							.profile-link-row
+								span.name Email:
+								span.value maximkuryazov@gmail.com
+					tr
+						td.header
+							| Adress
+					tr.area
+						td.adress
+							.profile-adress-row
+								span.name Country:
+								span.value Russian Federation
+							.profile-adress-row
+								span.name City:
+								span.value Moscow
+							.profile-adress-row
+								span.name Street:
+								span.value Sumskaya
+							.profile-adress-row
+								span.name House
+								span.value 6/5
+					tr
+						td.header
+							| Interests
+					tr.area
+						td.iterests
+							.profile-interest-row
+								span.name Occupation:
+								span.value Programming
+							.profile-interest-row
+								span.name Job:
+								span.value Qwile Incorporated
+							.profile-interest-row
+								span.name Position:
+								span.value Lead programmer
+							.profile-interest-row
+								span.name Hobbie:
+								span.value Chess, Swimming
+			// //////////////// USER END ///////////////
+			// **************** NOTIFICATION START ******************
+			.desktop-notification
+				.top
+					.close(title='close')
+				.content
+					img(src='img/image.jpg')
+					.text
+						h9 Alina Solopova
+						span.message
+							| had shared a private folder with you.
+			// //////////////// NOTIFICATION END ///////////////
+			// **************** WINDOW START *******************
+			.window
+				.top
+					table
+						tr
+							td.icon
+								img(src='img/conductor.png', alt='icon')
+							td.title
+								span Conductor
+							td.buttons
+								.close(title='Close')
+								.fullscreen(title='Full screen')
+								.hidedown(title='Hide')
+				.content
+					.inside
+						.scroll
+							.slider
+						.window-block
+						iframe(src='apps/conductor/index.html')
+			// //////////////// WINDOW END ///////////////////
+			// ***************** WIDGET START ****************
+			.widget.clock
+				.buttons
+					.close(title='Close')
+					.resize(title='Scale')
+					.settings(title='Customize')
+				canvas.content#clock(width='150', height='150')
+			.widget.calc
+				.buttons
+					.close(title='Close')
+					.resize(title='Scale')
+					.settings(title='Customize')
+				section.content.calculator-container
+					.calculator
+						input(type='text', readonly='')
+						.row
+							.key 1
+							.key 2
+							.key 3
+							.key.last 0
+						.row
+							.key 4
+							.key 5
+							.key 6
+							.key.last.action.instant cl
+						.row
+							.key 7
+							.key 8
+							.key 9
+							.key.last.action.instant =
+						.row
+							.key.action +
+							.key.action -
+							.key.action x
+							.key.last.action /
+
+			// //////////////// WIDGET END ///////////////////
+			// ***************** MENU START *******************
+			#menu
+				table.menu-table
+					tr
+						td.left-part
+							table(width='100%', cellspacing='20')
+								tr.dropables(align='center')
+									td
+										.button_back
+									td
+										.to_home
+									td
+										.to_bin
+									td
+										.button_forward
+								tr
+									td.apps-td(colspan='4')
+								tr.pager(align='center')
+									td(colspan='4')
+										ul.pagination
+											li.active
+											li
+											li
+											li
+											li
+						td.right-part
+							form.search
+								table
+									tr
+										td
+											input(type='text', placeholder='Type the name of application here...')
+										td(align='right', width='50')
+											.button
+							.placeholder(align='center') There are no results on your request.
+							ul#apps-list
+								li
+									table
+										tr
+											td.icon
+											td.content
+												.top
+													.name
+														| Conductor
+													.rating
+														.star.filled
+														.star.filled
+														.star.blank
+														.star.blank
+														.star.blank
+												.bottom
+													.description
+														| Easy file manager developed for Qwile OS.
+													.developer
+											td.switcher
+								li.added
+									table
+										tr
+											td.icon
+											td.content
+												.top
+													.name
+														| Conductor
+													.rating
+														.star.filled
+														.star.filled
+														.star.filled
+														.star.blank
+														.star.blank
+												.bottom
+													.description
+														| Easy file manager developed for Qwile OS.
+													.developer
+											td.switcher
+			// //////////////// MENU END ///////////////////
+			// ************** WIDGET SELECT START ***************
+			#widget_select
+				#widget_select_inside
+					table(width='100%')
+						tr
+							td(width='48')
+								.left-arrow
+							td
+								.widgets_list(align='center')
+									.img.clock(data-name="clock")
+										.mark
+										.title Clock
+									.img.calc(data-name="calc")
+										.mark
+										.title Calculator
+							td(width='48')
+								.right-arrow
+			// ///////////// WIDGET SELECT END ///////////////////
+			.footer-push
+		// ***************** LOGO LOAD START *************
+		table.logo
+			tr
+				td
+					img#logo-mono(src='img/logo-mono.png', alt='logo')
+					#logo-stereo
+					#digits Loading
+					img#untitled(src='img/title.png')
+		// ///////////// LOGO LOAD END ///////////////////
+		footer
+			.task
+				img.icon(src='img/conductor.png')
+				span.title Conductor
+				.close
+		script(src='js/widget/clock.js')
+		script(type='text/javascript', src='js/widget/calculator.js')

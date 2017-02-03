@@ -1,0 +1,51 @@
+{
+  "name": "qwile",
+  "version": "0.0.1",
+  "description": "Operation system that changes your life!",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.13.3",
+    "stylus": "0.54.5",
+    "nib": "1.1.x",
+    "jade": "1.11.0",
+    "gulp": "^3.9.1",
+    "nodemon": "1.11.0",
+    "socket.io": "1.7.2",
+    "mongoose": "4.7.9",
+    "node-static": "0.7.9",
+    "body-parser": "^1.16.0",
+    "request": "^2.79.0"
+  },
+  "devDependencies": {
+    "gulp-autoprefixer": "*",
+    "gulp-clean": "*",
+    "gulp-concat-css": "*",
+    "gulp-connect": "*",
+    "gulp-csso": "*",
+    "gulp-html-replace": "^1.6.2",
+    "gulp-imagemin": "*",
+    "gulp-livereload": "*",
+    "gulp-minify-css": "*",
+    "gulp-rename": "*",
+    "gulp-stylus": "*",
+    "gulp-uglify": "*",
+    "gulp-uncss": "*",
+    "imagemin-pngquant": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://qwile.com/dev/qwile.git"
+  },
+  "engines": {
+    "node": "6.9.2"
+  },
+  "keywords": [
+    "node",
+    "express"
+  ],
+  "author": "Maxim Kuryazov",
+  "license": "MIT"
+}

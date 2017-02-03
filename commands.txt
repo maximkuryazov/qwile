@@ -1,0 +1,8 @@
+Watch and compile to certain directory with minification: 
+stylus --compress -o client/css/ -w client/styl/
+
+Start mondoDB:
+mongod --dbpath C:\qwile\db
+
+MongoDB installation guide:
+https://code.msdn.microsoft.com/Mongo-Database-setup-on-6963f46f
