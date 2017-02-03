@@ -4,54 +4,60 @@
 
 module.exports = (function() {
 
+	const util = require('util');
+
 	const private = {
-		mongoose: {}
+		mongoose: {},
+		db: {}
 	};
 
-	function constructor(firstName, lastName, mongoose) {
-
+	function constructor(mongoose, db) {
+		
 		private.mongoose = mongoose;
+		this.data = {};
 
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.fullName = function () {
-			return this.firstName + ' ' + this.lastName;
-		}
+		var userSchema = mongoose.Schema({
+			email: String,
+			password: String,
+			firstname: String,
+			lastname: String,
+			middlename: String,
+			age: Number,
+			birthday: Date,
+			sound: Boolean,
+			animations: Boolean,
+			visible: Boolean
+		});
+
+		userSchema.methods.showData = function () {
+			console.log("Email: " + this.email);
+		};
+
+		private.UserModel = mongoose.model('User', userSchema);
+		private.db = db;
 
 	}
 
 	constructor.prototype = {
 
-		remove: function() {
-			console.log("Remove this user from database.");
+		remove: function(id) {
+			private.UserModel.remove({ "_id": id }, function(error) {
+				if (!error) {
+					console.log("User with id " + id + "had been removed.");
+				} else {
+					console.log("Error " + error + " occurred during the deletion.");
+				}
+			});
 		},
 
-		create: function() {
+		create: function(data) {
 
 			var mongoose = private.mongoose;
+			this.data = data;
 
-			var userSchema = mongoose.Schema({
-				email: String,
-				password: String,
-				firstname: String,
-				lastname: String,
-				middlename: String,
-				age: Number,
-				birthday: Date,
-				sound: Boolean,
-				animations: Boolean,
-				visible: Boolean
-			});
-
-			userSchema.methods.showData = function () {
-				console.log("Email: " + this.email);
-			};
-
-			var User = mongoose.model('User', userSchema);
-
-			var currentUser = new User({
-				email: "maximkuryazov@gmail.com",
-				password: "322538631",
+			var currentUser = new private.UserModel({
+				email: this.data.email,
+				password: this.data.password,
 				age: 27,
 				birthday: new Date()
 			});
@@ -61,7 +67,7 @@ module.exports = (function() {
 				currentUser.showData();
 			});
 
-			User.find(function (error, users) {
+			private.UserModel.find(function (error, users) {
 				if (error) return console.error(error);
 				console.log("Users: " + users);
 				for (var key in users) {

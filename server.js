@@ -1,7 +1,8 @@
 ﻿(function() {
 
+    const util = require('util');
+    const mongoose = require('mongoose');
     const databaseName = "qwile";
-    var mongoose = require('mongoose');
     mongoose.connect('mongodb://localhost/' + databaseName);
     const db = mongoose.connection;
     db.on('error', console.error.bind(console, 'Connection error:'));
@@ -16,8 +17,6 @@
         cache: 0,
         gzip: true
     });
-
-    const util = require('util');
 
     http.createServer(function (req, res) {
 
@@ -50,6 +49,7 @@
     var express = require('express');
     var path = require('path');
     var bodyParser = require('body-parser');
+    var timeout = require('connect-timeout')
 
     var app = express();
 
@@ -61,10 +61,16 @@
     app.set('view engine', 'jade');
     app.set('views', path.join(__dirname, '/client/views'));
 
+    // таймаут может повлиять на заливку файла
+    app.use(timeout(12000));
+
     db.once('open', function () {
 
         // Start listening server requests only after connection to Mongo established
         console.log('Connected to MongoDB to ' + databaseName + ' database!');
+
+        const User = require("./server/user.js");
+        const user = new User(mongoose, db);
 
         // Routing
 
@@ -84,6 +90,15 @@
 
         });
 
+        app.get("/user/remove", function(req, res) {
+
+            user.remove(req.query.id);
+            res.set('Access-Control-Allow-Origin', '*');
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify({ success: true }));
+
+        });
+
         app.post("/user/new", function (req, res) {
 
             res.set('Access-Control-Allow-Origin', '*');
@@ -93,7 +108,7 @@
                 return /\/|\{|\}|\:|<|>|,|\?|!|\s/g.test(string) ? false : string;
             }
 
-            var user = {
+            var userData = {
                 email: inappropriateSymbolsCheck(req.body.email),
                 password: inappropriateSymbolsCheck(req.body.password),
                 confirmation: inappropriateSymbolsCheck(req.body.confirmation),
@@ -101,19 +116,15 @@
             };
             var errors = [];
 
-            for (var key in user) {
-                if (!user[key]) errors.push(key);
+            for (var key in userData) {
+                if (!userData[key]) errors.push(key);
             }
 
             res.setHeader('Content-Type', 'application/json');
             if (errors.length === 0) {
 
-                var User = require("./server/user.js");
-                var user = new User("Maxim", "Kuryazov", mongoose);
-                user.remove();
-                user.create();
-
-                res.send(JSON.stringify({success: true}));
+                user.create(userData);
+                res.send(JSON.stringify({ success: true }));
 
             } else {
                 res.send(JSON.stringify({
