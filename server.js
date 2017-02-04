@@ -110,10 +110,10 @@
             }
 
             var userData = {
-                email: inappropriateSymbolsCheck(req.body.email),
-                password: inappropriateSymbolsCheck(req.body.password),
-                confirmation: inappropriateSymbolsCheck(req.body.confirmation),
-                capture: inappropriateSymbolsCheck(req.body.capture)
+                email:          inappropriateSymbolsCheck(req.body.email),
+                password:       inappropriateSymbolsCheck(req.body.password),
+                confirmation:   inappropriateSymbolsCheck(req.body.confirmation),
+                capture:        inappropriateSymbolsCheck(req.body.capture)
             };
             var errors = [];
 
@@ -143,6 +143,40 @@
                     errors: errors
                 }));
             }
+
+        });
+
+        app.get("/mail", function(req, res) {
+
+            res.set('Access-Control-Allow-Origin', '*');
+            res.setHeader('Content-Type', 'application/json');
+
+            const nodeMailer = require('nodemailer');
+
+            var transporter = nodeMailer.createTransport({
+                service: 'Gmail',
+                auth: {
+                    user: 'maximkuryazov@gmail.com',
+                    pass: '322538631'
+                }
+            });
+
+            var mailOptions = {
+                to:         req.query.address,
+                subject:    req.query.subject,
+                text:       req.query.text,
+                html:       req.query.html
+            };
+
+            transporter.sendMail(mailOptions, function(error, info){
+                if(error){
+                    console.log(error);
+                    res.send({ success: false });
+                } else{
+                    console.log("Message sent: " + info.message);
+                    res.send({ success: true });
+                }
+            });
 
         });
 

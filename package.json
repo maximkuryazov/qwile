@@ -17,7 +17,8 @@
     "mongoose": "4.7.9",
     "node-static": "0.7.9",
     "body-parser": "^1.16.0",
-    "request": "^2.79.0"
+    "request": "^2.79.0",
+    "nodemailer": "latest"
   },
   "devDependencies": {
     "gulp-autoprefixer": "*",
