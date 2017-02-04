@@ -32,9 +32,10 @@
     "gulp-minify-css": "*",
     "gulp-rename": "*",
     "gulp-stylus": "*",
-    "gulp-uglify": "*",
+    "gulp-uglify": "^2.0.1",
     "gulp-uncss": "*",
-    "imagemin-pngquant": "*"
+    "imagemin-pngquant": "*",
+    "pump": "^1.0.2"
   },
   "repository": {
     "type": "git",
