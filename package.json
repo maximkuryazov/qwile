@@ -21,7 +21,7 @@
     "nodemailer": "latest"
   },
   "devDependencies": {
-    "gulp-autoprefixer": "*",
+    "gulp-autoprefixer": "^3.1.1",
     "gulp-clean": "*",
     "gulp-concat-css": "*",
     "gulp-connect": "*",

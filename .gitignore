@@ -1,5 +1,5 @@
 .idea
 db
-node_modules
 dist/*
-#npm-debug.log
+npm-debug.log
+node_modules
