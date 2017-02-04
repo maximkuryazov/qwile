@@ -124,17 +124,43 @@
             if (errors.length === 0) {
 
                 user.getByMail(userData.email, function(doc) {
+
                     if (doc) {
+                        
                         console.log("This email is already occupied.");
                         res.send(JSON.stringify({
                             success: false,
                             occupied: true,
                             errors: []
                         }));
+
                     } else {
+
                         user.create(userData);
-                        res.send(JSON.stringify({ success: true }));
+
+                        let mail = require("./server/mail.js");
+
+                        var options = {
+                            to:         userData.email,
+                            from:       "Qwile OS <admin@qwile.com>",
+                            subject:    "Qwile: Account was created!",
+                            html:       "<b>Your registration had been done.</b>"
+                        };
+
+                        mail.send(options, function (info) {
+                            res.send(JSON.stringify({
+                                success: true,
+                                info: info
+                            }));
+                        }, function (error) {
+                            res.send(JSON.stringify({
+                                success: false,
+                                error: error
+                            }));
+                        });
+
                     }
+
                 });
 
             } else {
@@ -146,36 +172,33 @@
 
         });
 
+        // it's for testing mail
+
         app.get("/mail", function(req, res) {
 
             res.set('Access-Control-Allow-Origin', '*');
             res.setHeader('Content-Type', 'application/json');
+            
+            let mail = require("./server/mail.js");
 
-            const nodeMailer = require('nodemailer');
-
-            var transporter = nodeMailer.createTransport({
-                service: 'Gmail',
-                auth: {
-                    user: 'maximkuryazov@gmail.com',
-                    pass: '322538631'
-                }
-            });
-
-            var mailOptions = {
+            var options = {
                 to:         req.query.address,
+                from:       "Qwile OS <admin@qwile.com>",
                 subject:    req.query.subject,
                 text:       req.query.text,
                 html:       req.query.html
             };
 
-            transporter.sendMail(mailOptions, function(error, info){
-                if(error){
-                    console.log(error);
-                    res.send({ success: false });
-                } else{
-                    console.log("Message sent: " + info.message);
-                    res.send({ success: true });
-                }
+            mail.send(options, function (info) {
+                res.send({
+                    success: true,
+                    info: info
+                });
+            }, function (error) {
+                res.send({
+                    success: false,
+                    error: error
+                });
             });
 
         });
