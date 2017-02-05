@@ -107,11 +107,8 @@
             // this shit needs to be, 'cuz in the client, jQuery success callback doesn't fire
             // when domain is not specified (http://<domain>:8080) because of cross-domain policy.
 
-            console.log("Origin: " + 'http://' + req.get('host').split(":")[0] + ':' + port);
-
             res.set('Access-Control-Allow-Origin', 'http://' + req.get('host').split(":")[0] + ':' + port);
             res.set('Access-Control-Allow-Credentials', true);
-
             res.set('Content-Type', 'application/json');
 
             console.log("Cookie: " + util.inspect(req.cookies, false, null));
@@ -148,28 +145,38 @@
 
                     } else {
 
-                        user.create(userData);
-
-                        let mail = require("./server/mail.js");
-
-                        var options = {
-                            to:         userData.email,
-                            from:       "Qwile OS <admin@qwile.com>",
-                            subject:    "Qwile: Account was created!",
-                            html:       "<b>Your registration had been done.</b>"
-                        };
-
-                        mail.send(options, function (info) {
-                            res.send(JSON.stringify({
-                                success: true,
-                                info: info
-                            }));
-                        }, function (error) {
+                        if (req.cookies.captcha !== crypto.createHash('md5').update(userData.capture).digest("hex")) {
                             res.send(JSON.stringify({
                                 success: false,
-                                error: error
+                                wrongCaptcha: true,
+                                errors: []
                             }));
-                        });
+                        } else {
+
+                            user.create(userData);
+
+                            let mail = require("./server/mail.js");
+
+                            var options = {
+                                to:         userData.email,
+                                from:       "Qwile OS <admin@qwile.com>",
+                                subject:    "Qwile: Account was created!",
+                                html:       "<b>Your registration had been done.</b>"
+                            };
+
+                            mail.send(options, function (info) {
+                                res.send(JSON.stringify({
+                                    success: true,
+                                    info: info
+                                }));
+                            }, function (error) {
+                                res.send(JSON.stringify({
+                                    success: false,
+                                    error: error
+                                }));
+                            });
+                            
+                        }
 
                     }
 
@@ -212,6 +219,15 @@
                     error: error
                 });
             });
+
+        });
+
+        app.get('/captcha', function (req, res) {
+
+            var svgCaptcha = require('svg-captcha');
+            var captcha = svgCaptcha.create();
+            res.set('Content-Type', 'image/svg+xml');
+            res.cookie("captcha", crypto.createHash('md5').update(captcha.text).digest("hex")).status(200).send(captcha.data);
 
         });
 

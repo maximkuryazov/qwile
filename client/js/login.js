@@ -116,6 +116,17 @@
 		}, 3000);
 
 	}
+	
+	// captcha
+	
+	var $captcha = $("#captcha");
+	function initCaptcha() {
+		$captcha.attr("src", "http://" + document.domain + ":" + Qwile.serverPort + "/captcha?cache=" + Math.random());
+	}
+	initCaptcha();
+	$captcha.click(function() {
+		initCaptcha();
+	});
 
 	$("form#register").submit(function(event) {
 
@@ -152,8 +163,11 @@
 
 						var errorText = "";
 						if (data.occupied) {
-							errorText = "This E-Mail address already exists."
+							errorText = "This E-Mail address already exists.";
+						} else if (data.wrongCaptcha) {
+							errorText = "Text from picture is incorrect.";
 						} else {
+
 							data.errors.forEach(function(error, i) {
 								errorText += "Field <b>" + error + "</b> contains inappropriate symbols.<br />";
 								$('input[name="' + error + '"]')

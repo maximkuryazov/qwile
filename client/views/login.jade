@@ -88,9 +88,11 @@ a.bubble-toggle(href='#') Bubbles Off
 						td.check
 							img(style='margin-left:5px;', src='img/complete.png')
 					tr
-						td.label Text from the picture:
+						td.label
+							img(src="" id="captcha" title="Click to update. Text is sensitive to register.")
+							// Text from the picture:
 						td
-							input#capture-input(type='text', name="capture")
+							input#capture-input(type='text', name="capture", maxlength="4")
 						td.check
 							img(style='margin-left:5px;', src='img/incorrect.png')
 				button#registration.btn.btn-primary.regbutton(type="submit") Sign in
