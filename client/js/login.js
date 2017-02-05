@@ -126,7 +126,13 @@
 				data: $(this).formSerialize(),
 				method: "POST",
 				dataType:  'json',
-				success: function(data, statusText, xhr, $form) {
+				// we need to send cookie, and that's why we use these cross-domain stuff and Credentials,
+				// 'cuz stupid XHR thinks that when we send to different port (3000) - it is a different domain!
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				success: function(data) {
 
 					if(data.success) {
 
@@ -159,6 +165,9 @@
 
 					}
 
+				},
+				error: function(xhr, status, error) {
+					console.error(error);
 				}
 			});
 

@@ -5,6 +5,7 @@
 module.exports = (function() {
 
 	const util = require('util');
+	const crypto = require('crypto');
 
 	const private = {
 		mongoose: {},
@@ -65,7 +66,7 @@ module.exports = (function() {
 
 			var currentUser = new private.UserModel({
 				email: this.data.email,
-				password: this.data.password,
+				password: crypto.createHash('md5').update(this.data.password).digest("hex"),
 				age: 27,
 				birthday: new Date()
 			});

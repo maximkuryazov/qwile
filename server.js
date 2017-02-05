@@ -6,6 +6,9 @@
     mongoose.connect('mongodb://localhost/' + databaseName);
     const db = mongoose.connection;
     db.on('error', console.error.bind(console, 'Connection error:'));
+
+    const crypto = require('crypto');
+    const cookieParser = require('cookie-parser')
     
     // Static server
 
@@ -42,7 +45,7 @@
 
     }).listen(port, "0.0.0.0");
 
-    console.log('Static server listening on port 8080!');
+    console.log('Static server listening on port ' + port + '!');
 
     // Dynamic server
 
@@ -52,6 +55,7 @@
     var timeout = require('connect-timeout')
 
     var app = express();
+    app.use(cookieParser());
 
     app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
         extended: true
@@ -100,9 +104,17 @@
 
         app.post("/user/new", function (req, res) {
 
-            res.set('Access-Control-Allow-Origin', '*');
-            res.setHeader('Content-Type', 'application/json');
+            // this shit needs to be, 'cuz in the client, jQuery success callback doesn't fire
+            // when domain is not specified (http://<domain>:8080) because of cross-domain policy.
 
+            console.log("Origin: " + 'http://' + req.get('host').split(":")[0] + ':' + port);
+
+            res.set('Access-Control-Allow-Origin', 'http://' + req.get('host').split(":")[0] + ':' + port);
+            res.set('Access-Control-Allow-Credentials', true);
+
+            res.set('Content-Type', 'application/json');
+
+            console.log("Cookie: " + util.inspect(req.cookies, false, null));
             console.log("User create post params: ", util.inspect(req.body, false, null));
 
             function inappropriateSymbolsCheck(string) {

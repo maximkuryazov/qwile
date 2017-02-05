@@ -7,20 +7,22 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.13.3",
-    "stylus": "0.54.5",
-    "nib": "1.1.x",
-    "jade": "1.11.0",
-    "gulp": "^3.9.1",
-    "nodemon": "1.11.0",
-    "socket.io": "1.7.2",
-    "mongoose": "4.7.9",
-    "node-static": "0.7.9",
     "body-parser": "^1.16.0",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.13.3",
+    "gulp": "^3.9.1",
+    "jade": "1.11.0",
+    "mongoose": "4.7.9",
+    "nib": "1.1.x",
+    "node-static": "0.7.9",
+    "nodemailer": "latest",
+    "nodemon": "1.11.0",
     "request": "^2.79.0",
-    "nodemailer": "latest"
+    "socket.io": "1.7.2",
+    "stylus": "0.54.5"
   },
   "devDependencies": {
+    "forever": "^0.15.3",
     "gulp-autoprefixer": "^3.1.1",
     "gulp-clean": "*",
     "gulp-concat-css": "*",

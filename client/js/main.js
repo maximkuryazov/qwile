@@ -33,11 +33,12 @@
 			"jquery":        "lib/jquery.min",
 			"jquery-ui":     "lib/jquery.ui.min",
 			"tipped":        "lib/tipped",
-			"jquery-form":   "lib/jquery.form.min"
+			"jquery-form":   "lib/jquery.form.min",
+			"jquery-cookie": "lib/jquery.cookie"
 		}
 	});
 
-	define(["underscore", "tipped", "jquery-form", "jquery-ui"], function(_, Tipped) {
+	define(["underscore", "tipped", "jquery-form", "jquery-ui", "jquery-cookie"], function(_, Tipped) {
 
 		window.Tipped = Tipped;
 
