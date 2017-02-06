@@ -16,12 +16,12 @@
 
 	(function(history){
 		var pushState = history.pushState;
-		history.pushState = function(state) {
+		history.pushState = function(state, name, title, popstate) {
 			if (typeof history.onpushstate == "function") {
 				history.onpushstate({ state: state });
 			}
 			var result = pushState.apply(history, arguments);
-			window.onpopstate.call();
+			if (popstate) window.onpopstate.call();
 			return result;
 		}
 	})(window.history);
@@ -50,13 +50,20 @@
 
 		function loadPage(template) {
 			$.ajax({
+
 				method: "GET",
 				url: baseURL + ":" + port + "/templateController",
 				data: { template: template },
 				crossDomain: true,
 				dataType: "html"
-			}).done(function(data) {
+
+			}).done(function(data, textStatus, xhr) {
+
+				var state = { state: "" };
+				window.history.pushState(state, "", $.cookie("redirect"), false);
 				$(document.body).hide().html(data).show();
+				$.removeCookie("redirect");
+
 			});
 		}
 		

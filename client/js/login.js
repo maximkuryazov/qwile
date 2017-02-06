@@ -77,6 +77,7 @@
 	
 	$('form#login').submit(function() {
 
+		$.removeCookie("remember");
 		$.ajax({
 			url: Qwile.baseURL + ":" + Qwile.serverPort + "/login",
 			data: $(this).formSerialize(),
@@ -94,8 +95,8 @@
 					}, time, function() {
 						$('.bubble-toggle').click();
 						// location.href = '/desktop';
-						var state = { foo: "bar" };
-						window.history.pushState(state, "Desktop", "desktop");
+						var state = { state: "" };
+						window.history.pushState(state, "Desktop", "desktop", true);
 						// no longer need, because now you can type /desktop in URL
 						// window.history.back();
 					});

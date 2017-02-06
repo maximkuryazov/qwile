@@ -107,17 +107,32 @@
 
             console.log("Cookie: " + util.inspect(req.cookies, false, null));
 
+            function checkLogin() {
+                // you are logged in?
+                if (req.session.email) {
+                    
+                    res.cookie("redirect", "desktop");
+                    res.render('desktop');
+                    
+                } else {
+                    
+                    res.cookie("redirect", "/");
+                    res.render('login');
+                    
+                }
+            }
+
             switch (req.query.template) {
                 case "login":
-                    res.render('login');
+                    if (req.cookies.remember) {
+                        checkLogin();
+                     } else {
+                        res.cookie("redirect", "/");
+                        res.render('login');
+                     }
                 break;
                 case "desktop":
-                    // you are logged in?
-                    if (req.session.email) {
-                        res.render('desktop');
-                    } else {
-                        res.render('login');
-                    }
+                    checkLogin();
                 break;
             }
 
