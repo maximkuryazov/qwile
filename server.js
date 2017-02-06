@@ -191,6 +191,49 @@
 
         });
 
+        app.post("/login", function(req, res) {
+
+            res.set('Access-Control-Allow-Origin', 'http://' + req.get('host').split(":")[0] + ':' + port);
+            res.set('Access-Control-Allow-Credentials', true);
+            res.set('Content-Type', 'application/json');
+
+            user.getByMail(req.body.email, function(document) {
+
+                console.log(util.inspect(document, false, null));
+
+                function sendResponse(success, remember) {
+                    res.send(JSON.stringify({
+                        success: success,
+                        remember: remember
+                    }));
+                }
+
+                if (!document) {
+                    sendResponse(false);
+                } else {
+
+                    var cipherPassword = crypto.createHash('md5').update(req.body.password).digest("hex");
+                    if (document.password === cipherPassword) {
+
+                        var remember = false;
+                        if (req.body.remember) {
+
+                            res.cookie("remember", '{ "email": "' + req.body.email + '", "password": "' + cipherPassword + '" }');
+                            remember = true;
+
+                        }
+                        sendResponse(true, remember);
+
+                    } else {
+                        sendResponse(false);
+                    }
+
+                }
+
+            });
+
+        });
+
         // it's for testing mail
 
         app.get("/mail", function(req, res) {

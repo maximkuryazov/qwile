@@ -52,15 +52,15 @@ a.bubble-toggle(href='#') Bubbles Off
 		.mini-circle
 			img#logo(src='img/logo.png')
 			form#login
-				input(type='text', placeholder='Your E-Mail adress')
+				input(type='text', placeholder='Your E-Mail adress', name="email")
 				br
-				input(type='password', placeholder='Your password')
+				input(type='password', placeholder='Your password', name="password")
 				br
 				#forgot(title='Forgot your password?', data-toggle='tooltip', data-placement='top')
 					img(src='img/forgot.png')
-				button#enter.btn.btn-primary Log in
+				button#enter.btn.btn-primary(type="submit") Log in
 				br
-				input#remember(type='checkbox', checked='')
+				input#remember(type='checkbox', checked='', name="remember")
 				label(for='remember') Remember me
 				span.reglink Registration
 				footer.login

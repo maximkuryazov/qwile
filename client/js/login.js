@@ -74,27 +74,54 @@
 		});
 		return false;
 	});
+	
+	$('form#login').submit(function() {
 
-	$('#enter').click(function() {
-		if ($('#login input[type="text"]:first').val() == 'test@test.com' && $('#login input[type="password"]').val() == 'test') {
-			$('#circle').stop().css("transform", "rotate(0deg)").animate({
-  				transform: 'rotate(360deg) scale(0)'
-			}, time, function() {
-				$('.bubble-toggle').click();
-				//location.href = '/desktop';
-				var state = { foo: "bar" };
-				window.history.pushState(state, "Desktop", "desktop");
-				// no longer need, because now you can type /desktop in URL
-				// window.history.back();
-			});
-		} else {
-			$('.modal-body').css({ 'font-size': '12px', 'color': '#970101' }).html('Incorrect password or E-Mail address.');
-			$('.modal').modal('show');
-			setTimeout(function() {
-				$('.modal').modal('hide');
-			}, 2500);
-		}
+		$.ajax({
+			url: Qwile.baseURL + ":" + Qwile.serverPort + "/login",
+			data: $(this).formSerialize(),
+			method: "POST",
+			dataType: 'json',
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
+			success: function (data) {
+				if(data.success) {
+
+					$('#circle').stop().css("transform", "rotate(0deg)").animate({
+						transform: 'rotate(360deg) scale(0)'
+					}, time, function() {
+						$('.bubble-toggle').click();
+						// location.href = '/desktop';
+						var state = { foo: "bar" };
+						window.history.pushState(state, "Desktop", "desktop");
+						// no longer need, because now you can type /desktop in URL
+						// window.history.back();
+					});
+
+					if (data.remember) {
+						var credentials = JSON.parse($.cookie("remember"));
+						// credentials.email
+						// credentials.password - already hashed
+					}
+					
+				} else {
+
+					$('.modal-body').css({ 'font-size': '12px', 'color': '#970101' }).html('Incorrect password or E-Mail address.');
+					$('.modal').modal('show');
+					setTimeout(function() {
+						$('.modal').modal('hide');
+					}, 2500);
+					
+				}
+			},
+			error: function (xhr, status, error) {
+				console.error(error);
+			}
+		});
 		return false;
+
 	});
 
 	if (window.chrome) {
