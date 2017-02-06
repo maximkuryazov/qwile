@@ -42,11 +42,19 @@
 
 		window.Tipped = Tipped;
 
+		$.ajaxSetup({
+			xhrFields: {
+				withCredentials: true
+			}
+		});
+
 		function loadPage(template) {
 			$.ajax({
 				method: "GET",
 				url: baseURL + ":" + port + "/templateController",
-				data: { template: template }
+				data: { template: template },
+				crossDomain: true,
+				dataType: "html"
 			}).done(function(data) {
 				$(document.body).hide().html(data).show();
 			});

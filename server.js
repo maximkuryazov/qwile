@@ -8,8 +8,9 @@
     db.on('error', console.error.bind(console, 'Connection error:'));
 
     const crypto = require('crypto');
-    const cookieParser = require('cookie-parser')
-    
+    const cookieParser = require('cookie-parser');
+    const session = require('express-session');
+
     // Static server
 
     var static = require('node-static'),
@@ -57,6 +58,11 @@
     var app = express();
     app.use(cookieParser());
 
+    app.use(session({
+        secret: require('crypto').randomBytes(64).toString('hex'),
+        key: 'session.id'
+    }));
+
     app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
         extended: true
     }));
@@ -78,17 +84,37 @@
 
         // Routing
 
+        function setCrossDomainHeaders(res, req) {
+
+            // this shit needs to be, 'cuz in the client, jQuery success callback doesn't fire
+            // when domain is not specified (http://<domain>:8080) because of cross-domain policy.
+
+            res.set('Access-Control-Allow-Origin', 'http://' + req.get('host').split(":")[0] + ':' + port);
+            res.set('Access-Control-Allow-Credentials', true);
+            res.set('Content-Type', 'application/json');
+
+        }
+
         app.get("/templateController", function (req, res) {
 
+            console.log("Session: ", req.session.email)
+
             console.log(req.query.template);
-            res.set('Access-Control-Allow-Origin', '*');
+            setCrossDomainHeaders(res, req);
+
+            console.log("Cookie: " + util.inspect(req.cookies, false, null));
+
             switch (req.query.template) {
                 case "login":
                     res.render('login');
-                    break;
+                break;
                 case "desktop":
-                    // нужно быть залогиненым, чтобы получить десктоп, иначе должен возвращать редирект на вход
-                    res.render('desktop');
+                    // you are logged in?
+                    if (req.session.email) {
+                        res.render('desktop');
+                    } else {
+                        res.render('login');
+                    }
                 break;
             }
 
@@ -104,12 +130,7 @@
 
         app.post("/user/new", function (req, res) {
 
-            // this shit needs to be, 'cuz in the client, jQuery success callback doesn't fire
-            // when domain is not specified (http://<domain>:8080) because of cross-domain policy.
-
-            res.set('Access-Control-Allow-Origin', 'http://' + req.get('host').split(":")[0] + ':' + port);
-            res.set('Access-Control-Allow-Credentials', true);
-            res.set('Content-Type', 'application/json');
+            setCrossDomainHeaders(res, req);
 
             console.log("Cookie: " + util.inspect(req.cookies, false, null));
             console.log("User create post params: ", util.inspect(req.body, false, null));
@@ -135,7 +156,7 @@
                 user.getByMail(userData.email, function(doc) {
 
                     if (doc) {
-                        
+
                         console.log("This email is already occupied.");
                         res.send(JSON.stringify({
                             success: false,
@@ -175,7 +196,7 @@
                                     error: error
                                 }));
                             });
-                            
+
                         }
 
                     }
@@ -191,11 +212,13 @@
 
         });
 
+        app.get("/logout", function(req, res) {
+            req.session.destroy();
+        });
+
         app.post("/login", function(req, res) {
 
-            res.set('Access-Control-Allow-Origin', 'http://' + req.get('host').split(":")[0] + ':' + port);
-            res.set('Access-Control-Allow-Credentials', true);
-            res.set('Content-Type', 'application/json');
+            setCrossDomainHeaders(res, req);
 
             user.getByMail(req.body.email, function(document) {
 
@@ -222,6 +245,7 @@
                             remember = true;
 
                         }
+                        req.session.email = req.body.email
                         sendResponse(true, remember);
 
                     } else {
@@ -240,7 +264,7 @@
 
             res.set('Access-Control-Allow-Origin', '*');
             res.setHeader('Content-Type', 'application/json');
-            
+
             let mail = require("./server/mail.js");
 
             var options = {
