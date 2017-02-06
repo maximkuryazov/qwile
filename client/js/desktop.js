@@ -311,23 +311,38 @@ $(window).ready(function() {
 						$('#quit').click(function() {
 							$('#shadow').fadeIn('fast');
 						});
+
 						$('#shadow').click(function(e) {
 							$(this).fadeOut('fast');
 							e.stopImmediatePropagation();
 						});
+
 						$(".dialog-content").click(function(e) {
 							e.stopPropagation();
 						});
+
 						$(".dialog-content .dialog-close, .dialog-content .cancel, .dialog-content .exit").click(function() {
 							$('#shadow').fadeOut('fast');
 						});
+
 						$(".dialog-content .exit").click(function() {
-							var sound = new Howl({
-								src: ['sounds/logout.mp3']
-							});
-							if (SOUND) sound.play();
-							$(document.body).fadeOut(1000, function() {
-								window.location.href = '/';
+							$.ajax({
+								method: "GET",
+								url: (Qwile.baseURL + ":" + Qwile.serverPort + "/logout"),
+								crossDomain: true,
+								dataType: "json"
+							}).done(function(data) {
+								if (data.success) {
+
+									var sound = new Howl({
+										src: ['sounds/logout.mp3']
+									});
+									if (SOUND) sound.play();
+									$(document.body).fadeOut(1000, function() {
+										window.location.href = '/';
+									});
+
+								}
 							});
 						});
 

@@ -97,9 +97,12 @@
 
         app.get("/templateController", function (req, res) {
 
-            console.log("Session: ", req.session.email)
+            console.log("Session: ", req.session.email);
 
             console.log(req.query.template);
+
+            // here we don't need application/json header,
+            // but on the client side we just set dataType: "html" and jQ can handle it correctly
             setCrossDomainHeaders(res, req);
 
             console.log("Cookie: " + util.inspect(req.cookies, false, null));
@@ -213,7 +216,12 @@
         });
 
         app.get("/logout", function(req, res) {
+
+            setCrossDomainHeaders(res, req);
             req.session.destroy();
+            console.log("Logout. Session was destroyed");
+            res.send(JSON.stringify({ success: true }));
+
         });
 
         app.post("/login", function(req, res) {
