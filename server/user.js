@@ -27,7 +27,9 @@ module.exports = (function() {
 			birthday: Date,
 			sound: Boolean,
 			animations: Boolean,
-			visible: Boolean
+			visible: Boolean,
+			activated: Boolean,
+			activationCode: Number
 		});
 
 		userSchema.methods.showData = function () {
@@ -68,7 +70,9 @@ module.exports = (function() {
 				email: this.data.email,
 				password: crypto.createHash('md5').update(this.data.password).digest("hex"),
 				age: 27,
-				birthday: new Date()
+				birthday: new Date(),
+				activated: false,
+				activationCode: this.data.activationCode
 			});
 
 			currentUser.save(function (error, currentUser) {
@@ -83,6 +87,24 @@ module.exports = (function() {
 					console.log("Email: " + users[key].email);
 					console.log("ID: " + users[key]._id);
 				}
+			});
+
+		},
+		
+		set: function(id, property, value, callback) {
+
+			var options = {};
+			options[property] = value;
+			console.log(util.inspect(options, false, null));
+
+			private.UserModel.update({ _id: id }, {
+				$set: options,
+			}, function(error, affected) {
+
+				console.log("User set error: ", error);
+				console.log("User set affected: ", affected);
+				callback();
+				
 			});
 
 		}

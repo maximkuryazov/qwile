@@ -79,7 +79,7 @@
 
 		$.removeCookie("remember");
 		$.ajax({
-			url: Qwile.baseURL + ":" + Qwile.serverPort + "/login",
+			url: Qwile.baseURL + ":" + Qwile.serverPort + "/user/login",
 			data: $(this).formSerialize(),
 			method: "POST",
 			dataType: 'json',
@@ -109,7 +109,8 @@
 					
 				} else {
 
-					$('.modal-body').css({ 'font-size': '12px', 'color': '#970101' }).html('Incorrect password or E-Mail address.');
+					var message = data.activated ? 'Incorrect password or E-Mail address.' : "Your account hasn't been activated yet."
+					$('.modal-body').css({ 'font-size': '12px', 'color': '#970101' }).html(message);
 					$('.modal').modal('show');
 					setTimeout(function() {
 						$('.modal').modal('hide');

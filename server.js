@@ -1,5 +1,7 @@
 ﻿(function() {
 
+    const defaultDomain = "http://95.31.9.74";
+
     const util = require('util');
     const mongoose = require('mongoose');
     const databaseName = "qwile";
@@ -82,8 +84,6 @@
         const User = require("./server/user.js");
         const user = new User(mongoose, db);
 
-        // Routing
-
         function setCrossDomainHeaders(res, req) {
 
             // this shit needs to be, 'cuz in the client, jQuery success callback doesn't fire
@@ -91,18 +91,48 @@
 
             res.set('Access-Control-Allow-Origin', 'http://' + req.get('host').split(":")[0] + ':' + port);
             res.set('Access-Control-Allow-Credentials', true);
-            res.set('Content-Type', 'application/json');
 
         }
+
+        app.all('*', function(req, res, next) {
+
+            console.log(req.url);
+
+            setCrossDomainHeaders(res, req);
+
+            var requestString = '/templateController?template=';
+            if (
+                req.url == requestString + 'login' ||
+                req.url == requestString + 'desktop' ||
+                req.url == '/user/login' ||
+                /^\/user\/activate/.test(req.url) ||
+                req.url == '/mail' || /^\/captcha/.test(req.url) || req.url == '/user/new'
+            ) {
+                return next();
+            } else if (!req.session.email) {
+
+                res.set('Content-Type', 'application/json');
+                res.send(JSON.stringify({
+                    success: false,
+                    error: "You are not logged in."
+                }));
+
+            } else {
+                user.getByMail(req.session.email, function(document) {
+                    if (req.session) req.session.currentUser = document;
+                });
+                return next();
+            }
+
+        });
+
+        // Routing
 
         app.get("/templateController", function (req, res) {
 
             console.log("Session: ", req.session.email);
-
             console.log(req.query.template);
 
-            // here we don't need application/json header,
-            // but on the client side we just set dataType: "html" and jQ can handle it correctly
             setCrossDomainHeaders(res, req);
 
             console.log("Cookie: " + util.inspect(req.cookies, false, null));
@@ -149,6 +179,7 @@
         app.post("/user/new", function (req, res) {
 
             setCrossDomainHeaders(res, req);
+            res.set('Content-Type', 'application/json');
 
             console.log("Cookie: " + util.inspect(req.cookies, false, null));
             console.log("User create post params: ", util.inspect(req.body, false, null));
@@ -192,6 +223,7 @@
                             }));
                         } else {
 
+                            userData.activationCode = Math.round((Math.random() * 100000));
                             user.create(userData);
 
                             let mail = require("./server/mail.js");
@@ -200,7 +232,9 @@
                                 to:         userData.email,
                                 from:       "Qwile OS <admin@qwile.com>",
                                 subject:    "Qwile: Account was created!",
-                                html:       "<b>Your registration had been done.</b>"
+                                html:       'Your registration had been done. To activate your profile, click on the link below.<br /> \
+                                            <a href="' + defaultDomain + ':3000/user/activate?code=' + userData.activationCode
+                                            + '&mail=' + userData.email + '">Activate your profile</a>'
                             };
 
                             mail.send(options, function (info) {
@@ -230,32 +264,55 @@
 
         });
 
-        app.get("/logout", function(req, res) {
+        app.get("/user/activate", function(req, res) {
+            
+            user.getByMail(req.query.mail, function(document) {
+                console.log(util.inspect(document, false, null));
+                if (req.query.code == document.activationCode) {
+                    user.set(document._id, "activated", true, function() {
+                        res.setHeader("Content-type", "text/html; charset=utf-8");
+                        res.render("activationComplete", {
+                            domain: defaultDomain
+                        });
+                    });
+                } else {
+                    res.render("invalidActivation");
+                }
+            });
+            
+        });
+
+        app.get("/user/logout", function(req, res) {
 
             setCrossDomainHeaders(res, req);
+            res.set('Content-Type', 'application/json');
             req.session.destroy();
             console.log("Logout. Session was destroyed");
             res.send(JSON.stringify({ success: true }));
 
         });
 
-        app.post("/login", function(req, res) {
+        app.post("/user/login", function(req, res) {
 
             setCrossDomainHeaders(res, req);
+            res.set('Content-Type', 'application/json');
 
             user.getByMail(req.body.email, function(document) {
 
                 console.log(util.inspect(document, false, null));
 
-                function sendResponse(success, remember) {
+                function sendResponse(success, remember, activated) {
                     res.send(JSON.stringify({
                         success: success,
-                        remember: remember
+                        remember: remember,
+                        activated: activated
                     }));
                 }
 
                 if (!document) {
-                    sendResponse(false);
+                    sendResponse(false, false, true);
+                } else if (!document.activated) {
+                    sendResponse(false, false, false);
                 } else {
 
                     var cipherPassword = crypto.createHash('md5').update(req.body.password).digest("hex");
@@ -268,11 +325,11 @@
                             remember = true;
 
                         }
-                        req.session.email = req.body.email
-                        sendResponse(true, remember);
+                        req.session.email = req.body.email;
+                        sendResponse(true, remember, true);
 
                     } else {
-                        sendResponse(false);
+                        sendResponse(false, false, true);
                     }
 
                 }

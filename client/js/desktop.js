@@ -328,7 +328,7 @@ $(window).ready(function() {
 						$(".dialog-content .exit").click(function() {
 							$.ajax({
 								method: "GET",
-								url: (Qwile.baseURL + ":" + Qwile.serverPort + "/logout"),
+								url: (Qwile.baseURL + ":" + Qwile.serverPort + "/user/logout"),
 								crossDomain: true,
 								dataType: "json"
 							}).done(function(data) {

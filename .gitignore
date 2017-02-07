@@ -3,3 +3,4 @@ db
 dist/*
 npm-debug.log
 node_modules
+storage
