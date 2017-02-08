@@ -91,10 +91,8 @@ module.exports = (function() {
 
 		},
 		
-		set: function(id, property, value, callback) {
+		set: function(id, options, callback) {
 
-			var options = {};
-			options[property] = value;
 			console.log(util.inspect(options, false, null));
 
 			private.UserModel.update({ _id: id }, {

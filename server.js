@@ -269,7 +269,12 @@
             user.getByMail(req.query.mail, function(document) {
                 console.log(util.inspect(document, false, null));
                 if (req.query.code == document.activationCode) {
-                    user.set(document._id, "activated", true, function() {
+                    user.set(document._id, {
+
+                        activated: true,
+                        activationCode: 0
+
+                    }, function() {
                         res.setHeader("Content-type", "text/html; charset=utf-8");
                         res.render("activationComplete", {
                             domain: defaultDomain
