@@ -106,7 +106,7 @@
                 req.url == requestString + 'desktop' ||
                 req.url == '/user/login' ||
                 /^\/user\/activate/.test(req.url) ||
-                req.url == '/mail' || /^\/captcha/.test(req.url) || req.url == '/user/new'
+                req.url == '/user/restore' || /^\/captcha/.test(req.url) || req.url == '/user/new'
             ) {
                 return next();
             } else if (!req.session.email) {
@@ -343,35 +343,44 @@
 
         });
 
-        // it's for testing mail
+        app.post("/user/restore", function(req, res) {
 
-        app.get("/mail", function(req, res) {
-
-            res.set('Access-Control-Allow-Origin', '*');
             res.setHeader('Content-Type', 'application/json');
+            setCrossDomainHeaders(res, req);
 
-            let mail = require("./server/mail.js");
+            console.log(req.body.email);
 
-            var options = {
-                to:         req.query.address,
-                from:       "Qwile OS <admin@qwile.com>",
-                subject:    req.query.subject,
-                text:       req.query.text,
-                html:       req.query.html
-            };
-
-            mail.send(options, function (info) {
-                res.send({
-                    success: true,
-                    info: info
-                });
-            }, function (error) {
-                res.send({
-                    success: false,
-                    error: error
-                });
+            user.getByMail(req.body.email, function(document) {
+                if (!document) {
+                    res.send({
+                        success: false,
+                        error: "There is no such E-Mail in system."
+                    });
+                } else {
+                    
+                    let mail = require("./server/mail.js");
+                    var options = {
+                        to:         req.body.email,
+                        from:       "Qwile OS <admin@qwile.com>",
+                        subject:    "Account restore",
+                        html:       'To restore your account, please, follow this link: <br /><a href="#">Restore your password</a>'
+                    };
+                    
+                    mail.send(options, function (info) {
+                        res.send({
+                            success: true,
+                            info: info
+                        });
+                    }, function (error) {
+                        res.send({
+                            success: false,
+                            error: error
+                        });
+                    });
+                    
+                }
             });
-
+            
         });
 
         app.get('/captcha', function (req, res) {

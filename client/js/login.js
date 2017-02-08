@@ -5,6 +5,12 @@
 	var Blue = '#0287a9';
 	var time = 700;
 
+	$.ajaxSetup({
+		xhrFields: {
+			withCredentials: true
+		}
+	});
+
 	$('#circle').animate({ transform: 'scale(1)' }, 1000);
 	$('.reglink').click(function() {
 		$('#circle').stop().css('transform', 'rotate(0deg)').animate({
@@ -35,26 +41,53 @@
 	}
 
 	var restoreHTML = '<div onclick="$(this).remove();" class="shadow"><div class="inner-shadow"> \
-	<form id="restore-form"><input id="restore-input" onclick="event.stopPropagation()" type="text" placeholder="Type your E-Mail address here"></input><button onclick="event.stopPropagation()" class="btn btn-primary" id="restore-button">Restore</button></form></div></div>';
+	<form id="restore-form"><input name="email" id="restore-input" onclick="event.stopPropagation()" type="text" placeholder="Type your E-Mail address here"></input><button onclick="event.stopPropagation()" class="btn btn-primary" type="submit" id="restore-button">Restore</button></form></div></div>';
 	$('#forgot').tooltip().click(function() {
 
 		$(restoreHTML).appendTo('body').fadeIn();
 		$('#restore-input').tooltip().focus(function() {
 			$(this).css('text-align', 'left').attr('placeholder', '');
 		});
-		function closeShadow() {
-			$('.shadow').fadeOut(function() {
-				$(this).remove();
-			});
-			$('.modal-body').css({ 'font-size': '12px', 'color': Blue }).html('Instructions were sent to your E-Mail.');
+
+		function showModal (message, color) {
+
+			$('.modal-body').css({ 'font-size': '12px', 'color': color }).html(message);
 			$('.modal').modal('show');
 			setTimeout(function() {
 				$('.modal').modal('hide');
 			}, 2500);
-			return false;
+
 		}
-		$('#restore-button').click(closeShadow);
-		$("#restore-form").submit(closeShadow);
+
+		function closeShadow () {
+
+			$('.shadow').fadeOut(function() {
+				$(this).remove();
+			});
+			showModal('Instructions were sent to your E-Mail.', Blue);
+			return false;
+
+		}
+
+		$("#restore-form").submit(function() {
+
+			$.ajax({
+				url: Qwile.baseURL + ":" + Qwile.serverPort + "/user/restore",
+				data: $(this).formSerialize(),
+				method: "POST",
+				dataType: 'json',
+				crossDomain: true,
+				success: function (data) {
+					if (data.success) {
+						closeShadow();
+					} else {
+						showModal(data.error, "#970101");
+					}
+				}
+			});
+			return false;
+
+		});
 
 	});
 
