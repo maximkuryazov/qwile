@@ -102,11 +102,11 @@
 
             var requestString = '/templateController?template=';
             if (
-                req.url == requestString + 'login' ||
-                req.url == requestString + 'desktop' ||
-                req.url == '/user/login' ||
-                /^\/user\/activate/.test(req.url) ||
-                req.url == '/user/restore' || /^\/captcha/.test(req.url) || req.url == '/user/new'
+                req.url == requestString + 'login' || req.url == requestString + 'desktop' ||
+                req.url == '/user/login' || req.url == '/user/restore' ||
+                /^\/user\/updatePassword/.test(req.url) || /^\/user\/activate/.test(req.url) ||
+                /^\/user\/changePassword/.test(req.url) || /^\/captcha/.test(req.url) ||
+                req.url == '/user/new'
             ) {
                 return next();
             } else if (!req.session.email) {
@@ -348,8 +348,6 @@
             res.setHeader('Content-Type', 'application/json');
             setCrossDomainHeaders(res, req);
 
-            console.log(req.body.email);
-
             user.getByMail(req.body.email, function(document) {
                 if (!document) {
                     res.send({
@@ -358,29 +356,85 @@
                     });
                 } else {
                     
+					var restoreCode = Math.round((Math.random() * 100000));
                     let mail = require("./server/mail.js");
                     var options = {
                         to:         req.body.email,
                         from:       "Qwile OS <admin@qwile.com>",
-                        subject:    "Account restore",
-                        html:       'To restore your account, please, follow this link: <br /><a href="#">Restore your password</a>'
+                        subject:    "Qwile: Account restore",
+                        html:       'To restore your account, please, follow this link: <br /><a href="http://95.31.9.74:3000/user/changePassword?code='
+									+ restoreCode + '&email=' + req.body.email +'">Restore your password</a>'
                     };
-                    
-                    mail.send(options, function (info) {
-                        res.send({
-                            success: true,
-                            info: info
-                        });
-                    }, function (error) {
-                        res.send({
-                            success: false,
-                            error: error
-                        });
-                    });
+					
+					user.set(document._id, { restoreCode: restoreCode }, function(info, error) {
+						if (!error) {
+							mail.send(options, function (info) {
+								res.send({
+									success: true,
+									info: info
+								});
+							}, function (error) {
+								res.send({
+									success: false,
+									error: error
+								});
+							});
+						}
+					});
                     
                 }
             });
             
+        });
+		
+		app.get("/user/changePassword", function (req, res) {
+
+			res.setHeader("Content-type", "text/html; charset=utf-8");
+			user.getByMail(req.query.email, function(document) {
+                if (!document) {
+                    res.render("invalidRestoreLink");
+                } else if (document.restoreCode == req.query.code && document.email == req.query.email) {
+					res.render("setNewPassword", {
+						domain: defaultDomain
+					});
+				} else {
+					res.render("invalidRestoreLink");
+				}
+			});
+			
+		});
+
+        app.post("/user/updatePassword", function (req, res) {
+
+            //  TODO: Check password for inappropriate symbols
+
+            res.setHeader('Content-Type', 'application/json');
+            setCrossDomainHeaders(res, req);
+            user.getByMail(req.body.email, function(document) {
+                if (!document) {
+                    res.send({
+                        success: false,
+                        error: "There is no such E-Mail in system."
+                    });
+                 } else if (req.body.code == document.restoreCode && req.body.email == document.email) {
+                    uset.set(document._id, {
+                        restoreCode: 0,
+                        password: crypto.createHash('md5').update(req.body.password).digest("hex")
+                    }, function(info, error) {
+                        if (!error) {
+                            res.send({
+                                success: true
+                            });
+                        } else {
+                            res.send({
+                                success: false,
+                                error: error
+                            });
+                        }
+                    });
+                }
+            });
+
         });
 
         app.get('/captcha', function (req, res) {

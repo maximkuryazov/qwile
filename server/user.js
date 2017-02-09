@@ -29,7 +29,8 @@ module.exports = (function() {
 			animations: Boolean,
 			visible: Boolean,
 			activated: Boolean,
-			activationCode: Number
+			activationCode: Number,
+			restoreCode: Number
 		});
 
 		userSchema.methods.showData = function () {
@@ -101,7 +102,7 @@ module.exports = (function() {
 
 				console.log("User set error: ", error);
 				console.log("User set affected: ", affected);
-				callback();
+				callback(affected, error);
 				
 			});
 
