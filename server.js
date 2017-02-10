@@ -417,7 +417,7 @@
                         error: "There is no such E-Mail in system."
                     });
                  } else if (req.body.code == document.restoreCode && req.body.email == document.email) {
-                    uset.set(document._id, {
+                    user.set(document._id, {
                         restoreCode: 0,
                         password: crypto.createHash('md5').update(req.body.password).digest("hex")
                     }, function(info, error) {
