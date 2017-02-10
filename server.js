@@ -389,6 +389,10 @@
 
             //  TODO: Check password for inappropriate symbols
 
+            console.log(req.body.email);
+            console.log(req.body.code);
+            console.log(req.body.password);
+
             res.setHeader('Content-Type', 'application/json');
             setCrossDomainHeaders(res, req);
             user.getByMail(req.body.email, function(document) {
@@ -412,6 +416,11 @@
                                 error: error
                             });
                         }
+                    });
+                } else {
+                    res.send({
+                        success: false,
+                        error: "Sometheng wrong. Incorrect data was sent."
                     });
                 }
             });

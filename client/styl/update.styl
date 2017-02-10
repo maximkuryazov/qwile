@@ -1,0 +1,149 @@
+@font-face {
+  font-family: 'Copperplate Gothic Bold';
+  src: url('../fonts/Copperplate Gothic Bold.ttf');
+}
+body {
+	background: url('../img/bg.jpg') no-repeat bottom center fixed;
+	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+	overflow: hidden !important;
+	width: 100%;
+}
+#circle {
+	width: 720px;
+	background: rgba(255,255,255, 0.5);
+	height: 720px;
+	border-radius: 500px;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	transform: scale(0);
+	margin-top: -360px;
+}
+#circle-parent {
+	width: 720px;
+	height: 720px;
+	margin: auto;
+}
+.mini-circle {
+	border-radius: 500px;
+	background: rgba(255,255,255, 0.5);
+	position: absolute;
+	top: 20px;
+	width: 390px;
+	height: 390px;
+}
+.mini-circle:first-child {
+	left: 20%;
+}
+.mini-circle:last-child {
+	left: 27%;
+}
+#logo {
+	width: 300px;
+	margin-left: 20px;
+	margin-top: 33px;
+}
+#update {
+	margin-top: 80px;
+	margin-left: 67px;
+}
+#update input[type="text"], #update input[type="password"] {
+	margin-top: 10px;
+	border: 1px solid #04a0e0;
+	height: 32px;
+	width: 224px;
+	font: 12px Verdana;
+	padding: 7px;
+	background: rgba(999,999,999,0.5);
+}
+#update input[type="text"]:focus, #login input[type="password"]:focus {
+	border: 1px solid #f90;
+}
+#update input[type="password"] {
+	width: 225px !important;
+}
+#update input[type="password"]:focus {
+	border-right: 0px !important;
+}
+#enter {
+	outline: none;
+	margin-top: 10px;
+	width: 224px;
+	font: bold 12px verdana;
+}
+input.wrong {
+  border: 1px solid red !important;
+}
+label {
+	margin-left: 8px;
+	font: 14px Verdana;
+	font-variant: small-caps;
+}
+
+/* neutral */
+
+.shadow {
+	display: none;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(000, 020, 023, 0.7);
+}
+.inner-shadow {
+	width: 50%;
+	height: 50%;
+	overflow: auto;
+	color: white;
+	margin: auto;
+	position: absolute;
+	top: 0; 
+	left: 0; 
+	bottom: 0; 
+	right: 0;
+}
+.dialog-content {
+	position: relative;
+	width: 400px;
+	margin-left: auto;
+	margin-right: auto;
+	height: 149px;
+	background-image: url('../img/dialog.png');
+	background-color: rgba(000, 000, 000, 0.1);
+	border-radius: 8px;
+	margin-top: 12%;
+}
+.dialog-close {
+	margin-top: 3px;
+	float: right;
+	margin-right: 3px;
+	background: url('../img/dialog-close.png');
+	width: 15px;
+	height: 14px;
+	cursor: pointer;
+}
+.dialog-close:hover {
+	background-position: 15px;
+}
+.dialog-close:active {
+	background-position: 30px;
+}
+.modal-dialog {
+	margin-top: 20% !important;
+	width: 350px;
+	color: #970101 !important;
+	font: 12px verdana;
+	text-align: center;
+}
+.modal-content {
+	background: rgba(999, 999, 999, 0.7) !important;
+}
+footer {
+	font:11px "Copperplate Gothic Bold" !important;
+	text-align: center;
+	margin-right: 110px !important;
+  	margin-top: 100px;
+}
