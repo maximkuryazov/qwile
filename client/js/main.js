@@ -9,12 +9,12 @@
 	Qwile.widget = new Function();
 	Qwile.file = new Function();
 
-	var baseURL = Qwile.baseURL = document.location.href.split(":8080")[0];
-	var port = Qwile.serverPort = "3000";
+	var baseURL = "";
+	var port = Qwile.serverPort = "80";
 
 	// it's because browser doesn't fired onpopstate when pushState is called (only back() and forward())
 
-	(function(history){
+	(function(history) {
 		var pushState = history.pushState;
 		history.pushState = function(state, name, title, popstate) {
 			if (typeof history.onpushstate == "function") {
@@ -52,7 +52,7 @@
 			$.ajax({
 
 				method: "GET",
-				url: baseURL + ":" + port + "/templateController",
+				url: baseURL + "/templateController",
 				data: { template: template },
 				crossDomain: true,
 				dataType: "html"

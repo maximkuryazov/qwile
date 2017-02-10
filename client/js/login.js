@@ -72,7 +72,7 @@
 		$("#restore-form").submit(function() {
 
 			$.ajax({
-				url: Qwile.baseURL + ":" + Qwile.serverPort + "/user/restore",
+				url: "/user/restore",
 				data: $(this).formSerialize(),
 				method: "POST",
 				dataType: 'json',
@@ -112,7 +112,7 @@
 
 		$.removeCookie("remember");
 		$.ajax({
-			url: Qwile.baseURL + ":" + Qwile.serverPort + "/user/login",
+			url: "/user/login",
 			data: $(this).formSerialize(),
 			method: "POST",
 			dataType: 'json',
@@ -195,7 +195,7 @@
 		if ($("#register img[src='img/incorrect.png']:visible").length == 0 && $("#register img[src='img/complete.png']:visible").length == 4) {
 
 			$.ajax({
-				url: Qwile.baseURL + ":" + Qwile.serverPort + "/user/new",
+				url: "/user/new",
 				data: $(this).formSerialize(),
 				method: "POST",
 				dataType:  'json',

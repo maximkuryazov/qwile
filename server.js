@@ -13,44 +13,9 @@
     const cookieParser = require('cookie-parser');
     const session = require('express-session');
 
-    // Static server
+    const port = 80;
 
-    var static = require('node-static'),
-        port = 8080,
-        http = require('http');
-
-    var staticServer = new static.Server('./client', {
-        cache: 0,
-        gzip: true
-    });
-
-    http.createServer(function (req, res) {
-
-        var params = req.url.replace(/\/\?/, "").split("=");
-        if (req.url == "/desktop") {
-
-            var fs = require('fs');
-            fs.readFile('client/index.html', 'utf8', function (error, data) {
-                if (error) {
-                    return console.log(error);
-                }
-                res.setHeader('content-type', 'text/html');
-                res.end(data);
-            });
-
-        } else {
-
-            req.addListener('end', function () {
-                staticServer.serve(req, res);
-            }).resume();
-
-        }
-
-    }).listen(port, "0.0.0.0");
-
-    console.log('Static server listening on port ' + port + '!');
-
-    // Dynamic server
+    // Static and dynamic server in one
 
     var express = require('express');
     var path = require('path');
@@ -73,8 +38,9 @@
     app.set('view engine', 'jade');
     app.set('views', path.join(__dirname, '/client/views'));
 
-    // таймаут может повлиять на заливку файла
+    // timeout may affect long file uploads
     app.use(timeout(12000));
+    app.use(express.static('./client'));
 
     db.once('open', function () {
 
@@ -100,28 +66,43 @@
 
             setCrossDomainHeaders(res, req);
 
-            var requestString = '/templateController?template=';
-            if (
-                req.url == requestString + 'login' || req.url == requestString + 'desktop' ||
-                req.url == '/user/login' || req.url == '/user/restore' ||
-                /^\/user\/updatePassword/.test(req.url) || /^\/user\/activate/.test(req.url) ||
-                /^\/user\/changePassword/.test(req.url) || /^\/captcha/.test(req.url) ||
-                req.url == '/user/new'
-            ) {
-                return next();
-            } else if (!req.session.email) {
+            if (req.url == "/desktop") {
 
-                res.set('Content-Type', 'application/json');
-                res.send(JSON.stringify({
-                    success: false,
-                    error: "You are not logged in."
-                }));
+                var fs = require('fs');
+                fs.readFile('client/index.html', 'utf8', function (error, data) {
+                    if (error) {
+                        return console.log(error);
+                    }
+                    res.setHeader('content-type', 'text/html');
+                    res.end(data);
+                });
 
             } else {
-                user.getByMail(req.session.email, function(document) {
-                    if (req.session) req.session.currentUser = document;
-                });
-                return next();
+
+                var requestString = '/templateController?template=';
+                if (
+                    req.url == requestString + 'login' || req.url == requestString + 'desktop' ||
+                    req.url == '/user/login' || req.url == '/user/restore' ||
+                    /^\/user\/updatePassword/.test(req.url) || /^\/user\/activate/.test(req.url) ||
+                    /^\/user\/changePassword/.test(req.url) || /^\/captcha/.test(req.url) ||
+                    req.url == '/user/new' || /\/templateController/.test(req.url)
+                ) {
+                    return next();
+                } else if (!req.session.email) {
+
+                    res.set('Content-Type', 'application/json');
+                    res.send(JSON.stringify({
+                        success: false,
+                        error: "You are not logged in."
+                    }));
+
+                } else {
+                    user.getByMail(req.session.email, function (document) {
+                        if (req.session) req.session.currentUser = document;
+                    });
+                    return next();
+                }
+
             }
 
         });
@@ -168,7 +149,7 @@
 
         });
 
-        app.get("/user/remove", function(req, res) {
+        app.get("/user/remove", function (req, res) {
             user.remove(req.query.id, function() {
                 res.set('Access-Control-Allow-Origin', '*');
                 res.setHeader('Content-Type', 'application/json');
@@ -233,7 +214,7 @@
                                 from:       "Qwile OS <admin@qwile.com>",
                                 subject:    "Qwile: Account was created!",
                                 html:       'Your registration had been done. To activate your profile, click on the link below.<br /> \
-                                            <a href="' + defaultDomain + ':3000/user/activate?code=' + userData.activationCode
+                                            <a href="' + defaultDomain + '/user/activate?code=' + userData.activationCode
                                             + '&mail=' + userData.email + '">Activate your profile</a>'
                             };
 
@@ -362,7 +343,7 @@
                         to:         req.body.email,
                         from:       "Qwile OS <admin@qwile.com>",
                         subject:    "Qwile: Account restore",
-                        html:       'To restore your account, please, follow this link: <br /><a href="http://95.31.9.74:3000/user/changePassword?code='
+                        html:       'To restore your account, please, follow this link: <br /><a href="http://95.31.9.74/user/changePassword?code='
 									+ restoreCode + '&email=' + req.body.email +'">Restore your password</a>'
                     };
 					
@@ -446,8 +427,8 @@
 
         });
 
-        app.listen(3000, function () {
-            console.log('Dynamic server listening on port 3000!');
+        app.listen(port, "0.0.0.0", function () {
+            console.log('Dynamic server listening on port 80!');
         });
 
     });
