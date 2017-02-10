@@ -119,7 +119,7 @@
             console.log("Cookie: " + util.inspect(req.cookies, false, null));
 
             function checkLogin() {
-                // you are logged in?
+                // Are you logged in?
                 if (req.session.email) {
                     
                     res.cookie("redirect", "desktop");
@@ -388,10 +388,6 @@
         app.post("/user/updatePassword", function (req, res) {
 
             //  TODO: Check password for inappropriate symbols
-
-            console.log(req.body.email);
-            console.log(req.body.code);
-            console.log(req.body.password);
 
             res.setHeader('Content-Type', 'application/json');
             setCrossDomainHeaders(res, req);

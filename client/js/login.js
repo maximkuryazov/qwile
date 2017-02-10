@@ -190,7 +190,7 @@
 		initCaptcha();
 	});
 
-	$("form#register").submit(function(event) {
+	$("form#register").submit(function() {
 
 		if ($("#register img[src='img/incorrect.png']:visible").length == 0 && $("#register img[src='img/complete.png']:visible").length == 4) {
 
@@ -258,7 +258,13 @@
    	 	return re.test(email);
 	}
 
-	$("#email-input").on("change keyup blur", function() {
+	$("#email-input").keydown(function(event) {
+		if (event.which == 32) {
+			event.stopImmediatePropagation();
+			return false;
+		}
+	}).on("change keyup blur", function() {
+
 		var $img = $(".check img", this.parentNode.parentNode);
 		if (validateEmail($.trim(this.value))) {
 			$img.css("display", "block").attr('src', 'img/complete.png')
@@ -267,11 +273,18 @@
 			$img.css("display", "block").attr('src', 'img/incorrect.png');
 			$(this).addClass("wrong");
 		}
+
 	});
 
 	var userPassword = new String();
 
-	$("#password-input").on("change keyup blur", function() {
+	$("#password-input").keydown(function(event) {
+		if (event.which == 32) {
+			event.stopImmediatePropagation();
+			return false;
+		}
+	}).on("change keyup blur", function() {
+
 		var $img = $(".check img", this.parentNode.parentNode);
 		var confirm = $("#confirm-password-input").val();
 		if (this.value.length > 5) {
@@ -290,9 +303,16 @@
 			$(this).removeClass("wrong");
 		}
 		userPassword = this.value;
+
 	});
 
-	$("#confirm-password-input").on("change keyup blur", function() {
+	$("#confirm-password-input").keydown(function(event) {
+		if (event.which == 32) {
+			event.stopImmediatePropagation();
+			return false;
+		}
+	}).on("change keyup blur", function() {
+
 		var $img = $(".check img", this.parentNode.parentNode);
 		if (this.value === userPassword) {
 			$img.css("display", "block").attr('src', 'img/complete.png');
@@ -301,9 +321,11 @@
 			$img.css("display", "block").attr('src', 'img/incorrect.png');
 			$(this).addClass("wrong");
 		}
+
 	});
 
 	$("#capture-input").on("change keyup blur", function() {
+
 		var $img = $(".check img", this.parentNode.parentNode);
 		if (this.value.length > 3) {
 			$img.css("display", "block").attr('src', 'img/complete.png');
@@ -312,6 +334,7 @@
 			$img.css("display", "block").attr('src', 'img/incorrect.png');
 			$(this).addClass("wrong");
 		}
+
 	});
 
 	$('#register input').bind('keydown', function(e) {

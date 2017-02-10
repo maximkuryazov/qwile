@@ -49,6 +49,10 @@
 			showModal('#970101', "Passwords do not match.", false);
 			return false;
 		}
+		if (password.length < 6) {
+			showModal('#970101', "Too short password. It should contain minimum 6 characters.", false);
+			return false;
+		}
 
 		$.ajax({
 			url: "/user/updatePassword",
@@ -78,9 +82,38 @@
 
 	});
 
-	$('input[name="password"], input[name="confirm-password"]').on("change keyup blur", function() {
+	var $fields = $('input[name="password"], input[name="confirm-password"]');
 
-		// TODO: spell checking, like in registration
+	$fields.keydown(function(event) {
+		if (event.which == 32) {
+			event.stopImmediatePropagation();
+			return false;
+		}
+	});
+
+	$fields.on("change keyup blur", function() {
+
+		var text = $(this).val();
+		var $check = $("img.check", this.parentNode.parentNode);
+
+		if (text.length < 6) {
+			$check.attr("src", "../img/incorrect.png");
+		} else {
+			$check.attr("src", "../img/complete.png");
+		}
+
+	});
+
+	$('input[name="confirm-password"]').on("change keyup blur", function() {
+
+		var password = $('input[name="password"]').val();
+		var passwordConfirm = $('input[name="confirm-password"]').val();
+
+		var $check = $("img.check", this.parentNode.parentNode);
+
+		if (password !== passwordConfirm) {
+			$check.last().attr("src", "../img/incorrect.png");
+		}
 
 	});
 
