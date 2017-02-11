@@ -1,8 +1,8 @@
 $(window).ready(function() {
 
-	var scaleAnimateTime 	= 1000;  		// 1000
-	var loadingAnimateTime 	= 5000; 		// 5000
-	var logoAnimateTime 	= 1800;			// 1800
+	var scaleAnimateTime 	= 0;  		// 1000
+	var loadingAnimateTime 	= 0; 		// 5000
+	var logoAnimateTime 	= 0;			// 1800
 
 	var SOUND = true;
 
@@ -95,13 +95,16 @@ $(window).ready(function() {
 						});
 
 						$('.window .close, .task .close').click(function() {
-							$('.window').animate({
+
+							var appName = $(this).parents("[data-app-name]").data("app-name");
+							$('.window[data-app-name="' + appName + '"]').animate({
 								transform: 'skewX(-85deg) scale(0)',
 								opacity: 0
 							}, function() {
 								$(this).hide();
 							});
-							$('.task').hide('slow');
+							$('.task[data-app-name="' + appName + '"]').hide('slow');
+
 						});
 
 						$('.widget .close').click(function() {
@@ -246,40 +249,57 @@ $(window).ready(function() {
 
 						$('.task').click(function() {
 
+							var appName = $(this).data("app-name");
+							var $window = $('.window[data-app-name="' + appName + '"]');
+
 							if (cache.shown) {
 
 								cache.height = $('.window').height();
 								cache.width = $('.window').width();
-								cache.left = $('.window').offset().left,
-									cache.top = $('.window').offset().top
+								cache.left = $('.window').offset().left;
+								cache.top = $('.window').offset().top;
 
-								$('.window').animate({
-									width: '0px',
-									height: '0px',
-									left: '0px',
-									top: ($(document.body).height() - 0 + 'px'),
-									opacity: 0
-								}, 'fast');
+								if (!$window.prop("animated")) {
 
-								delete cache.shown;
+									$window.prop("animated", true).animate({
+										width: '0px',
+										height: '0px',
+										left: $(this).offset().left + "px",
+										top: ($(document.body).height() - 0 + 'px'),
+										opacity: 0
+									}, 'fast', function() {
+										$window.prop("animated", false)
+									});
+
+									delete cache.shown;
+
+								}
+
 
 							} else {
 
-								$('.window').animate({
+								if (!$window.prop("animated")) {
 
-									width: cache.width + 'px',
-									height: cache.height + 'px',
-									left: cache.left + 'px',
-									top: cache.top + 'px',
-									opacity: 1
+									$window.prop("animated", true).animate({
 
-								}, 'fast');
-								cache.shown = true;
+										width: cache.width + 'px',
+										height: cache.height + 'px',
+										left: cache.left + 'px',
+										top: cache.top + 'px',
+										opacity: 1
+
+									}, 'fast', function() {
+										$window.prop("animated", false)
+									});
+
+									cache.shown = true;
+
+								}
 
 							}
 
 						}).mousedown(function() {
-							$('.window').css('opacity', 1);
+							$('.window[data-app-name="' + $(this).data("app-name") + '"]').css('opacity', 1);
 						});
 
 						$('#photo').click(function() {

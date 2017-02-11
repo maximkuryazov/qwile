@@ -125,7 +125,9 @@
                 if (req.session.email) {
                     
                     res.cookie("redirect", "desktop");
-                    res.render('desktop');
+                    res.render('desktop', {
+                        email: req.session.email
+                    });
                     
                 } else {
                     

@@ -6,6 +6,10 @@
     font-family: 'Copperplate Gothic Light';
     src: url('../fonts/copperplate-gothic-light.ttf');
 }
+@font-face {
+  font-family: 'Tahoma';
+  src: url('../fonts/Tahoma.ttf');
+}
 html {
 	height: 100%;
 	margin: 0;
@@ -232,7 +236,7 @@ div#digits {
 	border-radius: 8px;
 	background: linear-gradient(to top, rgba(000, 000, 000, 0.8), rgba(004, 015, 015, 0.3));
 	color: #fff;
-	position: absolute;
+	position: relative;
 	bottom: 2px;
 }
 .task:hover {
@@ -1024,8 +1028,10 @@ aside#leftpanel .lock {
   cursor: pointer;
 
   .title {
-	  	top: 160px;
+		height: 20px;
 	  	position: absolute;
+		top: 165px;
+		padding-top: 6px;
 	  	font: bold 11px Verdana;
 	  	text-align: center;
 	  	background: linear-gradient(to bottom, rgba(0, 3 ,4, 0.8) 0%, rgba(41, 137, 216, 0.8) 100%, rgba(0, 43, 63, 0.8) 100%);

@@ -33,7 +33,7 @@ script(src='js/desktop.js')
 							input.search(type='text', placeholder='Start typing to search...')
 							.button(title='Start search')
 				td#email
-					span maximkuryazov@gmail.com
+					span #{email}
 				td#photo
 					div
 				td(width='42')
@@ -104,7 +104,7 @@ script(src='js/desktop.js')
 						span.value 390-291-581
 					.profile-link-row
 						span.name Email:
-						span.value maximkuryazov@gmail.com
+						span.value #{email}
 			tr
 				td.header
 					| Adress
@@ -152,7 +152,7 @@ script(src='js/desktop.js')
 					| had shared a private folder with you.
 	// //////////////// NOTIFICATION END ///////////////
 	// **************** WINDOW START *******************
-	.window
+	.window(data-app-name="conductor")
 		.top
 			table
 				tr
@@ -291,10 +291,10 @@ script(src='js/desktop.js')
 						.left-arrow
 					td
 						.widgets_list(align='center')
-							.img.clock(data-name="clock")
+							.img.clock(data-name="clock", title="Click to add this widget on Desktop.")
 								.mark
 								.title Clock
-							.img.calc(data-name="calc")
+							.img.calc(data-name="calc", title="Click to add this widget on Desktop.")
 								.mark
 								.title Calculator
 					td(width='48')
@@ -311,9 +311,13 @@ table.logo
 			img#untitled(src='img/title.png')
 // ///////////// LOGO LOAD END ///////////////////
 footer
-	.task
+	.task(data-app-name="conductor")
 		img.icon(src='img/conductor.png')
 		span.title Conductor
+		.close
+	.task(data-app-name="player")
+		img.icon(src='img/conductor.png')
+		span.title Player
 		.close
 script(src='js/widget/clock.js')
 script(type='text/javascript', src='js/widget/calculator.js')

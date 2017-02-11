@@ -30,7 +30,8 @@ module.exports = (function() {
 			visible: Boolean,
 			activated: Boolean,
 			activationCode: Number,
-			restoreCode: Number
+			restoreCode: Number,
+			image: String
 		});
 
 		userSchema.methods.showData = function () {
