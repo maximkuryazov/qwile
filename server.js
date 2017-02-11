@@ -20,10 +20,12 @@
     var express = require('express');
     var path = require('path');
     var bodyParser = require('body-parser');
-    var timeout = require('connect-timeout')
+    var timeout = require('connect-timeout');
+    var compression = require('compression');
 
     var app = express();
     app.use(cookieParser());
+    app.use(compression());
 
     app.use(session({
         secret: require('crypto').randomBytes(64).toString('hex'),

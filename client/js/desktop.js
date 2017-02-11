@@ -309,7 +309,7 @@ $(window).ready(function() {
 						/* Exit modal */
 
 						$('#quit').click(function() {
-							$('#shadow').fadeIn('fast');
+							$('#shadow').fadeIn('slow');
 						});
 
 						$('#shadow').click(function(e) {
@@ -363,15 +363,18 @@ $(window).ready(function() {
 						Tipped.create('#start', function(element) {
 							return '<span class="tooptip-text">Qwile basic menu is here</span>';
 						}, { position: 'bottom' });
+						
 						setTimeout(function(){
 							$('#start').mouseover();
 						}, 1000);
 
 						$("#leftpanel tr").each(function() {
+							
 							var title = $(this).attr('title');
 							Tipped.create(this, function(element) {
 								return '<span class="tooptip-text">' + title + '</span>';
-							}, { position: 'right', skin: 'blue' });
+							}, { position: 'right', skin: 'blue', showDelay: 1000 });
+							
 						});
 
 						$(".task").each(function() {
