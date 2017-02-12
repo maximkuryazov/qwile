@@ -127,20 +127,23 @@ $(window).ready(function() {
 							$('#cover').show();
 						});
 
-						var cachefull = {
+						$('.window').prop("cachefull", {
 							shown: true
-						};
+						});
 
 						$('.window .fullscreen').click(function() {
 
+							var $window = $(this).parents(".window");
+							var cachefull = $window.prop("cachefull");
+
 							if (cachefull.shown) {
 
-								cachefull.height = $('.window').height();
-								cachefull.width = $('.window').width();
-								cachefull.left = $('.window').offset().left,
-								cachefull.top = $('.window').offset().top
+								cachefull.height = $window.height();
+								cachefull.width = $window.width();
+								cachefull.left = $window.offset().left,
+								cachefull.top = $window.offset().top
 
-								$('.window').animate({
+								$window.animate({
 									top: '50px',
 									height: ($(document.body).height() - 87 + 'px'),
 									width: '100%',
@@ -148,17 +151,17 @@ $(window).ready(function() {
 								}, {
 									complete: function() {
 										// changing iframe size
-										$("iframe").height($(".window .content").outerHeight() - 15);
+										$("iframe").height($window.find(".content").outerHeight() - 15);
 									},
 									duration: 'fast'
 								});
 
 								delete cachefull.shown;
-								$('.window').prop('fullscreen', true).draggable('disable').resizable('disable');
+								$window.prop('fullscreen', true).draggable('disable').resizable('disable');
 
 							} else {
 
-								$('.window').animate({
+								$window.animate({
 
 									width: cachefull.width + 'px',
 									height: cachefull.height + 'px',
@@ -169,31 +172,33 @@ $(window).ready(function() {
 								}, {
 									complete: function() {
 										// changing iframe size
-										$("iframe").height($(".window .content").outerHeight() - 15);
+										$("iframe").height($window.find(".content").outerHeight() - 15);
 									},
 									duration: 'fast'
 								});
 
 								cachefull.shown = true;
-								$('.window').prop('fullscreen', false).draggable('enable').resizable('enable');
+								$window.prop('fullscreen', false).draggable('enable').resizable('enable');
 
 							}
 
-
 						});
 
-						var cache = {
+						$('.window').prop("cache", {
 							shown: true
-						};
+						});
 
-						$('.hidedown').click(function() {
+						$('.window .hidedown').click(function() {
 
-								cache.height = $('.window').height();
-								cache.width = $('.window').width();
-								cache.left = $('.window').offset().left,
-								cache.top = $('.window').offset().top
+							var $window = $(this).parents(".window");
+							var cache = $window.prop("cache");
 
-								$('.window').animate({
+								cache.height = $window.height();
+								cache.width = $window.width();
+								cache.left = $window.offset().left,
+								cache.top = $window.offset().top
+
+							$window.animate({
 									width: '0px',
 									height: '0px',
 									left: '0px',
@@ -206,9 +211,10 @@ $(window).ready(function() {
 						});
 
 						$('.window').mousedown(function() {
-							$(this).css('opacity', 1);
-							$('.window').find(".window-block").hide();
+							$(this).prop("active", true).css('opacity', 1);
+							$(this).find(".window-block").hide();
 						});
+
 						$('body').mousedown(function(e) {
 							if($(e.target).is(":not(.window *, .task *)") && !$('.window').prop('fullscreen')) {
 								$('.window').css('opacity', 0.8);
@@ -217,6 +223,7 @@ $(window).ready(function() {
 						});
 
 						$('.window').draggable({
+
 							handle: '.title',
 							containment: [0, $("#toppanel").height(), $(window).width() - 100, $(window).height() - $("footer").height() - $(".window .top").height()],
 							start: function( event, ui ) {
@@ -225,7 +232,9 @@ $(window).ready(function() {
 							stop: function( event, ui ) {
 								$(ui.helper).find(".inside .window-block").hide();
 							}
+
 						}).resizable({
+
 							handles: "n, e, s, w, se, ne, sw, nw",
 							// minWidth: 250,
 							// minHeight: 206,
@@ -245,19 +254,21 @@ $(window).ready(function() {
 								});
 								$("iframe").height($(".window .content").outerHeight() - 15);
 							}
+
 						});
 
 						$('.task').click(function() {
 
 							var appName = $(this).data("app-name");
 							var $window = $('.window[data-app-name="' + appName + '"]');
+							var cache = $window.prop("cache");
 
 							if (cache.shown) {
 
-								cache.height = $('.window').height();
-								cache.width = $('.window').width();
-								cache.left = $('.window').offset().left;
-								cache.top = $('.window').offset().top;
+								cache.height = $window.height();
+								cache.width = $window.width();
+								cache.left = $window.offset().left;
+								cache.top = $window.offset().top;
 
 								if (!$window.prop("animated")) {
 
@@ -274,7 +285,6 @@ $(window).ready(function() {
 									delete cache.shown;
 
 								}
-
 
 							} else {
 

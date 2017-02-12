@@ -356,11 +356,20 @@ aside#profile .area td .profile-interest-row {
 	font-weight: bold;
 	padding-left: 12px;
 	font-size: 9px;
-	color: white;
+  	color: silver;
 	cursor: default;
+
+  	&:hover {
+	  background: rgba(000,000,000,0.5);
+	  cursor: pointer;
+	  color: white;
+	  span.value {
+		color: deepskyblue;
+	  }
+	}
 }
 aside#profile .area td .value {
-	color: silver;
+    color: white;
 	display: inline-block;
 	float: right;
 	margin-right: 22px;
@@ -369,7 +378,6 @@ aside#profile .area td .value {
 	overflow: hidden;
 	font-size: 8px;
 }
-
 aside#profile .area.open {
 	display: table-row;
 }

@@ -123,17 +123,14 @@
             function checkLogin() {
                 // Are you logged in?
                 if (req.session.email) {
-                    
-                    res.cookie("redirect", "desktop");
-                    res.render('desktop', {
-                        email: req.session.email
+                    user.getByMail(req.session.email, function(document) {
+                        res.cookie("redirect", "desktop");
+                        console.log(document);
+                        res.render('desktop', { user: document });
                     });
-                    
                 } else {
-                    
                     res.cookie("redirect", "/");
                     res.render('login');
-                    
                 }
             }
 

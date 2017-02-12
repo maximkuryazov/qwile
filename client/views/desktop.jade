@@ -33,7 +33,7 @@ script(src='js/desktop.js')
 							input.search(type='text', placeholder='Start typing to search...')
 							.button(title='Start search')
 				td#email
-					span #{email}
+					span #{user.email}
 				td#photo
 					div
 				td(width='42')
@@ -76,50 +76,53 @@ script(src='js/desktop.js')
 					| Info
 			tr.area
 				td.info
-					.profile-personal-row
+					.profile-personal-row(title="Click to edit your information")
 						span.name Name:
-						span.value Maxim
-					.profile-personal-row
+						span.value #{user.firstname}
+					.profile-personal-row(title="Click to edit your information")
 						span.name Lastname:
-						span.value Kuryazov
-					.profile-personal-row
+						span.value #{user.lastname}
+					.profile-personal-row(title="Click to edit your information")
 						span.name Middlename:
-						span.value Rahimovich
-					.profile-personal-row
+						span.value #{user.middlename}
+					.profile-personal-row(title="Click to edit your information")
 						span.name Age:
-						span.value 24
+						span.value #{user.age}
+					.profile-personal-row(title="Click to edit your information")
+						span.name Gender:
+						span.value #{user.gender}
 			tr
 				td.header
 					| Link
 			tr.area
 				td.link
-					.profile-link-row
+					.profile-link-row(title="Click to edit your information")
 						span.name Mobile:
 						span.value +7 (915) 272-17-15
-					.profile-link-row
+					.profile-link-row(title="Click to edit your information")
 						span.name ICQ:
 						span.value 390-291-581
-					.profile-link-row
+					.profile-link-row(title="Click to edit your information")
 						span.name ICQ:
 						span.value 390-291-581
-					.profile-link-row
+					.profile-link-row(title="Click to edit your information")
 						span.name Email:
-						span.value #{email}
+						span.value #{user.email}
 			tr
 				td.header
 					| Adress
 			tr.area
 				td.adress
-					.profile-adress-row
+					.profile-adress-row(title="Click to edit your information")
 						span.name Country:
 						span.value Russian Federation
-					.profile-adress-row
+					.profile-adress-row(title="Click to edit your information")
 						span.name City:
 						span.value Moscow
-					.profile-adress-row
+					.profile-adress-row(title="Click to edit your information")
 						span.name Street:
 						span.value Sumskaya
-					.profile-adress-row
+					.profile-adress-row(title="Click to edit your information")
 						span.name House
 						span.value 6/5
 			tr
@@ -127,16 +130,16 @@ script(src='js/desktop.js')
 					| Interests
 			tr.area
 				td.iterests
-					.profile-interest-row
+					.profile-interest-row(title="Click to edit your information")
 						span.name Occupation:
 						span.value Programming
-					.profile-interest-row
+					.profile-interest-row(title="Click to edit your information")
 						span.name Job:
 						span.value Qwile Incorporated
-					.profile-interest-row
+					.profile-interest-row(title="Click to edit your information")
 						span.name Position:
 						span.value Lead programmer
-					.profile-interest-row
+					.profile-interest-row(title="Click to edit your information")
 						span.name Hobbie:
 						span.value Chess, Swimming
 	// //////////////// USER END ///////////////
