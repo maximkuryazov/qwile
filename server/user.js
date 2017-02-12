@@ -6,6 +6,8 @@ module.exports = (function() {
 
 	const util = require('util');
 	const crypto = require('crypto');
+	const fs = require('fs');
+	const _dir = './storage';
 
 	const private = {
 		mongoose: {},
@@ -23,6 +25,7 @@ module.exports = (function() {
 			firstname: String,
 			lastname: String,
 			middlename: String,
+			gender: String,
 			age: Number,
 			birthday: Date,
 			sound: Boolean,
@@ -78,8 +81,14 @@ module.exports = (function() {
 			});
 
 			currentUser.save(function (error, currentUser) {
+
 				if (error) return console.error(error);
 				currentUser.showData();
+				if (!fs.existsSync(_dir + '/' + currentUser._id)){
+					fs.mkdirSync(_dir + '/' + currentUser._id);
+					fs.mkdirSync(_dir + '/' + currentUser._id + '/__profile');
+				}
+
 			});
 
 			private.UserModel.find(function (error, users) {
