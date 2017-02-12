@@ -55,3 +55,7 @@ gulp.task('default', function(callback) {
         console.log('Compress JS is done.');
 
 });
+
+gulp.task('deploy', function() {
+    console.log("It should rename dist folder to client, and client folder to client.dev.");
+});

@@ -152,12 +152,12 @@ script(src='js/desktop.js')
 					| had shared a private folder with you.
 	// //////////////// NOTIFICATION END ///////////////
 	// **************** WINDOW START *******************
-	.window(data-app-name="conductor")
+	.window#conductor(data-app-name="conductor")
 		.top
 			table
 				tr
 					td.icon
-						img(src='img/conductor.png', alt='icon')
+						img(src='img/conductor.png', alt='App icon')
 					td.title
 						span Conductor
 					td.buttons
@@ -170,6 +170,24 @@ script(src='js/desktop.js')
 					.slider
 				.window-block
 				iframe(src='apps/conductor/index.html')
+
+	.window#player(data-app-name="player")
+		.top
+			table
+				tr
+					td.icon
+						img(src='img/player.png', alt='App icon')
+					td.title
+						span Player
+					td.buttons
+						.close(title='Close')
+						.fullscreen(title='Full screen')
+						.hidedown(title='Hide')
+		.content
+			.inside
+				.scroll
+					.slider
+				.window-block
 	// //////////////// WINDOW END ///////////////////
 	// ***************** WIDGET START ****************
 	.widget.clock
@@ -316,7 +334,7 @@ footer
 		span.title Conductor
 		.close
 	.task(data-app-name="player")
-		img.icon(src='img/conductor.png')
+		img.icon(src='img/player.png')
 		span.title Player
 		.close
 script(src='js/widget/clock.js')

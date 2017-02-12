@@ -300,7 +300,7 @@ $(window).ready(function() {
 
 						}).mousedown(function() {
 							$('.window[data-app-name="' + $(this).data("app-name") + '"]').css('opacity', 1);
-						});
+						}).parent().sortable();
 
 						$('#photo').click(function() {
 							var isVisible = $('#profile').css("right") != '-200px';
@@ -329,7 +329,7 @@ $(window).ready(function() {
 						/* Exit modal */
 
 						$('#quit').click(function() {
-							$('#shadow').fadeIn('slow');
+							$('#shadow').fadeIn('fast');
 						});
 
 						$('#shadow').click(function(e) {
