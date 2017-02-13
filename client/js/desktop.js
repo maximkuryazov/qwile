@@ -152,14 +152,13 @@ $(window).ready(function() {
 									left: 0
 								}, {
 									complete: function() {
-										// changing iframe size
-										$("iframe").height($window.find(".content").outerHeight() - 15);
+										$("iframe", $window).height($window.find(".content").outerHeight() - 15);
 									},
 									duration: 'fast'
 								});
 
 								delete cachefull.shown;
-								$window.prop('fullscreen', true).draggable('disable').resizable('disable');
+								$window.prop('fullscreen', true).draggable('disable').resizable('disable').find("td.title").css("cursor", "default");
 
 							} else {
 
@@ -173,14 +172,13 @@ $(window).ready(function() {
 
 								}, {
 									complete: function() {
-										// changing iframe size
-										$("iframe").height($window.find(".content").outerHeight() - 15);
+										$("iframe", $window).height($window.find(".content").outerHeight() - 15);
 									},
 									duration: 'fast'
 								});
 
 								cachefull.shown = true;
-								$window.prop('fullscreen', false).draggable('enable').resizable('enable');
+								$window.prop('fullscreen', false).draggable('enable').resizable('enable').find("td.title").css("cursor", "move");;
 
 							}
 
@@ -205,7 +203,7 @@ $(window).ready(function() {
 							$window.animate({
 									width: '0px',
 									height: '0px',
-									left: '0px',
+									left: $('.task[data-app-name="' + $window.data("app-name") + '"]').offset().left + 'px',
 									top: ($(document.body).height() - 0 + 'px'),
 									opacity: 0
 								}, 'fast');
@@ -216,7 +214,7 @@ $(window).ready(function() {
 
 						function makeWindowActive () {
 
-							$('.window').not(this).removeClass("active").css({ "z-index": 2, opacity: 0.8 });
+							$('.window').not(this).removeClass("active").css({ "z-index": 2, opacity: 0.8 }).find(".window-block").show();
 							$(this).addClass("active");
 							$(this).find(".window-block").hide();
 
@@ -258,10 +256,11 @@ $(window).ready(function() {
 								$(ui.helper).find(".inside .window-block").hide();
 							},
 							resize: function(event, ui) {
+								var iframe = $("iframe", ui.helper);
 								$(ui.helper).find(".inside .window-block").css({
-									height: $("iframe").height() + "px"
+									height: iframe.height() + "px"
 								});
-								$("iframe").height($(".window .content").outerHeight() - 15);
+								iframe.height($(ui.helper).find(".content").outerHeight() - 15);
 							}
 
 						});
@@ -272,8 +271,8 @@ $(window).ready(function() {
 							var $window = $('.window[data-app-name="' + appName + '"]');
 							var cache = $window.prop("cache");
 
-							if ($window.hasClass("active")) {
-								if (cache.shown) {
+							if (cache.shown) {
+								if ($window.hasClass("active")) {
 
 									cache.height = $window.height();
 									cache.width = $window.width();
@@ -281,7 +280,6 @@ $(window).ready(function() {
 									cache.top = $window.offset().top;
 
 									if (!$window.prop("animated")) {
-
 										$window.prop("animated", true).animate({
 
 											width: '0px',
@@ -291,36 +289,34 @@ $(window).ready(function() {
 											opacity: 0
 
 										}, 'fast', function() {
-											$window.prop("animated", false)
+											$window.prop("animated", false);
 										});
-
 										delete cache.shown;
-
 									}
 
 								} else {
-
-									if (!$window.prop("animated")) {
-
-										$window.prop("animated", true).animate({
-
-											width: cache.width + 'px',
-											height: cache.height + 'px',
-											left: cache.left + 'px',
-											top: cache.top + 'px',
-											opacity: 1
-
-										}, 'fast', function() {
-											$window.prop("animated", false)
-										});
-
-										cache.shown = true;
-
-									}
-
+									makeWindowActive.call($window);
 								}
 							} else {
-								makeWindowActive.call($window);
+
+								if (!$window.prop("animated")) {
+
+									$window.prop("animated", true).animate({
+
+										width: cache.width + 'px',
+										height: cache.height + 'px',
+										left: cache.left + 'px',
+										top: cache.top + 'px',
+										opacity: 1
+
+									}, 'fast', function() {
+										$window.prop("animated", false)
+									});
+
+									cache.shown = true;
+
+								}
+
 							}
 
 						}).mousedown(function() {
