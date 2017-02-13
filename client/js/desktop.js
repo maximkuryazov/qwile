@@ -127,8 +127,10 @@ $(window).ready(function() {
 							$('#cover').show();
 						});
 
-						$('.window').prop("cachefull", {
-							shown: true
+						$('.window').each(function() {
+							$(this).prop("cachefull", {
+								shown: true
+							});
 						});
 
 						$('.window .fullscreen').click(function() {
@@ -184,8 +186,10 @@ $(window).ready(function() {
 
 						});
 
-						$('.window').prop("cache", {
-							shown: true
+						$('.window').each(function() {
+							$(this).prop("cache", {
+								shown: true
+							});
 						});
 
 						$('.window .hidedown').click(function() {
@@ -210,14 +214,19 @@ $(window).ready(function() {
 
 						});
 
-						$('.window').mousedown(function() {
-							$(this).prop("active", true).css('opacity', 1);
+						function makeWindowActive () {
+
+							$('.window').not(this).removeClass("active").css({ "z-index": 2, opacity: 0.8 });
+							$(this).addClass("active");
 							$(this).find(".window-block").hide();
-						});
+
+						}
+
+						$('.window').mousedown(makeWindowActive);
 
 						$('body').mousedown(function(e) {
-							if($(e.target).is(":not(.window *, .task *)") && !$('.window').prop('fullscreen')) {
-								$('.window').css('opacity', 0.8);
+							if ($(e.target).is(":not(.window *, .task *)") && !$('.window').prop('fullscreen')) {
+								$('.window').css('opacity', 0.8).removeClass("active");
 								$('.window').find(".window-block").show().css("height", $(".window iframe").outerHeight());
 							}
 						});
@@ -263,49 +272,55 @@ $(window).ready(function() {
 							var $window = $('.window[data-app-name="' + appName + '"]');
 							var cache = $window.prop("cache");
 
-							if (cache.shown) {
+							if ($window.hasClass("active")) {
+								if (cache.shown) {
 
-								cache.height = $window.height();
-								cache.width = $window.width();
-								cache.left = $window.offset().left;
-								cache.top = $window.offset().top;
+									cache.height = $window.height();
+									cache.width = $window.width();
+									cache.left = $window.offset().left;
+									cache.top = $window.offset().top;
 
-								if (!$window.prop("animated")) {
+									if (!$window.prop("animated")) {
 
-									$window.prop("animated", true).animate({
-										width: '0px',
-										height: '0px',
-										left: $(this).offset().left + "px",
-										top: ($(document.body).height() - 0 + 'px'),
-										opacity: 0
-									}, 'fast', function() {
-										$window.prop("animated", false)
-									});
+										$window.prop("animated", true).animate({
 
-									delete cache.shown;
+											width: '0px',
+											height: '0px',
+											left: $(this).offset().left + "px",
+											top: ($(document.body).height() - 0 + 'px'),
+											opacity: 0
+
+										}, 'fast', function() {
+											$window.prop("animated", false)
+										});
+
+										delete cache.shown;
+
+									}
+
+								} else {
+
+									if (!$window.prop("animated")) {
+
+										$window.prop("animated", true).animate({
+
+											width: cache.width + 'px',
+											height: cache.height + 'px',
+											left: cache.left + 'px',
+											top: cache.top + 'px',
+											opacity: 1
+
+										}, 'fast', function() {
+											$window.prop("animated", false)
+										});
+
+										cache.shown = true;
+
+									}
 
 								}
-
 							} else {
-
-								if (!$window.prop("animated")) {
-
-									$window.prop("animated", true).animate({
-
-										width: cache.width + 'px',
-										height: cache.height + 'px',
-										left: cache.left + 'px',
-										top: cache.top + 'px',
-										opacity: 1
-
-									}, 'fast', function() {
-										$window.prop("animated", false)
-									});
-
-									cache.shown = true;
-
-								}
-
+								makeWindowActive.call($window);
 							}
 
 						}).mousedown(function() {

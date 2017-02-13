@@ -356,20 +356,20 @@ aside#profile .area td .profile-interest-row {
 	font-weight: bold;
 	padding-left: 12px;
 	font-size: 9px;
-  	color: silver;
+  	color: white;
 	cursor: default;
 
   	&:hover {
 	  background: rgba(000,000,000,0.5);
 	  cursor: pointer;
-	  color: white;
+	  color: deepskyblue;
 	  span.value {
-		color: deepskyblue;
+		color: white;
 	  }
 	}
 }
 aside#profile .area td .value {
-    color: white;
+    color: silver;
 	display: inline-block;
 	float: right;
 	margin-right: 22px;
@@ -558,6 +558,10 @@ aside#leftpanel .lock {
   z-index: 2;
   min-width: 250px;
   display: none;
+}
+.window.active {
+  opacity: 1 !important;
+  z-index: 3 !important;
 }
 .window#player {
   left: 480px;
