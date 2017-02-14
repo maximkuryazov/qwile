@@ -29,16 +29,18 @@
 	require.config({
 		baseUrl: "js",
 		paths: {
-			"underscore":    "lib/underscore.min",
-			"jquery":        "lib/jquery.min",
-			"jquery-ui":     "lib/jquery.ui.min",
-			"tipped":        "lib/tipped",
-			"jquery-form":   "lib/jquery.form.min",
-			"jquery-cookie": "lib/jquery.cookie"
+			"underscore":       "lib/underscore.min",
+			"backbone":		    "lib/backbone.min.js",
+			"jquery":           "lib/jquery.min",
+			"jquery-ui":        "lib/jquery.ui.min",
+			"tipped":           "lib/tipped",
+			"jquery-form":      "lib/jquery.form.min",
+			"jquery-cookie":    "lib/jquery.cookie",
+			"jquery-transform": "lib/jquery.transform2d"
 		}
 	});
 
-	define(["underscore", "tipped", "jquery-form", "jquery-ui", "jquery-cookie"], function(_, Tipped) {
+	require(["jquery", "underscore", "tipped", "jquery-form", "jquery-ui", "jquery-cookie", "jquery-transform"], function($, _, Tipped) {
 
 		window.Tipped = Tipped;
 
