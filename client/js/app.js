@@ -25,7 +25,9 @@ define(["jquery-ui", "underscore", "backbone", "jquery-transform"], function ($,
 
 			events: {
 
-				"click .close": "close"
+				"click .close": "close",
+				"click .fullscreen": "fullscreen",
+				"click .hidedown": "hidedown"
 
 			},
 
@@ -47,7 +49,75 @@ define(["jquery-ui", "underscore", "backbone", "jquery-transform"], function ($,
 					$(this).remove();
 				});
 
+			},
+
+			run: function () {
+
+			},
+			
+			hidedown: function () {
+				
+			},
+			
+			showup: function () {
+				
+			},
+
+			fullscreen: function () {
+				if (this.cachefull.shown) {
+
+					this.minimize();
+					this.cachefull.shown = false;
+
+				} else {
+
+					this.maximize();
+					this.cachefull.shown = true;
+
+				}
 			}
+			
+			maximize: function () {
+				
+			},
+			
+			minimize: function () {
+				
+			},
+			
+			activate: function () {
+				this.isActive = true;
+			},
+			
+			deactivate: function () {
+				this.isActive = false;
+			},
+
+			isActive: false,
+
+			cache: {
+
+				shown: false
+
+				top: 0,
+				left: 0,
+				width: 0,
+				height: 0
+
+			},
+
+			cachefull: {
+
+				shown: false
+
+				top: 0,
+				left: 0,
+				width: 0,
+				height: 0
+
+			},
+
+			tab: $(".task[data-app-name]")
 
 		});
 
@@ -66,6 +136,7 @@ define(["jquery-ui", "underscore", "backbone", "jquery-transform"], function ($,
 			}))
 
 		});
+		conductor.run();
 
 	})(window);
 
