@@ -30,56 +30,69 @@
 		baseUrl: "js",
 		paths: {
 			"underscore":       "lib/underscore.min",
-			"backbone":		    "lib/backbone.min.js",
+			"backbone":		    "lib/backbone.min",
 			"jquery":           "lib/jquery.min",
 			"jquery-ui":        "lib/jquery.ui.min",
 			"tipped":           "lib/tipped",
 			"jquery-form":      "lib/jquery.form.min",
 			"jquery-cookie":    "lib/jquery.cookie",
-			"jquery-transform": "lib/jquery.transform2d"
+			"jquery-transform": "lib/jquery.transform2d",
+			"howler":			"lib/howler"
 		}
 	});
 
-	require(["jquery", "underscore", "tipped", "jquery-form", "jquery-ui", "jquery-cookie", "jquery-transform"], function($, _, Tipped) {
+	require(["jquery", "underscore", "tipped", "jquery-form", "jquery-ui", "jquery-cookie"], function($, _, Tipped) {
 
 		window.Tipped = Tipped;
 
-		$.ajaxSetup({
-			xhrFields: {
-				withCredentials: true
-			}
-		});
+		require(["jquery-transform"], function() {
 
-		function loadPage(template) {
-			$.ajax({
-
-				method: "GET",
-				url: baseURL + "/templateController",
-				data: { template: template },
-				crossDomain: true,
-				dataType: "html"
-
-			}).done(function(data, textStatus, xhr) {
-
-				var state = { state: "" };
-				window.history.pushState(state, "", $.cookie("redirect"), false);
-				$(document.body).hide().html(data).show();
-				$.removeCookie("redirect");
-
+			$.ajaxSetup({
+				xhrFields: {
+					withCredentials: true
+				}
 			});
-		}
-		
-		var parameter = document.location.href.replace(/^.*\/\/[^\/]+\//, '');
-		if (parameter == "desktop") {
-			loadPage(parameter);
-		} else {
-			loadPage("login");
-		}
 
-		window.onpopstate = function() {
+			function loadPage(template) {
+				$.ajax({
+
+					method: "GET",
+					url: baseURL + "/templateController",
+					data: { template: template },
+					crossDomain: true,
+					dataType: "html"
+
+				}).done(function(data, textStatus, xhr) {
+
+					function onPageLoad () {
+
+						var state = { state: "" };
+						window.history.pushState(state, "", $.cookie("redirect"), false);
+						$(document.body).hide().html(data).show();
+						$.removeCookie("redirect");
+
+					}
+					onPageLoad();
+					if (template == "desktop") require(["app", "howler"]);
+
+				});
+			}
+
 			var parameter = document.location.href.replace(/^.*\/\/[^\/]+\//, '');
-			loadPage(parameter);
-		}
+			if (parameter == "desktop") {
+				loadPage(parameter);
+			} else {
+				loadPage("login");
+			}
+
+			window.onpopstate = function() {
+
+				var parameter = document.location.href.replace(/^.*\/\/[^\/]+\//, '');
+				loadPage(parameter);
+
+			}
+
+		});
 
 	});
 

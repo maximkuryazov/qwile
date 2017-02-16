@@ -1,4 +1,4 @@
-define(["jquery-ui", "underscore", "backbone", "jquery-transform"], function ($, _, Backbone) {
+define(["backbone"], function (Backbone) {
 
 	(function (window) {
 
@@ -9,17 +9,16 @@ define(["jquery-ui", "underscore", "backbone", "jquery-transform"], function ($,
 			initialize: function (options) {
 
 				this.options = options;
-				_.bindAll(this, this.render);
+				_.bindAll(this, "render");
 				this.model.bind("change", this.render);
 				this.render();
-
 			},
 
 			render: function () {
 
-				var template = _.template($(this.options.template).html(), this.model.toJSON());
-				this.$el.html(template);
-				this.$el.appendTo(this.options.container);
+				var template = _.template($(this.options.template).html());
+				this.$el.html(template(this.model.toJSON()));
+				this.$el.appendTo($(this.options.container));
 
 			},
 
@@ -52,7 +51,7 @@ define(["jquery-ui", "underscore", "backbone", "jquery-transform"], function ($,
 			},
 
 			run: function () {
-
+				this.$el.find(".window").show("slow");
 			},
 			
 			hidedown: function () {
@@ -75,14 +74,14 @@ define(["jquery-ui", "underscore", "backbone", "jquery-transform"], function ($,
 					this.cachefull.shown = true;
 
 				}
-			}
+			},
 			
 			maximize: function () {
-				
+				alert("maximize")
 			},
 			
 			minimize: function () {
-				
+				alert("minimize")
 			},
 			
 			activate: function () {
@@ -97,7 +96,7 @@ define(["jquery-ui", "underscore", "backbone", "jquery-transform"], function ($,
 
 			cache: {
 
-				shown: false
+				shown: false,
 
 				top: 0,
 				left: 0,
@@ -108,7 +107,7 @@ define(["jquery-ui", "underscore", "backbone", "jquery-transform"], function ($,
 
 			cachefull: {
 
-				shown: false
+				shown: false,
 
 				top: 0,
 				left: 0,
