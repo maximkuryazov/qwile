@@ -40,7 +40,7 @@ define(["backbone"], function (Backbone) {
 					transform: "skewX(-85deg) scale(0)",
 					opacity: 0
 
-				}, _bind(function() {
+				}, _.bind(function() {
 					this.remove();
 				}, this));
 
