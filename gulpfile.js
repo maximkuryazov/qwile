@@ -4,6 +4,7 @@ const concat        = require('gulp-concat-css');
 const minifyCSS     = require('gulp-minify-css');
 const uglify        = require('gulp-uglify');
 const pump          = require('pump');
+const imagemin      = require('gulp-imagemin');
 
 gulp.task('default', function(callback) {
 
@@ -53,6 +54,14 @@ gulp.task('default', function(callback) {
             ], callback
         );
         console.log('Compress JS is done.');
+
+});
+
+gulp.task("image", function () {
+
+    gulp.src('client/img/*')
+        .pipe(imagemin())
+        .pipe(gulp.dest('dist/img'));
 
 });
 
