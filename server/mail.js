@@ -4,6 +4,8 @@
 
 module.exports = (function() {
 
+	const fs
+
 	return {
 		send: function (options, successCallback, errorCallback) {
 
@@ -13,7 +15,7 @@ module.exports = (function() {
 				service: 'Gmail',
 				auth: {
 					user: 'maximkuryazov@gmail.com',
-					pass: '322538631'
+					pass: '*********'
 				}
 			});
 
