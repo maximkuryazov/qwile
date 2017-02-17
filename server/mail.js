@@ -13,7 +13,7 @@ module.exports = (function() {
 				service: 'Gmail',
 				auth: {
 					user: 'maximkuryazov@gmail.com',
-					pass: '322538631'
+					pass: '*********'
 				}
 			});
 
