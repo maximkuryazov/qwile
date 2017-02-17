@@ -1,8 +1,8 @@
 define(["backbone"], function (Backbone) {
 
-	(function (window) {
+	(function (Qwile) {
 
-		window.Qwile.AppView = Backbone.View.extend({
+		Qwile.app.View = Backbone.View.extend({
 
 			el: document.createElement("div"),
 
@@ -48,10 +48,24 @@ define(["backbone"], function (Backbone) {
 					$(this).remove();
 				});
 
+				Qwile.apps.remove(this.model);
+				console.log(Qwile.apps.toJSON());
+
 			},
 
 			run: function () {
-				this.$el.find(".window").show("slow");
+
+				this.$el.find(".window").animate({
+
+					transform: "scale(1)",
+					opacity: 1
+
+				}, "slow");
+
+				Qwile.apps.add(this.model);
+				console.log(Qwile.apps.toJSON());
+				console.log(this.model.view);
+
 			},
 			
 			hidedown: function () {
@@ -63,15 +77,15 @@ define(["backbone"], function (Backbone) {
 			},
 
 			fullscreen: function () {
-				if (this.cachefull.shown) {
+				if (this.fullScreenCache.shown) {
 
 					this.minimize();
-					this.cachefull.shown = false;
+					this.fullScreenCache.shown = false;
 
 				} else {
 
 					this.maximize();
-					this.cachefull.shown = true;
+					this.fullScreenCache.shown = true;
 
 				}
 			},
@@ -105,7 +119,7 @@ define(["backbone"], function (Backbone) {
 
 			},
 
-			cachefull: {
+			fullScreenCache: {
 
 				shown: false,
 
@@ -120,23 +134,31 @@ define(["backbone"], function (Backbone) {
 
 		});
 
-		window.Qwile.AppModel = Backbone.Model.extend({});
+		Qwile.app.Model = Backbone.Model.extend({});
+		Qwile.apps = new Backbone.Collection;
 
-		var conductor = new Qwile.AppView({
+		var conductor = {};
+		conductor.model = new Qwile.app.Model({
+
+			id: 0,
+			name: "conductor",
+			icon: "conductor.png",
+			description: "",
+			developer: "",
+			rating: 5
+
+		});
+
+		conductor.view = new Qwile.app.View({
 
 			template: "#default-app-view-template",
 			container: ".wrapper",
-
-			model: (new Qwile.AppModel({
-
-				name: "conductor",
-				icon: "conductor.png"
-
-			}))
+			model: conductor.model
 
 		});
-		conductor.run();
+		conductor.model.view = conductor.view;
+		conductor.view.run();
 
-	})(window);
+	})(window.Qwile);
 
 });
