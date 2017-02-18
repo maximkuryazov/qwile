@@ -559,14 +559,14 @@ aside#leftpanel .lock {
   width: 600px; /* temporarily properties just for visuing */
   height: 500px;
   position: absolute !important;
-  z-index: 2;
+  z-index: 1;
   min-width: 250px;
-  opacity: 0;
+  opacity: 0.8;
   transform-scale(0);
 }
 .window.active {
   opacity: 1 !important;
-  z-index: 3 !important;
+  z-index: 2 !important;
 }
 .window#player {
   left: 480px;
@@ -991,7 +991,7 @@ aside#leftpanel .lock {
 	margin-left: 100px;
 	height: calc(100% - 90px);
  	height: -webkit-calc(100% - 90px);
- 	z-index: 2;
+ 	z-index: 3;
 }
 ::i-block-chrome, #widget_select {			/* shity Safari 5.0 */
 	width: 94%;

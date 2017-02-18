@@ -161,7 +161,7 @@ script(src='js/desktop.js')
 					tr
 						td.icon
 							img(src!='img/<%= icon %>', alt='App icon')
-						td.title
+						td.title(title="Double click to use a fullscreen mode.")
 							span <%= name %>
 						td.buttons
 							.close(title='Close')
@@ -180,7 +180,7 @@ script(src='js/desktop.js')
 				tr
 					td.icon
 						img(src='img/player.png', alt='App icon')
-					td.title
+					td.title(title="Double click to use a fullscreen mode.")
 						span Player
 					td.buttons
 						.close(title='Close')

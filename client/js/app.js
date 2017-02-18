@@ -26,10 +26,11 @@ define(["backbone"], function (Backbone) {
 
 			events: {
 
-				"click .close": 		"close",
-				"click .fullscreen": 	"fullscreen",
-				"click .hidedown": 		"hidedown",
-				"mousedown .window": 	"activate"
+				"click .close":         "close",
+				"click .fullscreen":    "fullscreen",
+				"click .hidedown":      "hidedown",
+				"mousedown .window":    "activate",
+				"dblclick td.title":    "fullscreen"
 
 			},
 
@@ -138,6 +139,25 @@ define(["backbone"], function (Backbone) {
 			},
 			
 			showup: function () {
+
+				var $window = this.$window;
+				var cache = this.cache;
+				if (!$window.prop("animated")) {
+
+					$window.prop("animated", true).animate({
+
+						width: cache.width + "px",
+						height: cache.height + "px",
+						left: cache.left + "px",
+						top: cache.top + "px",
+						opacity: 1
+
+					}, "fast", function () {
+						$window.prop("animated", false)
+					});
+					cache.shown = true;
+
+				}
 				
 			},
 
@@ -221,7 +241,10 @@ define(["backbone"], function (Backbone) {
 			},
 			
 			deactivate: function () {
+				
 				this.isActive = false;
+				this.$window.removeClass("active").find(".window-block").show();
+				
 			},
 
 			isActive: false,
@@ -255,7 +278,7 @@ define(["backbone"], function (Backbone) {
 		Qwile.app.Model = Backbone.Model.extend({});
 		Qwile.apps = new Backbone.Collection;
 
-		var conductor = {};
+		window.conductor = {};
 		conductor.model = new Qwile.app.Model({
 
 			id: 0,
