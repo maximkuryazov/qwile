@@ -162,7 +162,7 @@ script(src='js/desktop.js')
 						td.icon
 							img(src!='img/<%= icon %>', alt='App icon')
 						td.title
-							span Conductor
+							span <%= name %>
 						td.buttons
 							.close(title='Close')
 							.fullscreen(title='Full screen')
@@ -332,7 +332,7 @@ table.logo
 			img#untitled(src='img/title.png')
 // ///////////// LOGO LOAD END ///////////////////
 footer
-	.task(data-app-name="conductor")
+	.task(data-app-name="Conductor")
 		img.icon(src='img/conductor.png')
 		span.title Conductor
 		.close

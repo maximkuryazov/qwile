@@ -19,14 +19,59 @@ define(["backbone"], function (Backbone) {
 				var template = _.template($(this.options.template).html());
 				this.$el.html(template(this.model.toJSON()));
 				this.$el.appendTo($(this.options.container));
+				this.$window = this.$el.find(".window");
+				this.uiSet();
 
 			},
 
 			events: {
 
-				"click .close": "close",
-				"click .fullscreen": "fullscreen",
-				"click .hidedown": "hidedown"
+				"click .close": 		"close",
+				"click .fullscreen": 	"fullscreen",
+				"click .hidedown": 		"hidedown",
+				"mousedown .window": 	"activate"
+
+			},
+
+			uiSet: function () {
+
+				this.$window.draggable({
+
+					handle: '.title',
+					containment: [0, $("#toppanel").height(), $(window).width() - 100, $(window).height() - $("footer").height() - this.$window.find(".top").height()],
+					start: function( event, ui ) {
+						$(ui.helper).find(".inside .window-block").show();
+					},
+					stop: function( event, ui ) {
+						$(ui.helper).find(".inside .window-block").hide();
+					}
+
+				}).resizable({
+
+					handles: "n, e, s, w, se, ne, sw, nw",
+					// minWidth: 250,
+					// minHeight: 206,
+					// верхние по дефолту, но в случае кондуктора это должно настраиваться!
+					// ресайз лагает если уменьшить величины, из-за того что .block - заслонка эта сверху фрейма фиксированной высоты
+					minWidth: 520,
+					minHeight: 265,
+					start: function(event, ui) {
+						$(ui.helper).find(".inside .window-block").show();
+					},
+					stop: function(event, ui) {
+						$(ui.helper).find(".inside .window-block").hide();
+					},
+					resize: function(event, ui) {
+
+						var iframe = $("iframe", ui.helper);
+						$(ui.helper).find(".inside .window-block").css({
+							height: iframe.height() + "px"
+						});
+						iframe.height($(ui.helper).find(".content").outerHeight() - 15);
+
+					}
+
+				});
 
 			},
 
@@ -69,6 +114,26 @@ define(["backbone"], function (Backbone) {
 			},
 			
 			hidedown: function () {
+
+				var $window = this.$window;
+				var cache = this.cache;
+
+				cache.height = $window.height();
+				cache.width = $window.width();
+				cache.left = $window.offset().left;
+				cache.top = $window.offset().top
+
+				$window.animate({
+
+					width: 0,
+					height: 0,
+					left: $('.task[data-app-name="' + $window.data("app-name") + '"]').offset().left + 'px',
+					top: ($(document.body).height() - 0 + "px"),
+					opacity: 0
+
+				}, "fast");
+
+				delete cache.shown;
 				
 			},
 			
@@ -91,15 +156,68 @@ define(["backbone"], function (Backbone) {
 			},
 			
 			maximize: function () {
-				alert("maximize")
+
+				var $window = this.$window;
+				var cachefull = this.fullScreenCache;
+
+				cachefull.height = $window.height();
+				cachefull.width = $window.width();
+				cachefull.left = $window.offset().left;
+				cachefull.top = $window.offset().top;
+
+				$window.animate({
+
+					top: "50px",
+					height: ($(document.body).height() - 87 + "px"),
+					width: "100%",
+					left: 0
+
+				}, {
+
+					complete: function () {
+						$("iframe", $window).height($window.find(".content").outerHeight() - 15);
+					},
+					duration: "fast"
+
+				});
+
+				delete cachefull.shown;
+				$window.draggable("disable").resizable("disable").find("td.title").css("cursor", "default");
+
 			},
 			
 			minimize: function () {
-				alert("minimize")
+
+				var $window = this.$window;
+				var cachefull = this.fullScreenCache;
+
+				$window.animate({
+
+					width: cachefull.width + "px",
+					height: cachefull.height + "px",
+					left: cachefull.left + "px",
+					top: cachefull.top + "px",
+					opacity: 1
+
+				}, {
+
+					complete: function() {
+						$("iframe", $window).height($window.find(".content").outerHeight() - 15);
+					},
+					duration: "fast"
+
+				});
+
+				cachefull.shown = true;
+				$window.draggable("enable").resizable("enable").find("td.title").css("cursor", "move");
+
 			},
 			
 			activate: function () {
+				
 				this.isActive = true;
+				this.$window.addClass("active").find(".window-block").hide();
+				
 			},
 			
 			deactivate: function () {
@@ -141,11 +259,12 @@ define(["backbone"], function (Backbone) {
 		conductor.model = new Qwile.app.Model({
 
 			id: 0,
-			name: "conductor",
+			name: "Conductor",
 			icon: "conductor.png",
-			description: "",
-			developer: "",
-			rating: 5
+			description: "Easy file manager developed for Qwile OS.",
+			developer: "Qwile Inc.",
+			rating: 5,
+			iframe: true
 
 		});
 

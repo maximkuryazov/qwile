@@ -4,8 +4,8 @@
 
 module.exports = (function() {
 
-	const fs
-
+	const fs = require('fs');
+	
 	return {
 		send: function (options, successCallback, errorCallback) {
 
