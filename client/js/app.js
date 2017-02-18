@@ -22,6 +22,11 @@ define(["backbone"], function (Backbone) {
 				this.$window = this.$el.find(".window");
 				this.uiSet();
 
+				var taskTemplate = _.template($("#task-view").html());
+				$("footer").prepend(taskTemplate(this.model.toJSON()));
+				this.$tab = $('.task[data-app-name="' + this.model.get("name") + '"]');
+				this.$tab.on("click", _.bind(this.switchroll, this));
+
 			},
 
 			events: {
@@ -108,7 +113,10 @@ define(["backbone"], function (Backbone) {
 
 				}, "slow");
 
+				this.$tab.show("slow");
 				Qwile.apps.add(this.model);
+				this.cache.shown = true;
+
 				console.log(Qwile.apps.toJSON());
 				console.log(this.model.view);
 
@@ -137,7 +145,7 @@ define(["backbone"], function (Backbone) {
 				delete cache.shown;
 				
 			},
-			
+
 			showup: function () {
 
 				var $window = this.$window;
@@ -158,6 +166,24 @@ define(["backbone"], function (Backbone) {
 					cache.shown = true;
 
 				}
+				
+			},
+
+			switchroll: function (event) {
+				
+				if (this.cache.shown) {
+
+					this.hidedown();
+					this.cache.shown = false;
+
+				} else {
+
+					this.showup();
+					this.cache.shown = true;
+
+				}
+				event.stopImmediatePropagation();
+				event.stopPropagation();
 				
 			},
 
@@ -269,9 +295,7 @@ define(["backbone"], function (Backbone) {
 				width: 0,
 				height: 0
 
-			},
-
-			tab: $(".task[data-app-name]")
+			}
 
 		});
 

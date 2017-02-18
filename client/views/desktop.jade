@@ -332,10 +332,11 @@ table.logo
 			img#untitled(src='img/title.png')
 // ///////////// LOGO LOAD END ///////////////////
 footer
-	.task(data-app-name="Conductor")
-		img.icon(src='img/conductor.png')
-		span.title Conductor
-		.close
+	script#task-view(type='text/template')
+		.task(data-app-name!="<%= name %>")
+			img.icon(src!='img/<%= icon %>')
+			span.title <%= name %>
+			.close
 	.task(data-app-name="player")
 		img.icon(src='img/player.png')
 		span.title Player

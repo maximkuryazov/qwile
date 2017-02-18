@@ -235,7 +235,7 @@ div#digits {
 	width: 160px;
 	padding-right: 10px;
 	height: 36px;
-	display: inline-block;
+    display: none;
 	float: left;
 	margin: 1px;
 	border-radius: 8px;
@@ -243,6 +243,9 @@ div#digits {
 	color: #fff;
 	position: relative;
 	bottom: 2px;
+}
+.task[data-app-name="player"] {
+  display: block;
 }
 .task:hover {
 	background: rgba(000, 000, 000, 0.5);

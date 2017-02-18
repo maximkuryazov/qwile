@@ -178,7 +178,7 @@ $(window).ready(function() {
 								});
 
 								cachefull.shown = true;
-								$window.prop('fullscreen', false).draggable('enable').resizable('enable').find("td.title").css("cursor", "move");
+								$window.prop('fullscreen', false).draggable('enable').resizable('enable').find("td.title").css("cursor", "move");;
 
 							}
 
@@ -208,7 +208,7 @@ $(window).ready(function() {
 									opacity: 0
 								}, 'fast');
 
-							delete cache.shown;
+								delete cache.shown;
 
 						});
 
