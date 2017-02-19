@@ -26,6 +26,7 @@ define(["backbone"], function (Backbone) {
 				$("footer").prepend(taskTemplate(this.model.toJSON()));
 				this.$tab = $('.task[data-app-name="' + this.model.get("name") + '"]');
 				this.$tab.on("click", _.bind(this.switchroll, this));
+				this.$tab.find(".close").on("click", _.bind(this.close, this));
 
 			},
 
@@ -81,7 +82,7 @@ define(["backbone"], function (Backbone) {
 
 			},
 
-			close: function () {
+			close: function (event) {
 
 				var $window = this.$el.find(".window");
 				var appName = $window.data("app-name");
@@ -101,6 +102,8 @@ define(["backbone"], function (Backbone) {
 
 				Qwile.apps.remove(this.model);
 				console.log(Qwile.apps.toJSON());
+
+				event.stopPropagation();
 
 			},
 
