@@ -566,6 +566,11 @@ aside#leftpanel .lock {
   min-width: 250px;
   opacity: 0.8;
   transform-scale(0);
+
+  &.inactive {
+	z-index: 1 !important;
+	opacity: 0.8 !important;
+  }
 }
 .window.active {
   opacity: 1 !important;

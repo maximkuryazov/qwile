@@ -224,8 +224,19 @@ $(window).ready(function() {
 
 						$('body').mousedown(function(e) {
 							if ($(e.target).is(":not(.window *, .task *)") && !$('.window').prop('fullscreen')) {
-								$('.window').css('opacity', 0.8).removeClass("active");
-								$('.window').find(".window-block").show().css("height", $(".window iframe").outerHeight());
+
+								//$('.window').css('opacity', 0.8).removeClass("active");
+								//$('.window').find(".window-block").show().css("height", $(".window iframe").outerHeight());
+
+								_.each(Qwile.apps.models, function (model) {
+
+									var view = model.view;
+									if (view.isActive && !view.fullScreenCache.shown) {
+										view.deactivate();
+									}
+
+								}, this);
+
 							}
 						});
 

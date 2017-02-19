@@ -119,6 +119,7 @@ define(["backbone"], function (Backbone) {
 				this.$tab.show("slow");
 				Qwile.apps.add(this.model);
 				this.cache.shown = true;
+				this.activate();
 
 				console.log(Qwile.apps.toJSON());
 				console.log(this.model.view);
@@ -176,8 +177,14 @@ define(["backbone"], function (Backbone) {
 				
 				if (this.cache.shown) {
 
-					this.hidedown();
-					this.cache.shown = false;
+					if (this.isActive) {
+
+						this.hidedown();
+						this.cache.shown = false;
+
+					} else {
+						this.activate();
+					}
 
 				} else {
 
@@ -265,15 +272,17 @@ define(["backbone"], function (Backbone) {
 			activate: function () {
 				
 				this.isActive = true;
-				this.$window.addClass("active").find(".window-block").hide();
+				this.$window.addClass("active").removeClass("inactive").find(".window-block").hide();
 				
 			},
 			
 			deactivate: function () {
 				
 				this.isActive = false;
-				this.$window.removeClass("active").find(".window-block").show();
-				
+				var $frame = this.$window.find("iframe");
+				this.$window.removeClass("active").addClass("inactive");
+				this.$window.find(".window-block").show().css("height", $frame.outerHeight());
+
 			},
 
 			isActive: false,
