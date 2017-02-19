@@ -221,9 +221,9 @@ $(window).ready(function() {
 						}
 
 						$('.window').mousedown(makeWindowActive);
-
+/*
 						$('body').mousedown(function(e) {
-							if ($(e.target).is(":not(.window *, .task *)") && !$('.window').prop('fullscreen')) {
+							if ($(e.target).is(":not(.window *, .task *)")) {
 
 								//$('.window').css('opacity', 0.8).removeClass("active");
 								//$('.window').find(".window-block").show().css("height", $(".window iframe").outerHeight());
@@ -239,7 +239,7 @@ $(window).ready(function() {
 
 							}
 						});
-
+*/
 						$('.window').draggable({
 
 							handle: '.title',

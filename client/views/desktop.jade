@@ -155,7 +155,7 @@ script(src='js/desktop.js')
 	// **************** WINDOW START *******************
 
 	script#default-app-view-template(type='text/template')
-		.window#conductor(data-app-name!='<%= name %>')
+		.window(data-app-name!='<%= name %>', id!="<%= id %>")
 			.top
 				table
 					tr
@@ -172,25 +172,27 @@ script(src='js/desktop.js')
 					.scroll
 						.slider
 					.window-block
+					<% if (iframe) { %>
 					iframe(src='apps/conductor/index.html')
+					<% } %>
 
-	.window#player(data-app-name="player")
-		.top
-			table
-				tr
-					td.icon
-						img(src='img/player.png', alt='App icon')
-					td.title(title="Double click to use a fullscreen mode.")
-						span Player
-					td.buttons
-						.close(title='Close')
-						.fullscreen(title='Full screen')
-						.hidedown(title='Hide')
-		.content
-			.inside
-				.scroll
-					.slider
-				.window-block
+	//.window#player(data-app-name="player")
+	//	.top
+	//		table
+	//			tr
+	//				td.icon
+	//					img(src='img/player.png', alt='App icon')
+	//				td.title(title="Double click to use a fullscreen mode.")
+	//					span Player
+	//				td.buttons
+	//					.close(title='Close')
+	//					.fullscreen(title='Full screen')
+	//					.hidedown(title='Hide')
+	//	.content
+	//		.inside
+	//			.scroll
+	//				.slider
+	//			.window-block
 	// //////////////// WINDOW END ///////////////////
 	// ***************** WIDGET START ****************
 	.widget.clock
@@ -337,9 +339,9 @@ footer
 			img.icon(src!='img/<%= icon %>')
 			span.title <%= name %>
 			.close
-	.task(data-app-name="player")
-		img.icon(src='img/player.png')
-		span.title Player
-		.close
+	//.task(data-app-name="player")
+	//	img.icon(src='img/player.png')
+	//	span.title Player
+	//	.close
 script(src='js/widget/clock.js')
 script(type='text/javascript', src='js/widget/calculator.js')

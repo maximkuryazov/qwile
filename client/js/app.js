@@ -4,14 +4,36 @@ define(["backbone"], function (Backbone) {
 
 		Qwile.app.View = Backbone.View.extend({
 
-			el: document.createElement("div"),
-
 			initialize: function (options) {
 
 				this.options = options;
+				this.el = document.createElement("div");
+				this.cache = {
+
+					shown: false,
+
+					top: 0,
+					left: 0,
+					width: 0,
+					height: 0
+
+				};
+
+				this.fullScreenCache = {
+
+					shown: false,
+
+					top: 0,
+					left: 0,
+					width: 0,
+					height: 0
+
+				};
+
 				_.bindAll(this, "render");
 				this.model.bind("change", this.render);
 				this.render();
+
 			},
 
 			render: function () {
@@ -22,10 +44,14 @@ define(["backbone"], function (Backbone) {
 				this.$window = this.$el.find(".window");
 				this.uiSet();
 
+				var self = this;
 				var taskTemplate = _.template($("#task-view").html());
 				$("footer").prepend(taskTemplate(this.model.toJSON()));
 				this.$tab = $('.task[data-app-name="' + this.model.get("name") + '"]');
-				this.$tab.on("click", _.bind(this.switchroll, this));
+				this.$tab.on("click", _.bind(_.throttle(self.switchroll, 500), self));
+				this.$tab.on("dblclick", function (event) {
+					event.stopImmediatePropagation();
+				});
 				this.$tab.find(".close").on("click", _.bind(this.close, this));
 
 			},
@@ -107,14 +133,19 @@ define(["backbone"], function (Backbone) {
 
 			},
 
-			run: function () {
+			run: function (properties) {
 
 				this.$el.find(".window").animate({
 
 					transform: "scale(1)",
 					opacity: 1
 
-				}, "slow");
+				}, "slow").css({
+					
+					top:  properties.top + "px",
+					left: properties.left + "px"
+					
+				});
 
 				this.$tab.show("slow");
 				Qwile.apps.add(this.model);
@@ -131,22 +162,28 @@ define(["backbone"], function (Backbone) {
 				var $window = this.$window;
 				var cache = this.cache;
 
-				cache.height = $window.height();
-				cache.width = $window.width();
-				cache.left = $window.offset().left;
-				cache.top = $window.offset().top
+				if (!$window.prop("animated")) {
 
-				$window.animate({
+					cache.height = $window.height();
+					cache.width = $window.width();
+					cache.left = $window.offset().left;
+					cache.top = $window.offset().top
 
-					width: 0,
-					height: 0,
-					left: $('.task[data-app-name="' + $window.data("app-name") + '"]').offset().left + 'px',
-					top: ($(document.body).height() - 0 + "px"),
-					opacity: 0
+					$window.prop("animated", true).animate({
 
-				}, "fast");
+						width: 0,
+						height: 0,
+						left: $('.task[data-app-name="' + $window.data("app-name") + '"]').offset().left + 'px',
+						top: ($(document.body).height() - 0 + "px"),
+						opacity: 0
 
-				delete cache.shown;
+					}, "fast", function () {
+						$window.prop("animated", false)
+					});
+
+					delete cache.shown;
+
+				}
 				
 			},
 
@@ -174,7 +211,7 @@ define(["backbone"], function (Backbone) {
 			},
 
 			switchroll: function (event) {
-				
+
 				if (this.cache.shown) {
 
 					if (this.isActive) {
@@ -270,6 +307,15 @@ define(["backbone"], function (Backbone) {
 			},
 			
 			activate: function () {
+
+				_.each(Qwile.apps.models, function (model) {
+
+					var view = model.view;
+					if (view.isActive && !view.fullScreenCache.shown) {
+						view.deactivate();
+					}
+
+				}, this);
 				
 				this.isActive = true;
 				this.$window.addClass("active").removeClass("inactive").find(".window-block").hide();
@@ -285,57 +331,78 @@ define(["backbone"], function (Backbone) {
 
 			},
 
-			isActive: false,
-
-			cache: {
-
-				shown: false,
-
-				top: 0,
-				left: 0,
-				width: 0,
-				height: 0
-
-			},
-
-			fullScreenCache: {
-
-				shown: false,
-
-				top: 0,
-				left: 0,
-				width: 0,
-				height: 0
-
-			}
+			isActive: false
 
 		});
 
 		Qwile.app.Model = Backbone.Model.extend({});
 		Qwile.apps = new Backbone.Collection;
 
-		window.conductor = {};
-		conductor.model = new Qwile.app.Model({
+		function createPlayer () {
 
-			id: 0,
-			name: "Conductor",
-			icon: "conductor.png",
-			description: "Easy file manager developed for Qwile OS.",
-			developer: "Qwile Inc.",
-			rating: 5,
-			iframe: true
+			window.player = {};
+			player.model = new Qwile.app.Model({
 
-		});
+				id: 1,
+				name: "Player",
+				icon: "player.png",
+				description: "Easy file manager developed for Qwile OS.",
+				developer: "Qwile Inc.",
+				rating: 5,
+				iframe: false
 
-		conductor.view = new Qwile.app.View({
+			});
 
-			template: "#default-app-view-template",
-			container: ".wrapper",
-			model: conductor.model
+			player.view = new Qwile.app.View({
 
-		});
-		conductor.model.view = conductor.view;
-		conductor.view.run();
+				template: "#default-app-view-template",
+				container: ".wrapper",
+				model: player.model
+
+			});
+			player.model.view = player.view;
+			player.view.run({
+
+				left: 480,
+				top: 200
+
+			});
+
+		}
+
+		function createConductor () {
+
+			window.conductor = {};
+			conductor.model = new Qwile.app.Model({
+
+				id: 0,
+				name: "Conductor",
+				icon: "conductor.png",
+				description: "Easy file manager developed for Qwile OS.",
+				developer: "Qwile Inc.",
+				rating: 5,
+				iframe: true
+
+			});
+
+			conductor.view = new Qwile.app.View({
+
+				template: "#default-app-view-template",
+				container: ".wrapper",
+				model: conductor.model
+
+			});
+			conductor.model.view = conductor.view;
+			conductor.view.run({
+
+				left: 180,
+				top: 100
+
+			});
+		}
+
+		createConductor();
+		createPlayer();
 
 	})(window.Qwile);
 
