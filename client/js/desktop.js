@@ -358,6 +358,11 @@ $(window).ready(function() {
 							$("#profile-photo-uploader").click();
 						});
 
+						$("#profile").resizable({
+							handles: "w",
+							minWidth: 200
+						});
+
 						/* Exit modal */
 
 						$('#quit').click(function() {

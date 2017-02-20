@@ -282,6 +282,7 @@ div#digits {
 }
 aside#profile {
 	width: 200px;
+  	min-width: 200px !important;			/* I'm not sure about it's necceserity */
 	height: calc(100% - 90px);				/* Android, iOS and Safari don't support this stuff */
 	height: -webkit-calc(100% - 90px);
 	background: url('../img/panel.png');
@@ -291,6 +292,10 @@ aside#profile {
 	border-left: 6px solid #154d54;
 	border-top: 1px solid #154d54;
 	box-shadow: 10px black;
+
+    table {
+	  width: 100%;
+	}
 }
 aside#profile td {
 	min-width: 200px;
@@ -351,13 +356,13 @@ aside#profile .area {
 aside#profile .area td {
 	padding: 10px;
 	overflow: hidden;
-	padding: 0;
+	padding: 0;   
 }
 aside#profile .area td .profile-personal-row,
 aside#profile .area td .profile-link-row,
 aside#profile .area td .profile-adress-row,
 aside#profile .area td .profile-interest-row {
-	background: rgba(000,000,000,0.3);
+	background: rgba(000,000,000,0.4);
 	padding-top: 10px;
 	height: 25px;
 	margin: 3px;
@@ -368,7 +373,7 @@ aside#profile .area td .profile-interest-row {
 	cursor: default;
 
   	&:hover {
-	  background: rgba(000,000,000,0.5);
+	  background: rgba(000,000,000,0.6);
 	  cursor: pointer;
 	  color: deepskyblue;
 	  span.value {
