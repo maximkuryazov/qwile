@@ -169,8 +169,10 @@ script(src='js/desktop.js')
 							.hidedown(title='Hide')
 			.content
 				.inside
+					<% if (scroll) { %>
 					.scroll
 						.slider
+					<% } %>
 					.window-block
 					<% if (iframe) { %>
 					iframe(src='apps/conductor/index.html')

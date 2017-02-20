@@ -221,9 +221,9 @@ $(window).ready(function() {
 						}
 
 						$('.window').mousedown(makeWindowActive);
-/*
+
 						$('body').mousedown(function(e) {
-							if ($(e.target).is(":not(.window *, .task *)")) {
+							if ($(e.target).is(":not(.window *, .task, .task *)")) {
 
 								//$('.window').css('opacity', 0.8).removeClass("active");
 								//$('.window').find(".window-block").show().css("height", $(".window iframe").outerHeight());
@@ -239,7 +239,7 @@ $(window).ready(function() {
 
 							}
 						});
-*/
+
 						$('.window').draggable({
 
 							handle: '.title',
@@ -433,7 +433,7 @@ $(window).ready(function() {
 							var title = $(this).find('.title').text();
 							Tipped.create(this, function(element) {
 								return '<span class="tooptip-text">Hide and show ' + title + '</span>';
-							}, { position: 'top', skin: 'blue' });
+							}, { position: "top" });
 						});
 
 						var $soundTab = $("aside#leftpanel .sound");

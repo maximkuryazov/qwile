@@ -135,20 +135,32 @@ define(["backbone"], function (Backbone) {
 
 			run: function (properties) {
 
-				this.$el.find(".window").animate({
+				var $window = this.$window;
+				$window.animate({
 
 					transform: "scale(1)",
 					opacity: 1
 
-				}, "slow").css({
+				}, "slow", function () {
+					$("iframe", $window).height($window.find(".content").outerHeight() - 15);
+				}).css({
 					
-					top:  properties.top + "px",
-					left: properties.left + "px"
-					
+					top:    properties.top + "px",
+					left:   properties.left + "px",
+					width:  properties.width ? properties.width + "px" : undefined,
+					height: properties.height ? properties.height + "px" : undefined
+
 				});
 
-				this.$tab.show("slow");
+				var tabTitle = this.model.get("name");
+				Tipped.create(this.$tab, function(element) {
+					return '<span class="tooptip-text">Hide and show ' +  tabTitle + '</span>';
+				}, {
+					position: "top"
+				});
+				this.$tab.show("slow").parent().sortable();
 				Qwile.apps.add(this.model);
+
 				this.cache.shown = true;
 				this.activate();
 
@@ -205,6 +217,7 @@ define(["backbone"], function (Backbone) {
 						$window.prop("animated", false)
 					});
 					cache.shown = true;
+					this.activate();
 
 				}
 				
@@ -311,9 +324,7 @@ define(["backbone"], function (Backbone) {
 				_.each(Qwile.apps.models, function (model) {
 
 					var view = model.view;
-					if (view.isActive && !view.fullScreenCache.shown) {
-						view.deactivate();
-					}
+					if (view.isActive) view.deactivate();
 
 				}, this);
 				
@@ -338,71 +349,59 @@ define(["backbone"], function (Backbone) {
 		Qwile.app.Model = Backbone.Model.extend({});
 		Qwile.apps = new Backbone.Collection;
 
-		function createPlayer () {
+		function createApp (name, model, position) {
 
-			window.player = {};
-			player.model = new Qwile.app.Model({
+			window[name] = {};
+			window[name].model = new Qwile.app.Model(model);
 
-				id: 1,
-				name: "Player",
-				icon: "player.png",
-				description: "Easy file manager developed for Qwile OS.",
-				developer: "Qwile Inc.",
-				rating: 5,
-				iframe: false
-
-			});
-
-			player.view = new Qwile.app.View({
+			window[name].view = new Qwile.app.View({
 
 				template: "#default-app-view-template",
 				container: ".wrapper",
-				model: player.model
+				model: window[name].model
 
 			});
-			player.model.view = player.view;
-			player.view.run({
-
-				left: 480,
-				top: 200
-
-			});
+			window[name].model.view = window[name].view;
+			window[name].view.run(position);
 
 		}
 
-		function createConductor () {
+		createApp("Conductor", {
 
-			window.conductor = {};
-			conductor.model = new Qwile.app.Model({
+			id: 0,
+			name: "Conductor",
+			icon: "conductor.png",
+			description: "Easy file manager developed for Qwile OS.",
+			developer: "Qwile Inc.",
+			rating: 5,
+			iframe: true,
+			scroll: true
 
-				id: 0,
-				name: "Conductor",
-				icon: "conductor.png",
-				description: "Easy file manager developed for Qwile OS.",
-				developer: "Qwile Inc.",
-				rating: 5,
-				iframe: true
+		}, {
 
-			});
+			left: 180,
+			top: 100,
+			width: 800
 
-			conductor.view = new Qwile.app.View({
+		});
 
-				template: "#default-app-view-template",
-				container: ".wrapper",
-				model: conductor.model
+		createApp("Player", {
 
-			});
-			conductor.model.view = conductor.view;
-			conductor.view.run({
+			id: 1,
+			name: "Player",
+			icon: "player.png",
+			description: "Media player for video files.",
+			developer: "Qwile Inc.",
+			rating: 5,
+			iframe: false,
+			scroll: false
 
-				left: 180,
-				top: 100
+		}, {
 
-			});
-		}
+			left: 480,
+			top: 200
 
-		createConductor();
-		createPlayer();
+		});
 
 	})(window.Qwile);
 

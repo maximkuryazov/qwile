@@ -568,13 +568,13 @@ aside#leftpanel .lock {
   transform-scale(0);
 
   &.inactive {
-	z-index: 1 !important;
+	z-index: 2 !important;
 	opacity: 0.8 !important;
   }
 }
 .window.active {
   opacity: 1 !important;
-  z-index: 2 !important;
+  z-index: 3 !important;
 }
 .window .content {
 	border: 7px solid rgba(000, 000, 000, 0.4);
@@ -991,7 +991,7 @@ aside#leftpanel .lock {
 	margin-left: 100px;
 	height: calc(100% - 90px);
  	height: -webkit-calc(100% - 90px);
- 	z-index: 3;
+ 	z-index: 4;
 }
 ::i-block-chrome, #widget_select {			/* shity Safari 5.0 */
 	width: 94%;
