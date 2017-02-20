@@ -20,6 +20,7 @@ module.exports = (function() {
 		this.data = {};
 
 		var userSchema = mongoose.Schema({
+
 			email: String,
 			password: String,
 			firstname: String,
@@ -34,7 +35,9 @@ module.exports = (function() {
 			activated: Boolean,
 			activationCode: Number,
 			restoreCode: Number,
-			image: String
+			image: String,
+			apps: Array
+
 		});
 
 		userSchema.methods.showData = function () {
