@@ -2,7 +2,7 @@ $(window).ready(function() {
 
 	var scaleAnimateTime 	= 0;  		// 1000
 	var loadingAnimateTime 	= 0; 		// 5000
-	var logoAnimateTime 	= 0;			// 1800
+	var logoAnimateTime 	= 0;		// 1800
 
 	var SOUND = true;
 
@@ -48,15 +48,6 @@ $(window).ready(function() {
 								});
 							});
 
-							// here window is already loaded
-
-							// alert($(".window .content").outerHeight());
-							$('.window iframe').css({
-								// height: "210px",
-								height: $(".window .content").outerHeight() - 15 + "px",
-								width: "95%"
-							});
-
 						});
 
 						/* ************ loading complete, handlers starts *********** */
@@ -94,22 +85,10 @@ $(window).ready(function() {
 
 						});
 
-						$('.window .close, .task .close').click(function() {
-
-							var appName = $(this).parents("[data-app-name]").data("app-name");
-							$('.window[data-app-name="' + appName + '"]').animate({
-								transform: 'skewX(-85deg) scale(0)',
-								opacity: 0
-							}, function() {
-								$(this).hide();
-							});
-							$('.task[data-app-name="' + appName + '"]').hide('slow');
-
-						});
-
 						$('.widget .close').click(function() {
 							$(this).parents('.widget').fadeOut();
 						});
+
 						$('.widget').draggable({
 							containment: "parent",
 							handle: ".content"
@@ -127,216 +106,11 @@ $(window).ready(function() {
 							$('#cover').show();
 						});
 
-						$('.window').each(function() {
-							$(this).prop("cachefull", {
-								shown: true
-							});
-						});
-
-						$('.window .fullscreen').click(function() {
-
-							var $window = $(this).parents(".window");
-							var cachefull = $window.prop("cachefull");
-
-							if (cachefull.shown) {
-
-								cachefull.height = $window.height();
-								cachefull.width = $window.width();
-								cachefull.left = $window.offset().left,
-								cachefull.top = $window.offset().top
-
-								$window.animate({
-									top: '50px',
-									height: ($(document.body).height() - 87 + 'px'),
-									width: '100%',
-									left: 0
-								}, {
-									complete: function() {
-										$("iframe", $window).height($window.find(".content").outerHeight() - 15);
-									},
-									duration: 'fast'
-								});
-
-								delete cachefull.shown;
-								$window.prop('fullscreen', true).draggable('disable').resizable('disable').find("td.title").css("cursor", "default");
-
-							} else {
-
-								$window.animate({
-
-									width: cachefull.width + 'px',
-									height: cachefull.height + 'px',
-									left: cachefull.left + 'px',
-									top: cachefull.top + 'px',
-									opacity: 1
-
-								}, {
-									complete: function() {
-										$("iframe", $window).height($window.find(".content").outerHeight() - 15);
-									},
-									duration: 'fast'
-								});
-
-								cachefull.shown = true;
-								$window.prop('fullscreen', false).draggable('enable').resizable('enable').find("td.title").css("cursor", "move");;
-
-							}
-
-						});
-
-						$('.window').each(function() {
-							$(this).prop("cache", {
-								shown: true
-							});
-						});
-
-						$('.window .hidedown').click(function() {
-
-							var $window = $(this).parents(".window");
-							var cache = $window.prop("cache");
-
-								cache.height = $window.height();
-								cache.width = $window.width();
-								cache.left = $window.offset().left,
-								cache.top = $window.offset().top
-
-							$window.animate({
-									width: '0px',
-									height: '0px',
-									left: $('.task[data-app-name="' + $window.data("app-name") + '"]').offset().left + 'px',
-									top: ($(document.body).height() - 0 + 'px'),
-									opacity: 0
-								}, 'fast');
-
-								delete cache.shown;
-
-						});
-
-						function makeWindowActive () {
-
-							$('.window').not(this).removeClass("active").css({ "z-index": 2, opacity: 0.8 }).find(".window-block").show();
-							$(this).addClass("active");
-							$(this).find(".window-block").hide();
-
-						}
-
-						$('.window').mousedown(makeWindowActive);
-
-						$('body').mousedown(function(e) {
-							if ($(e.target).is(":not(.window *, .task, .task *)")) {
-
-								//$('.window').css('opacity', 0.8).removeClass("active");
-								//$('.window').find(".window-block").show().css("height", $(".window iframe").outerHeight());
-
-								_.each(Qwile.apps.models, function (model) {
-
-									var view = model.view;
-									if (view.isActive && !view.fullScreenCache.shown) {
-										view.deactivate();
-									}
-
-								}, this);
-
-							}
-						});
-
-						$('.window').draggable({
-
-							handle: '.title',
-							containment: [0, $("#toppanel").height(), $(window).width() - 100, $(window).height() - $("footer").height() - $(".window .top").height()],
-							start: function( event, ui ) {
-								$(ui.helper).find(".inside .window-block").show();
-							},
-							stop: function( event, ui ) {
-								$(ui.helper).find(".inside .window-block").hide();
-							}
-
-						}).resizable({
-
-							handles: "n, e, s, w, se, ne, sw, nw",
-							// minWidth: 250,
-							// minHeight: 206,
-							// верхние по дефолту, но в случае кондуктора это должно настраиваться!
-							// резайз лагает если уменьшить величины, из-за того что .block заслонка эта сверху врейма фиксированной высоты
-							minWidth: 520,
-							minHeight: 265,
-							start: function(event, ui) {
-								$(ui.helper).find(".inside .window-block").show();
-							},
-							stop: function(event, ui) {
-								$(ui.helper).find(".inside .window-block").hide();
-							},
-							resize: function(event, ui) {
-								var iframe = $("iframe", ui.helper);
-								$(ui.helper).find(".inside .window-block").css({
-									height: iframe.height() + "px"
-								});
-								iframe.height($(ui.helper).find(".content").outerHeight() - 15);
-							}
-
-						});
-
-						$('.task').click(function() {
-
-							var appName = $(this).data("app-name");
-							var $window = $('.window[data-app-name="' + appName + '"]');
-							var cache = $window.prop("cache");
-
-							if (cache.shown) {
-								if ($window.hasClass("active")) {
-
-									cache.height = $window.height();
-									cache.width = $window.width();
-									cache.left = $window.offset().left;
-									cache.top = $window.offset().top;
-
-									if (!$window.prop("animated")) {
-										$window.prop("animated", true).animate({
-
-											width: '0px',
-											height: '0px',
-											left: $(this).offset().left + "px",
-											top: ($(document.body).height() - 0 + 'px'),
-											opacity: 0
-
-										}, 'fast', function() {
-											$window.prop("animated", false);
-										});
-										delete cache.shown;
-									}
-
-								} else {
-									makeWindowActive.call($window);
-								}
-							} else {
-
-								if (!$window.prop("animated")) {
-
-									$window.prop("animated", true).animate({
-
-										width: cache.width + 'px',
-										height: cache.height + 'px',
-										left: cache.left + 'px',
-										top: cache.top + 'px',
-										opacity: 1
-
-									}, 'fast', function() {
-										$window.prop("animated", false)
-									});
-
-									cache.shown = true;
-
-								}
-
-							}
-
-						}).mousedown(function() {
-							$('.window[data-app-name="' + $(this).data("app-name") + '"]').css('opacity', 1);
-						}).parent().sortable();
-
 						$('#photo').click(function() {
-							var isVisible = $('#profile').css("right") != '-200px';
-							$('#profile').animate({ right: isVisible ? -200 : 0 });
+							var isVisible = $('#profile').css("right") == '0px';
+							$('#profile').css("left", "auto").animate({
+								right: isVisible ? -$('#profile').width() : 0
+							});
 						});
 
 						$("#profile .header").each(function(i) {
@@ -354,13 +128,34 @@ $(window).ready(function() {
 							});
 						});
 
+						$("#profile .area td:not(.photo)").delegate("div", "click", function () {
+							var value = prompt("Enter a new value: ");
+							$(".value", this).text(value);
+						});
+
 						$("#profile .profile-photo").on("click tap", function() {
 							$("#profile-photo-uploader").click();
 						});
 
 						$("#profile").resizable({
 							handles: "w",
-							minWidth: 200
+							minWidth: 200,
+							maxWidth: 400
+						});
+
+						$('body').mousedown(function(e) {
+							if ($(e.target).is(":not(.window *, .task, .task *)")) {
+
+								_.each(Qwile.apps.models, function (model) {
+
+									var view = model.view;
+									if (view.isActive && !view.fullScreenCache.shown) {
+										view.deactivate();
+									}
+
+								}, this);
+
+							}
 						});
 
 						/* Exit modal */
@@ -434,17 +229,18 @@ $(window).ready(function() {
 							
 						});
 
-						$(".task").each(function() {
-							var title = $(this).find('.title').text();
-							Tipped.create(this, function(element) {
-								return '<span class="tooptip-text">Hide and show ' + title + '</span>';
-							}, { position: "top" });
-						});
-
 						var $soundTab = $("aside#leftpanel .sound");
 						$soundTab.on("click tap", function() {
+
 							$(this).toggleClass("disabled");
 							SOUND = !$(this).hasClass("disabled");
+							if (SOUND) {
+								var soundsOnSound = new Howl({
+									src: ['sounds/unmute.mp3']
+								});
+								soundsOnSound.play();
+							}
+
 						});
 						if (!SOUND) $soundTab.addClass("disabled");
 

@@ -282,13 +282,13 @@ div#digits {
 }
 aside#profile {
 	width: 200px;
-  	min-width: 200px !important;			/* I'm not sure about it's necceserity */
 	height: calc(100% - 90px);				/* Android, iOS and Safari don't support this stuff */
 	height: -webkit-calc(100% - 90px);
 	background: url('../img/panel.png');
 	position: absolute;
 	z-index: 2;
 	right: -200px;
+    left: auto;
 	border-left: 6px solid #154d54;
 	border-top: 1px solid #154d54;
 	box-shadow: 10px black;
@@ -299,6 +299,9 @@ aside#profile {
 }
 aside#profile td {
 	min-width: 200px;
+}
+aside#profile td.photo {
+  background-color: black;
 }
 aside#profile .header {
 	height: 30px;
@@ -329,8 +332,10 @@ aside#profile .header:hover {
 aside#profile .photo .profile-photo {
 	height: 200px;
 	background: url("../img/profile.png");
-	width: 200px;
+	width: 212px;
     cursor: pointer;
+	margin-left: auto;
+	margin-right: auto;
 
   	&:hover {
 	  	opacity: .8;
@@ -695,6 +700,7 @@ aside#leftpanel .lock {
 	margin-left:auto;
 	margin-right:auto;
 	overflow-x: hidden;
+    width: 95%;
 }
 
 .widget {
