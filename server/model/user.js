@@ -4,10 +4,10 @@
 
 module.exports = (function() {
 
-	const util = require('util');
-	const crypto = require('crypto');
-	const fs = require('fs');
-	const _dir = './storage';
+	const util = require("util");
+	const crypto = require("crypto");
+	const fs = require("fs");
+	const _dir = "./storage";
 
 	const private = {
 		
@@ -66,9 +66,14 @@ module.exports = (function() {
 			private.UserModel.remove({ "_id": id }, function (error) {
 				if (!error) {
 
-					console.log("User with id " + id + "had been removed.");
-					callback();
+					var rimraf = require("rimraf");
+					rimraf(_dir + "/" + id, function () {
 
+						console.log("User with id " + id + "had been removed.");
+						callback();
+
+					});
+					
 				} else {
 					
 					console.log("Error " + error + " occurred during the deletion.");
@@ -86,7 +91,7 @@ module.exports = (function() {
 			var currentUser = new private.UserModel({
 
 				email: this.data.email,
-				password: crypto.createHash('md5').update(this.data.password).digest("hex"),
+				password: crypto.createHash("md5").update(this.data.password).digest("hex"),
 				age: 27,
 				birthday: new Date(),
 				activated: false,
@@ -98,10 +103,10 @@ module.exports = (function() {
 
 				if (error) return console.error(error);
 				currentUser.showData();
-				if (!fs.existsSync(_dir + '/' + currentUser._id)){
+				if (!fs.existsSync(_dir + "/" + currentUser._id)){
 
-					fs.mkdirSync(_dir + '/' + currentUser._id);
-					fs.mkdirSync(_dir + '/' + currentUser._id + '/__profile');
+					fs.mkdirSync(_dir + "/" + currentUser._id);
+					fs.mkdirSync(_dir + "/" + currentUser._id + "/__profile");
 
 				}
 
