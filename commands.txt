@@ -4,5 +4,8 @@ stylus --compress -o client/css/ -w client/styl/
 Start mondoDB:
 mongod --dbpath C:\qwile\db
 
+Create dumps:
+mongodump --out C:\qwile\dump
+
 MongoDB installation guide:
 https://code.msdn.microsoft.com/Mongo-Database-setup-on-6963f46f
