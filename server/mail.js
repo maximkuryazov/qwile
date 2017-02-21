@@ -4,28 +4,34 @@
 
 module.exports = (function() {
 
-	const fs = require('fs');
+	const fs = require("fs");
 	
 	return {
 		send: function (options, successCallback, errorCallback) {
 
-			const nodeMailer = require('nodemailer');
+			const nodeMailer = require("nodemailer");
 
 			var transporter = nodeMailer.createTransport({
-				service: 'Gmail',
+				service: "Gmail",
 				auth: {
-					user: 'maximkuryazov@gmail.com',
-					pass: '322538631'
+
+					user: "maximkuryazov@gmail.com",
+					pass: "322538631"
+
 				}
 			});
 
 			transporter.sendMail(options, function(error, info) {
 				if (error) {
+
 					console.log(error);
 					errorCallback(error);
+
 				} else {
+
 					console.log("Message sent: " + info.response);
 					successCallback(info);
+
 				}
 			});
 

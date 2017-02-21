@@ -10,11 +10,13 @@ module.exports = (function() {
 	const _dir = './storage';
 
 	const private = {
+		
 		mongoose: {},
 		db: {}
+		
 	};
 
-	function constructor(mongoose, db) {
+	function constructor (mongoose, db) {
 		
 		private.mongoose = mongoose;
 		this.data = {};
@@ -44,43 +46,49 @@ module.exports = (function() {
 			console.log("Email: " + this.email);
 		};
 
-		private.UserModel = mongoose.model('User', userSchema);
+		private.UserModel = mongoose.model("User", userSchema);
 		private.db = db;
 
 	}
 
 	constructor.prototype = {
 
-		getByMail: function(email, callback) {
-			private.UserModel.findOne({ email: email }, function (error, doc){
+		getByMail: function (email, callback) {
+			private.UserModel.findOne({ email: email }, function (error, doc) {
+
 				if (!error) callback(doc);
 				else console.log("Error " + error + " occurred.");
+
 			});
 		},
 
-		remove: function(id, callback) {
-			private.UserModel.remove({ "_id": id }, function(error) {
+		remove: function (id, callback) {
+			private.UserModel.remove({ "_id": id }, function (error) {
 				if (!error) {
+
 					console.log("User with id " + id + "had been removed.");
 					callback();
+
 				} else {
 					console.log("Error " + error + " occurred during the deletion.");
 				}
 			});
 		},
 
-		create: function(data) {
+		create: function (data) {
 
 			var mongoose = private.mongoose;
 			this.data = data;
 
 			var currentUser = new private.UserModel({
+
 				email: this.data.email,
 				password: crypto.createHash('md5').update(this.data.password).digest("hex"),
 				age: 27,
 				birthday: new Date(),
 				activated: false,
 				activationCode: this.data.activationCode
+
 			});
 
 			currentUser.save(function (error, currentUser) {
@@ -88,30 +96,34 @@ module.exports = (function() {
 				if (error) return console.error(error);
 				currentUser.showData();
 				if (!fs.existsSync(_dir + '/' + currentUser._id)){
+
 					fs.mkdirSync(_dir + '/' + currentUser._id);
 					fs.mkdirSync(_dir + '/' + currentUser._id + '/__profile');
+
 				}
 
 			});
 
 			private.UserModel.find(function (error, users) {
+
 				if (error) return console.error(error);
 				console.log("Users: " + users);
 				for (var key in users) {
 					console.log("Email: " + users[key].email);
 					console.log("ID: " + users[key]._id);
 				}
+
 			});
 
 		},
 		
-		set: function(id, options, callback) {
+		set: function (id, options, callback) {
 
 			console.log(util.inspect(options, false, null));
 
 			private.UserModel.update({ _id: id }, {
 				$set: options,
-			}, function(error, affected) {
+			}, function (error, affected) {
 
 				console.log("User set error: ", error);
 				console.log("User set affected: ", affected);

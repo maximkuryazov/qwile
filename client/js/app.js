@@ -158,9 +158,10 @@ define(["backbone"], function (Backbone) {
 				}, {
 					position: "top"
 				});
-				this.$tab.show("slow").parent().sortable();
-				Qwile.apps.add(this.model);
 
+				this.$tab.show("slow").parent().sortable();
+
+				Qwile.apps.add(this.model);
 				this.cache.shown = true;
 				this.activate();
 
@@ -330,6 +331,7 @@ define(["backbone"], function (Backbone) {
 				
 				this.isActive = true;
 				this.$window.addClass("active").removeClass("inactive").find(".window-block").hide();
+				this.$tab.addClass("active");
 				
 			},
 			
@@ -339,6 +341,7 @@ define(["backbone"], function (Backbone) {
 				var $frame = this.$window.find("iframe");
 				this.$window.removeClass("active").addClass("inactive");
 				this.$window.find(".window-block").show().css("height", $frame.outerHeight());
+				this.$tab.removeClass("active");
 
 			},
 
@@ -366,40 +369,30 @@ define(["backbone"], function (Backbone) {
 
 		}
 
-		createApp("Conductor", {
+		function openApp (name, id, options) {
+			$.get("/app/get", "id=" + id, function (response) {
+				if (response.success) {
 
-			id: 0,
-			name: "Conductor",
-			icon: "conductor.png",
-			description: "Easy file manager developed for Qwile OS.",
-			developer: "Qwile Inc.",
-			rating: 5,
-			iframe: true,
-			scroll: true
+					var model = response.data;
+					model.id = model._id;
+					createApp(name, model, options);
 
-		}, {
+				}
+			});
+		}
+
+		openApp("Player", "58ab1532d3c4b878ce485a31", {
+
+			left: 480,
+			top: 200
+
+		});
+
+		openApp("Conductor", "58ab1513d3c4b878ce485a22", {
 
 			left: 180,
 			top: 100,
 			width: 800
-
-		});
-
-		createApp("Player", {
-
-			id: 1,
-			name: "Player",
-			icon: "player.png",
-			description: "Media player for video files.",
-			developer: "Qwile Inc.",
-			rating: 5,
-			iframe: false,
-			scroll: false
-
-		}, {
-
-			left: 480,
-			top: 200
 
 		});
 

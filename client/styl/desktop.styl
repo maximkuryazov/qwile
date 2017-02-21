@@ -247,12 +247,15 @@ div#digits {
 .task[data-app-name="player"] {
   display: block;
 }
-.task:hover {
-	background: rgba(000, 000, 000, 0.5);
+.task:hover, .task.active:hover {
+  	background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 100%);
 }
-.task:active {
+.task:active, .task.active:active {
     /* fucked IE doesn't inherit active, it needs JavaScript */
 	background: linear-gradient(to top, rgba(000, 000, 000, 0.4), rgba(004, 015, 015, 1)) !important;
+}
+.task.active {
+  background: linear-gradient(to bottom, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 100%);
 }
 .task .title {
 	font: 11px "Copperplate Gothic Bold", Verdana;

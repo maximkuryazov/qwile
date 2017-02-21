@@ -28,8 +28,10 @@
     app.use(compression());
 
     app.use(session({
+        
         secret: require('crypto').randomBytes(64).toString('hex'),
         key: 'session.id'
+        
     }));
 
     app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -72,11 +74,13 @@
 
                 var fs = require('fs');
                 fs.readFile('client/index.html', 'utf8', function (error, data) {
+                    
                     if (error) {
                         return console.log(error);
                     }
                     res.setHeader('content-type', 'text/html');
                     res.end(data);
+                    
                 });
 
             } else {
@@ -95,8 +99,10 @@
 
                     res.set('Content-Type', 'application/json');
                     res.send(JSON.stringify({
+                        
                         success: false,
                         error: "You are not logged in."
+                        
                     }));
 
                 } else {
@@ -124,19 +130,23 @@
                 // Are you logged in?
                 if (req.session.email) {
                     user.getByMail(req.session.email, function(document) {
+                        
                         res.cookie("redirect", "desktop");
                         console.log(document);
                         res.render('desktop', { user: document });
+                        
                     });
                 } else {
+                    
                     res.cookie("redirect", "/");
                     res.render('login');
+                    
                 }
             }
 
             switch (req.query.template) {
                 case "login":
-                    if (req.cookies.remember) {
+                     if (req.cookies.remember) {
                         checkLogin();
                      } else {
                         res.cookie("redirect", "/");
@@ -147,10 +157,10 @@
                     checkLogin();
                 break;
             }
-
         });
         
         let userController = require("./server/controller/user")(app, user);
+        let appController = require("./server/controller/app")(app, user, mongoose, db);
 
         app.get('/captcha', function (req, res) {
 
