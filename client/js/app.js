@@ -159,7 +159,11 @@ define(["backbone"], function (Backbone) {
 					position: "top"
 				});
 
-				this.$tab.show("slow").parent().sortable();
+				this.$tab.show("slow").parent().sortable({
+					stop: _.bind(function () {
+						this.$tab.beingSortable = true;
+					}, this)
+				});
 
 				Qwile.apps.add(this.model);
 				this.cache.shown = true;
@@ -226,6 +230,13 @@ define(["backbone"], function (Backbone) {
 
 			switchroll: function (event) {
 
+				if (this.$tab.beingSortable) {
+
+					delete this.$tab.beingSortable;
+					return false;
+
+				}
+
 				if (this.cache.shown) {
 
 					if (this.isActive) {
@@ -243,6 +254,7 @@ define(["backbone"], function (Backbone) {
 					this.cache.shown = true;
 
 				}
+
 				event.stopImmediatePropagation();
 				event.stopPropagation();
 				

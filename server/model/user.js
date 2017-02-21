@@ -70,7 +70,10 @@ module.exports = (function() {
 					callback();
 
 				} else {
+					
 					console.log("Error " + error + " occurred during the deletion.");
+					callback(error);
+					
 				}
 			});
 		},

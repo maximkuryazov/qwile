@@ -18,11 +18,22 @@ module.exports = function (app, user) {
 	}
 
 	app.get("/user/remove", function (req, res) {
-		user.remove(req.query.id, function() {
+		user.remove(req.query.id, function(error) {
 
 			res.set('Access-Control-Allow-Origin', '*');
 			res.setHeader('Content-Type', 'application/json');
-			res.send(JSON.stringify({ success: true }));
+			if (!error) {
+				res.send(JSON.stringify({
+					success: true
+				}));
+			} else {
+				res.send(JSON.stringify({
+
+					success: false,
+					error: error
+
+				}));
+			}
 
 		});
 	});
