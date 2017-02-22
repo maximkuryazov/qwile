@@ -217,23 +217,38 @@ div#digits {
 	width: 43px;
 }
 #announce {
+
   width: 43px;
+  span.new {
+	border-radius: 50px;
+	min-width: 15px;
+	height: 15px;
+	position: absolute;
+	z-index: 5;
+	display: block;
+	top: 5px;
+	font: bold 11px Tahoma;
+	text-align: center;
+	color: white;
+	background-color: #e85500;
+  }
   div {
 	cursor: pointer;
 	background: url('../img/bell.png') no-repeat;
 	width: 31px;
 	height: 31px;
 	margin-top: -1px;
+
 	&:hover {
-		background-position: -31px 0px;
+	  background-position: -31px 0px;
 	}
 	&:active {
-	  	background-position: -62px 0px;
+	  background-position: -62px 0px;
 	}
+  }
+}
 #settings:active {
   background-position: -70px 0px;
-}
-  }
 }
 #photo:hover {
 	opacity: 0.8;
