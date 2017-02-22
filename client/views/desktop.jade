@@ -145,6 +145,16 @@ script(src='js/desktop.js')
 						span.value Chess, Swimming
 	// //////////////// USER END ///////////////
 	// **************** NOTIFICATION START ******************
+	script#popup-view(type="text/template")
+		.desktop-notification
+			.top
+				.close(title='close')
+			.content
+				img(src!='img/<%= picture %>')
+				.text
+					h9 <%= title %>
+					span.message
+						| <%= message %>
 	.desktop-notification
 		.top
 			.close(title='close')
@@ -156,7 +166,6 @@ script(src='js/desktop.js')
 					| had shared a private folder with you.
 	// //////////////// NOTIFICATION END ///////////////
 	// **************** WINDOW START *******************
-
 	script#default-app-view-template(type='text/template')
 		.window(data-app-name!='<%= name %>', id!="<%= id %>")
 			.top
@@ -179,25 +188,9 @@ script(src='js/desktop.js')
 					.window-block
 					<% if (iframe) { %>
 					iframe(src='apps/conductor/index.html')
+					<% } else { %>
+					iframe(src="https://www.youtube.com/embed/LZDh-18F_rA" frameborder="0" allowfullscreen="true")
 					<% } %>
-
-	//.window#player(data-app-name="player")
-	//	.top
-	//		table
-	//			tr
-	//				td.icon
-	//					img(src='img/player.png', alt='App icon')
-	//				td.title(title="Double click to use a fullscreen mode.")
-	//					span Player
-	//				td.buttons
-	//					.close(title='Close')
-	//					.fullscreen(title='Full screen')
-	//					.hidedown(title='Hide')
-	//	.content
-	//		.inside
-	//			.scroll
-	//				.slider
-	//			.window-block
 	// //////////////// WINDOW END ///////////////////
 	// ***************** WIDGET START ****************
 	.widget.clock
