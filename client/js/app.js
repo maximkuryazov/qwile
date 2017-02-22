@@ -126,8 +126,8 @@ define(["backbone"], function (Backbone) {
 					$(this).remove();
 				});
 
-				Qwile.apps.remove(this.model);
-				console.log(Qwile.apps.toJSON());
+				Qwile.processes.remove(this.model);
+				console.log(Qwile.processes.toJSON());
 
 				event.stopPropagation();
 
@@ -165,11 +165,11 @@ define(["backbone"], function (Backbone) {
 					}, this)
 				});
 
-				Qwile.apps.add(this.model);
+				Qwile.processes.add(this.model);
 				this.cache.shown = true;
 				this.activate();
 
-				console.log(Qwile.apps.toJSON());
+				console.log(Qwile.processes.toJSON());
 				console.log(this.model.view);
 
 			},
@@ -334,7 +334,7 @@ define(["backbone"], function (Backbone) {
 			
 			activate: function () {
 
-				_.each(Qwile.apps.models, function (model) {
+				_.each(Qwile.processes.models, function (model) {
 
 					var view = model.view;
 					if (view.isActive) view.deactivate();
@@ -362,52 +362,54 @@ define(["backbone"], function (Backbone) {
 		});
 
 		Qwile.app.Model = Backbone.Model.extend({});
-		Qwile.apps = new Backbone.Collection;
+		Qwile.processes = new Backbone.Collection;
+		Qwile.app.instances = {};
 
-		function createApp (name, model, position) {
+		Qwile.createApp = function (name, model, position) {
 
-			window[name] = {};
-			window[name].model = new Qwile.app.Model(model);
+			var instances = Qwile.app.instances;
+			instances[name] = {};
+			instances[name].model = new Qwile.app.Model(model);
 
-			window[name].view = new Qwile.app.View({
+			instances[name].view = new Qwile.app.View({
 
 				template: "#default-app-view-template",
 				container: ".wrapper",
-				model: window[name].model
+				model: instances[name].model
 
 			});
-			window[name].model.view = window[name].view;
-			window[name].view.run(position);
+			instances[name].model.view = instances[name].view;
+			instances[name].view.run(position);
 
 		}
 
-		function openApp (name, id, options) {
+		Qwile.openApp = function (name, id, options) {
 			$.get("/app/get", "id=" + id, function (response) {
 				if (response.success) {
 
 					var model = response.data;
 					model.id = model._id;
-					createApp(name, model, options);
+					Qwile.createApp(name, model, options);
 
 				}
 			});
 		}
 
-		openApp("Player", "58ab1532d3c4b878ce485a31", {
-
-			left: 480,
-			top: 200
-
-		});
-
-		openApp("Conductor", "58ab1513d3c4b878ce485a22", {
-
-			left: 180,
-			top: 100,
-			width: 800
-
-		});
-
 	})(window.Qwile);
+
+	Qwile.openApp("Player", "58ab1532d3c4b878ce485a31", {
+
+		left: 480,
+		top: 200
+
+	});
+
+	Qwile.openApp("Conductor", "58ab1513d3c4b878ce485a22", {
+
+		left: 180,
+		top: 100,
+		width: 800
+
+	});
 
 });

@@ -146,7 +146,7 @@ $(window).ready(function() {
 						$('body').mousedown(function(e) {
 							if ($(e.target).is(":not(.window *, .task, .task *)")) {
 
-								_.each(Qwile.apps.models, function (model) {
+								_.each(Qwile.processes.models, function (model) {
 
 									var view = model.view;
 									if (view.isActive && !view.fullScreenCache.shown) {
