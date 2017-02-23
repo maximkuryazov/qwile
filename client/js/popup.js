@@ -4,12 +4,14 @@
 
 define(["backbone"], function (Backbone) {
 
-	Qwile.Popup = Backbone.View.extend({
+	Qwile.popup = {};
+	Qwile.popup.View = Backbone.View.extend({
 
 		initialize: function (options) {
 
 			this.options = options;
 			this.el = document.createElement("div");
+			this.options.model.view = this;
 			this.render();
 
 		},
@@ -17,7 +19,7 @@ define(["backbone"], function (Backbone) {
 		render: function () {
 
 			var template = _.template($("#popup-view").html());
-			this.$el.html(template(this.options));
+			this.$el.html(template(this.options.model.toJSON()));
 
 			this.$el.appendTo(".wrapper");
 			this.$popup = this.$el.find(".desktop-notification");
@@ -27,35 +29,50 @@ define(["backbone"], function (Backbone) {
 		events: {
 
 			"click .close":   "remove",
-			"click .content": "gotToApp"
+			"click .content": "goToApp"
 
 		},
 
 		show: function () {
 
- 			this.$popup.animate({ bottom: 40 }, "slow", function () {
+			_.each(Qwile.popup.currentPopups.models, function (model) {
+
+				// destroy all previous popups or shift them up
+				model.view.remove();
+
+			}, this);
+
+ 			this.$popup.animate({ bottom: 40 }, "slow", _.bind(function () {
 
 				var sound = new Howl({
 					src: ["sounds/message.mp3"]
 				});
 				if (Qwile.settings.sound) sound.play();
+
 				$(this).css("z-index", "1001");
 
-			});
+				Qwile.popup.currentPopups.add(this.options.model);
+				console.log("CurrentPopups: ", Qwile.popup.currentPopups);
+
+			}, this));
 
 		},
 
 		remove: function () {
 
 			this.$popup.animate({
-				transform: 'skewX(-85deg) scale(.1)'
+				transform: "skewX(-85deg) scale(.1)"
 			}, _.bind(function () {
+
 				this.$el.remove();
+				Qwile.popup.currentPopups.remove(this.options.model);
+				console.log("CurrentPopups: ", Qwile.popup.currentPopups);
+
 			}, this));
 			
 		},
 
-		gotToApp: function () {
+		goToApp: function () {
 
 			this.remove();
 			var sound = new Howl({
@@ -91,31 +108,33 @@ define(["backbone"], function (Backbone) {
 
 	});
 
-	_.extend(Qwile.Popup, Backbone.Events);
+	_.extend(Qwile.popup, Backbone.Events);
 
-	Qwile.Popup.on("push", function (options) {
+	Qwile.popup.on("push", function (options) {
 
-		var popup = new Qwile.Popup(options.data);
+		var popup = new Qwile.popup.View(options);
 		popup[options.method].apply(popup, options.arguments);
 
 	});
+	Qwile.popup.Model = Backbone.Model.extend({});
+	Qwile.popup.currentPopups = new Backbone.Collection;
 
 	setTimeout(function () {
 
 		var options = {
 
-			data: {
+			model: new Qwile.popup.Model({
 
 				picture: "image.jpg",
 				title: "Alina Solopova",
 				message: "had shared a private folder with you."
 
-			},
+			}),
 			method: "showWithBlink",
 			arguments: [3000, 800]
 
 		};
-		Qwile.Popup.trigger("push", options);
+		Qwile.popup.trigger("push", options);
 
 	}, 5000);
 
