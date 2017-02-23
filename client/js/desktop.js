@@ -38,15 +38,7 @@ $(window).ready(function() {
 							$('.window, .widget').fadeIn('slow');
 							$('#leftpanel').animate({ left: 0 }, 'slow');
 							$('#profile').animate({ right: 0 }, 'slow', function() {
-								/*$('.desktop-notification').animate({ bottom: 40 }, 'slow', function() {
-
-									var sound = new Howl({
-										src: ['sounds/message.mp3']
-									});
-									if (Qwile.settings.sound) sound.play();
-
-								});*/
-
+								// here notification was shown
 							});
 
 						});
@@ -65,27 +57,7 @@ $(window).ready(function() {
 						}, time);
 
 						$('#leftpanel').mouseleave(hideLeftPanel).mouseover(showLeftPanel);
-/*
-						function hideNotification() {
-							$('.desktop-notification').animate({
-								transform: 'skewX(-85deg) scale(.1)'
-							}, function() {
-								$(this).hide();
-							});
-						}
-*/
-						//$('.desktop-notification .close').click(hideNotification);
-/*
-						$(".desktop-notification .content").click(function() {
 
-							hideNotification();
-							var sound = new Howl({
-								src: ['sounds/close.mp3']
-							});
-							if (Qwile.settings.sound) sound.play();
-
-						});
-*/
 						$('.widget .close').click(function() {
 							$(this).parents('.widget').fadeOut();
 						});
@@ -139,9 +111,11 @@ $(window).ready(function() {
 						});
 
 						$("#profile").resizable({
+							
 							handles: "w",
 							minWidth: 200,
 							maxWidth: 400
+							
 						});
 
 						$('body').mousedown(function(e) {

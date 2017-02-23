@@ -9,3 +9,5 @@ mongodump --out C:\qwile\dump
 
 MongoDB installation guide:
 https://code.msdn.microsoft.com/Mongo-Database-setup-on-6963f46f
+
+Skype may block 80 port.

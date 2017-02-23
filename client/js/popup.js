@@ -4,7 +4,7 @@
 
 define(["backbone"], function (Backbone) {
 
-	Qwile.popup = Backbone.View.extend({
+	Qwile.Popup = Backbone.View.extend({
 
 		initialize: function (options) {
 
@@ -87,24 +87,35 @@ define(["backbone"], function (Backbone) {
 
 			}, this), interval);
 
-		},
+		}
 
 	});
 
-	var settings = {
+	_.extend(Qwile.Popup, Backbone.Events);
 
-		picture: "image.jpg",
-		title: "Alina Solopova",
-		message: "had shared a private folder with you."
+	Qwile.Popup.on("push", function (options) {
 
-	};
+		var popup = new Qwile.Popup(options.data);
+		popup[options.method].apply(popup, options.arguments);
+
+	});
 
 	setTimeout(function () {
 
-		// everything is loaded on desktop
+		var options = {
 
-		var popup = new Qwile.popup(settings);
-		popup.show(3000, 800);
+			data: {
+
+				picture: "image.jpg",
+				title: "Alina Solopova",
+				message: "had shared a private folder with you."
+
+			},
+			method: "showWithBlink",
+			arguments: [3000, 800]
+
+		};
+		Qwile.Popup.trigger("push", options);
 
 	}, 5000);
 
