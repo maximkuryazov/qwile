@@ -4,7 +4,7 @@ $(window).ready(function() {
 	var loadingAnimateTime 	= 0; 		// 5000
 	var logoAnimateTime 	= 0;		// 1800
 
-	var SOUND = true;
+	Qwile.settings.sound = true;
 
 	var inithtml = $('div#digits').html();
 	var interval;
@@ -38,14 +38,15 @@ $(window).ready(function() {
 							$('.window, .widget').fadeIn('slow');
 							$('#leftpanel').animate({ left: 0 }, 'slow');
 							$('#profile').animate({ right: 0 }, 'slow', function() {
-								$('.desktop-notification').animate({ bottom: 40 }, 'slow', function() {
+								/*$('.desktop-notification').animate({ bottom: 40 }, 'slow', function() {
 
 									var sound = new Howl({
 										src: ['sounds/message.mp3']
 									});
-									if (SOUND) sound.play();
+									if (Qwile.settings.sound) sound.play();
 
-								});
+								});*/
+
 							});
 
 						});
@@ -54,9 +55,9 @@ $(window).ready(function() {
 
 						var time = 200;
 						var hideLeftPanel = _.debounce(function () {
-								if ($("#widget_select").is(":hidden")) {
-									$(this).stop().animate({left: -$(this).width() + "px"}, 'fast');
-								}
+							if ($("#widget_select").is(":hidden")) {
+								$(this).stop().animate({ left: -$(this).width() + "px"}, 'fast');
+							}
 						}, time);
 
 						var showLeftPanel = _.debounce(function() {
@@ -64,7 +65,7 @@ $(window).ready(function() {
 						}, time);
 
 						$('#leftpanel').mouseleave(hideLeftPanel).mouseover(showLeftPanel);
-
+/*
 						function hideNotification() {
 							$('.desktop-notification').animate({
 								transform: 'skewX(-85deg) scale(.1)'
@@ -72,19 +73,19 @@ $(window).ready(function() {
 								$(this).hide();
 							});
 						}
-
-						$('.desktop-notification .close').click(hideNotification);
-
+*/
+						//$('.desktop-notification .close').click(hideNotification);
+/*
 						$(".desktop-notification .content").click(function() {
 
 							hideNotification();
 							var sound = new Howl({
 								src: ['sounds/close.mp3']
 							});
-							if (SOUND) sound.play();
+							if (Qwile.settings.sound) sound.play();
 
 						});
-
+*/
 						$('.widget .close').click(function() {
 							$(this).parents('.widget').fadeOut();
 						});
@@ -189,7 +190,7 @@ $(window).ready(function() {
 									var sound = new Howl({
 										src: ['sounds/logout.mp3']
 									});
-									if (SOUND) sound.play();
+									if (Qwile.settings.sound) sound.play();
 									$(document.body).fadeOut(1000, function() {
 										window.location.href = '/';
 									});
@@ -237,8 +238,8 @@ $(window).ready(function() {
 						$soundTab.on("click tap", function() {
 
 							$(this).toggleClass("disabled");
-							SOUND = !$(this).hasClass("disabled");
-							if (SOUND) {
+							Qwile.settings.sound = !$(this).hasClass("disabled");
+							if (Qwile.settings.sound) {
 								var soundsOnSound = new Howl({
 									src: ['sounds/unmute.mp3']
 								});
@@ -246,7 +247,7 @@ $(window).ready(function() {
 							}
 
 						});
-						if (!SOUND) $soundTab.addClass("disabled");
+						if (!Qwile.settings.sound) $soundTab.addClass("disabled");
 
 					});
 

@@ -8,6 +8,7 @@
 	Qwile.app = new Function();
 	Qwile.widget = new Function();
 	Qwile.file = new Function();
+	Qwile.settings = {};
 
 	var baseURL = "";
 	var port = Qwile.serverPort = "80";
@@ -73,7 +74,7 @@
 
 					}
 					onPageLoad();
-					if (template == "desktop") require(["app", "howler"]);
+					if (template == "desktop") require(["howler", "app", "popup"]);
 
 				});
 			}
