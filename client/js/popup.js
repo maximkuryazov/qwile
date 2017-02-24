@@ -2,7 +2,7 @@
  * Created by User on 2/23/2017.
  */
 
-define(["backbone"], function (Backbone) {
+define(["backbone", "app"], function (Backbone) {
 
 	Qwile.popup = {};
 	Qwile.popup.View = Backbone.View.extend({
@@ -108,34 +108,30 @@ define(["backbone"], function (Backbone) {
 
 	});
 
-	_.extend(Qwile.popup, Backbone.Events);
+	Qwile.popup.Model = Backbone.Model.extend({});
+	Qwile.popup.currentPopups = new Backbone.Collection;
 
+	_.extend(Qwile.popup, Backbone.Events);
 	Qwile.popup.on("push", function (options) {
 
 		var popup = new Qwile.popup.View(options);
 		popup[options.method].apply(popup, options.arguments);
 
 	});
-	Qwile.popup.Model = Backbone.Model.extend({});
-	Qwile.popup.currentPopups = new Backbone.Collection;
 
-	setTimeout(function () {
+	Qwile.popup.addAppListeners = function () {
+		_.each(Qwile.processes.models, function (model) {
 
-		var options = {
+			_.extend(model, Backbone.Events);
+			model.on("push", function (options) {
 
-			model: new Qwile.popup.Model({
+				var popup = new Qwile.popup.View(options);
+				popup[options.method].apply(popup, options.arguments);
 
-				picture: "image.jpg",
-				title: "Alina Solopova",
-				message: "had shared a private folder with you."
+			});
 
-			}),
-			method: "showWithBlink",
-			arguments: [3000, 800]
-
-		};
-		Qwile.popup.trigger("push", options);
-
-	}, 5000);
-
+		});
+	};
+	Qwile.processes.bind("add", Qwile.popup.addAppListeners, this);
+	
 });

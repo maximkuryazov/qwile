@@ -38,7 +38,22 @@ $(window).ready(function() {
 							$('.window, .widget').fadeIn('slow');
 							$('#leftpanel').animate({ left: 0 }, 'slow');
 							$('#profile').animate({ right: 0 }, 'slow', function() {
-								// here notification was shown
+
+								var options = {
+
+									model: new Qwile.popup.Model({
+
+										picture: "image.jpg",
+										title: "Alina Solopova",
+										message: "had shared a private folder with you."
+
+									}),
+									method: "showWithBlink",
+									arguments: [3000, 800]
+
+								};
+								Qwile.popup.trigger("push", options);
+
 							});
 
 						});

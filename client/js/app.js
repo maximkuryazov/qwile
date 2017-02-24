@@ -176,6 +176,20 @@ define(["backbone"], function (Backbone) {
 			
 			hidedown: function () {
 
+				this.model.trigger("push", {
+
+					model: new Qwile.popup.Model({
+
+						picture: "image.jpg",
+						title: this.model.get("name"),
+						message: "You hide the app."
+
+					}),
+					method: "showWithBlink",
+					arguments: [3000, 800]
+
+				});
+
 				var $window = this.$window;
 				var cache = this.cache;
 
@@ -381,7 +395,7 @@ define(["backbone"], function (Backbone) {
 			instances[name].model.view = instances[name].view;
 			instances[name].view.run(position);
 
-		}
+		};
 
 		Qwile.openApp = function (name, id, options) {
 			$.get("/app/get", "id=" + id, function (response) {
