@@ -65,6 +65,7 @@ define(["backbone", "app"], function (Backbone) {
 			}, _.bind(function () {
 
 				this.$el.remove();
+				this.options.model.off("push");
 				Qwile.popup.currentPopups.remove(this.options.model);
 				console.log("CurrentPopups: ", Qwile.popup.currentPopups);
 
@@ -119,11 +120,11 @@ define(["backbone", "app"], function (Backbone) {
 
 	});
 
-	Qwile.popup.addAppListeners = function () {
+	Qwile.popup.resetAppListeners = function () {
 		_.each(Qwile.processes.models, function (model) {
 
 			_.extend(model, Backbone.Events);
-			model.on("push", function (options) {
+			model.off("push").on("push", function (options) {
 
 				var popup = new Qwile.popup.View(options);
 				popup[options.method].apply(popup, options.arguments);
@@ -132,6 +133,6 @@ define(["backbone", "app"], function (Backbone) {
 
 		});
 	};
-	Qwile.processes.bind("add", Qwile.popup.addAppListeners, this);
+	Qwile.processes.bind("add", Qwile.popup.resetAppListeners, this);
 	
 });
