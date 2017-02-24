@@ -80,6 +80,7 @@ define(["backbone", "app"], function (Backbone) {
 				src: ["sounds/close.mp3"]
 			});
 			if (Qwile.settings.sound) sound.play();
+			this.options.boundAppModel.view.activate();
 
 		},
 
@@ -126,6 +127,7 @@ define(["backbone", "app"], function (Backbone) {
 			_.extend(model, Backbone.Events);
 			model.off("push").on("push", function (options) {
 
+				options.boundAppModel = this;
 				var popup = new Qwile.popup.View(options);
 				popup[options.method].apply(popup, options.arguments);
 
