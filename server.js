@@ -12,6 +12,7 @@
     const crypto = require('crypto');
     const cookieParser = require('cookie-parser');
     const session = require('express-session');
+    const fileUpload = require('express-fileupload');
 
     const port = 80;
 
@@ -26,6 +27,7 @@
     var app = express();
     app.use(cookieParser());
     app.use(compression());
+    app.use(fileUpload());
 
     app.use(session({
         
@@ -38,7 +40,6 @@
         extended: true
     }));
     app.use(bodyParser.json());         // to support JSON-encoded bodies
-
     app.set('view engine', 'jade');
     app.set('views', path.join(__dirname, '/client/views'));
 

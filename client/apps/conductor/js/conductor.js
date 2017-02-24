@@ -78,6 +78,8 @@ function fileSelected () {
 
 		// complete
 
+		$("#upload-form").submit();
+
 		$(this).css("background", "#42ff71").fadeOut("slow", function() {
 
 			$(this).css("background", "#bee8ff").width(0);

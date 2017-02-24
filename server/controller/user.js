@@ -209,6 +209,7 @@ module.exports = function (app, user) {
 
 					}
 					req.session.email = req.body.email;
+					req.session.currentUserId = document._id;
 					sendResponse(true, remember, true);
 
 				} else {

@@ -139,7 +139,12 @@ module.exports = (function() {
 				
 			});
 
+		},
+
+		get: function ( ) {
+
 		}
+		
 	};
 	return constructor;
 
