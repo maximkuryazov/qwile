@@ -1,10 +1,12 @@
 var $table = $('.conductor-table');
 
 $table.DataTable({
+
 	paging: false,
 	ordering: true,
 	bLengthChange: false,
 	bInfo: false
+
 });
 
 $(".dataTables_filter input").attr("placeholder", "Start typing to search in this directory").appendTo(".conductor-search");
@@ -72,41 +74,49 @@ $(document.body).delegate("li.delete", "click", function() {
 
 function fileSelected () {
 
-	$(".progress").show().animate({
-		width: "100%"
-	}, 2000, function() {
+	var $progressBar = $(".progress").show();
+	$("#upload-form").ajaxSubmit({
 
-		// complete
+		beforeSend: function() {
 
-		$("#upload-form").submit();
+		},
 
-		$(this).css("background", "#42ff71").fadeOut("slow", function() {
+		uploadProgress: function(event, position, total, percentComplete) {
+			$progressBar.css("width", percentComplete + "%");
+		},
 
-			$(this).css("background", "#bee8ff").width(0);
+		complete: function(xhr) {
 
-			var Q = window.parent.Qwile;
-			var model = Q.processes.find(function(model) {
-				return model.get("name") === "Conductor";
-			});
+			var data = JSON.parse(xhr.responseText);
+			if (data.success) {
+				$progressBar.css("background", "#42ff71").fadeOut("slow", function() {
 
-			model.trigger("push", {
+					$(this).css("background", "#bee8ff").width(0);
 
-				model: new Q.popup.Model({
+					var Q = window.parent.Qwile;
+					var model = Q.processes.find(function(model) {
+						return model.get("name") === "Conductor";
+					});
 
-					picture: "conductor.png",
-					title: model.get("name"),
-					message: "Upload finished. Your file has been successfully uploaded."
+					model.trigger("push", {
 
-				}),
-				method: "showWithBlink",
-				arguments: [3000, 800]
+						model: new Q.popup.Model({
 
-			});
+							picture: "conductor.png",
+							title: model.get("name"),
+							message: data.message
 
-		});
-		// re-render all the table from server
+						}),
+						method: "showWithBlink",
+						arguments: [3000, 800]
+
+					});
+					// re-render all the table from server
+				});
+			}
+		}
+
 	});
-
 }
 
 Tipped.create(".dropdown-menu .upload", function(element) {
