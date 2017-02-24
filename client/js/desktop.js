@@ -117,8 +117,14 @@ $(window).ready(function() {
 						});
 
 						$("#profile .area td:not(.photo)").delegate("div", "click", function () {
-							var value = prompt("Enter a new value: ");
-							$(".value", this).text(value);
+							var self = this;
+							$("#shadow").fadeIn('fast', function() {
+								var value = prompt("Enter a new value: ");
+								if (value) {
+									$(".value", self).text(value);
+									$("#shadow").fadeOut('fast');
+								}
+							});
 						});
 
 						$("#profile .profile-photo").on("click tap", function() {
@@ -152,10 +158,12 @@ $(window).ready(function() {
 
 						$('#quit').click(function() {
 							$('#shadow').fadeIn('fast');
+							$("#shadow .dialog-content").show();
 						});
 
 						$('#shadow').click(function(e) {
 							$(this).fadeOut('fast');
+							$("#shadow .dialog-content").hide();
 							e.stopImmediatePropagation();
 						});
 
@@ -189,6 +197,15 @@ $(window).ready(function() {
 						});
 
 						/* Exit modal ends */
+
+						$('#settings').click(function() {
+							$('#shadow').fadeIn('fast');
+						});
+
+						$('#announce div').click(function() {
+							$('#shadow').fadeIn('fast');
+							$(this).parent().find("span.new").hide();
+						});
 
 						Tipped.create('#quit', function(element) {
 							return '<span class="tooptip-text">Quit</span>';

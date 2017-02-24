@@ -46,6 +46,20 @@ module.exports = (function() {
 				}
 
 			});
+		},
+
+		getAllApps: function (callback) {
+			private.AppModel.find({}, function (error, documents) {
+
+				if (!error) callback.call(this, documents);
+				else {
+
+					console.log("Error " + error + " occurred.");
+					callback.call(this, documents, error);
+
+				}
+
+			}).limit(20);
 		}
 
 	};

@@ -31,6 +31,24 @@ module.exports = function (app, user, mongoose, db) {
 		});
 	});
 
+	app.get("/app/get/all", function (req, res) {
+		appModel.getAllApps(function (documents, error) {
+
+			console.log("List of return apps:  ", documents);
+			if (!error) {
+				res.render("apps", {
+					apps: documents
+				});
+			} else {
+
+				res.setHeader("Content-Type", "text/plain charset=utf-8");
+				res.status(500).send("Error " + error + "occurred.");
+
+			}
+
+		});
+	});
+
 	app.post("/app/upload", function (req, res) {
 
 		console.log("FILES: ", req.files);

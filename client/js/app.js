@@ -176,7 +176,7 @@ define(["backbone"], function (Backbone) {
 			
 			hidedown: function () {
 
-				this.sendPopup();
+				// this.sendPopup();
 
 				var $window = this.$window;
 				var cache = this.cache;
