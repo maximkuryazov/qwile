@@ -54,6 +54,32 @@ module.exports = function (app, user, mongoose, db) {
 		});
 	});
 
+	app.put('/app/add', function (req, res) {
+
+		console.log("App ID: ", req.body.id);
+		res.setHeader("Content-Type", "application/json");
+		appModel.add(req.session.currentUserId, req.body.id, function (document, error) {
+			if (!error) {
+
+				console.log("Inserted document: ", document);
+				res.status(200).send(JSON.stringify({
+					success: true
+				}));
+
+			} else {
+
+				console.log(error);
+				res.status(503).send(JSON.stringify({
+
+					success: false,
+					error: error
+
+				}));
+			}
+		});
+
+	});
+
 	app.post("/app/upload", function (req, res) {
 
 		console.log("FILES: ", req.files);

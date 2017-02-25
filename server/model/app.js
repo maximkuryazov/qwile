@@ -30,6 +30,14 @@ module.exports = (function() {
 		
 		private.AppModel = mongoose.model("App", appSchema);
 
+		var appsUsersSchema = private.mongoose.Schema({
+
+			app: String,
+			user: String
+
+		});
+		private.AppsUsersModel = private.mongoose.model("Apps-user", appsUsersSchema);
+
 	}
 
 	constructor.prototype = {
@@ -60,6 +68,36 @@ module.exports = (function() {
 				}
 
 			}).limit(20);
+		},
+
+		add: function (userId, appId, callback) {
+			private.AppsUsersModel.findOne({
+
+				app: appId,
+				user: userId
+
+			}, function (error, document) {
+				if (!error) {
+					if (document) {
+						callback(document, "Document already exists.");
+					} else {
+
+						var relationship = new private.AppsUsersModel({
+
+							app: appId,
+							user: userId
+
+						});
+						relationship.save(function (error, document) {
+
+							if (!error) callback(document);
+							else callback(document, error);
+
+						});
+
+					}
+				}
+			});
 		}
 
 	};

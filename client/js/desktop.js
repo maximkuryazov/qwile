@@ -268,8 +268,38 @@ $(window).ready(function() {
 		$("ul#apps-list").html(data);
 	});
 
-	/*************** test.js *********************** */
+	$("#menu").delegate(".switcher", "click", function () {
 
+		var self = this;
+		$.ajax({
+			
+			url: "/app/add",
+			method: "PUT",
+			data: "id=" + $(this).parents("li").data("app-id"),
+			success: function(data) {
+				if (data.success) {
+					$(self).parents("li").addClass("added");
+				}
+			},
+			error: function (request, status, error) {
+
+				try {
+
+					var data = JSON.parse(request.responseText);
+					if (!data.success) {
+						console.log("Error message: " + data.error);
+					}
+
+				} catch (error) {
+					console.log("Error", error);
+				}
+			}
+
+		});
+
+	});
+
+	/*************** test.js *********************** */
 
 	var bool = true;
 
