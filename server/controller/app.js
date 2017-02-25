@@ -36,9 +36,14 @@ module.exports = function (app, user, mongoose, db) {
 
 			console.log("List of return apps:  ", documents);
 			if (!error) {
+
+				documents.forEach(function (app, index) {
+					app.added = index > 0 ? true : false;
+				});
 				res.render("apps", {
 					apps: documents
 				});
+
 			} else {
 
 				res.setHeader("Content-Type", "text/plain charset=utf-8");

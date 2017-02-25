@@ -1,19 +1,25 @@
 each app in apps
-   li.added
-      table
-         tr
-            td.icon
-               img(src="img/#{app.icon}")
-            td.content
-               .top
-                  .name= app.name
-                  .rating
-                     .star.filled
-                     .star.filled
-                     .star.blank
-                     .star.blank
-                     .star.blank
-               .bottom
-                  .description= app.description
-                  .developer= app.developer
-            td.switcher
+   if app.added
+      li.added
+         block app-layout
+            table
+               tr
+                  td.icon
+                     img(src="img/#{app.icon}")
+                  td.content
+                     .top
+                        .name= app.name
+                        .rating
+                           - for (var i = 0; i < app.rating; i++) {
+                              .star.filled
+                           - }
+                           - for (var j = 0; j < 5 - app.rating; j++) {
+                              .star.blank
+                           - }
+                     .bottom
+                        .description= app.description
+                        .developer= app.developer
+                  td.switcher
+   else
+      li
+         block append app-layout
