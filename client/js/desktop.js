@@ -262,7 +262,14 @@ $(window).ready(function() {
 		});
 	});
 
+	/*************** menu ajax *********************** */
+
+	$.get("/app/get/all", function (data) {
+		$("ul#apps-list").html(data);
+	});
+
 	/*************** test.js *********************** */
+
 
 	var bool = true;
 
