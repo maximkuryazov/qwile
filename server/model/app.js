@@ -56,16 +56,33 @@ module.exports = (function() {
 			});
 		},
 
-		getAllApps: function (callback) {
+		getAllApps: function (callback, currentUserId) {
 			private.AppModel.find({}, function (error, documents) {
 
-				if (!error) callback.call(this, documents);
-				else {
+				private.AppsUsersModel.find({
+					user: currentUserId
+				},
+					function (appsUsersError, relationships) {
+						if (!appsUsersError) {
 
-					console.log("Error " + error + " occurred.");
-					callback.call(this, documents, error);
+							documents.forEach(function (document) {
+								relationships.forEach(function (relationship) {
+									if (document._id == relationship.app) {
+										document.added = true;
+									}
+								});
+							});
 
-				}
+							if (!error) callback.call(this, documents);
+							else {
+
+								console.log("Error " + error + " occurred.");
+								callback.call(this, documents, error);
+
+							}
+
+						}
+				});
 
 			}).limit(20);
 		},
