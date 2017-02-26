@@ -117,13 +117,29 @@ $(window).ready(function() {
 						});
 
 						$("#profile .area td:not(.photo)").delegate("div", "click", function () {
+							
 							var self = this;
-							$("#shadow").fadeIn('fast', function() {
+							$("#shadow").fadeIn("fast", function() {
+								
 								var value = prompt("Enter a new value: ");
 								if (value) {
-									$(".value", self).text(value);
-									$("#shadow").fadeOut('fast');
+									$.post("/user/set", { 
+										
+										field: $("span.name", self).text().replace(/:/g, "").toLowerCase(),
+										value: value
+										
+									}, function (data) {
+										
+										if (data.success) {
+											$(".value", self).text(value);
+										} else {
+											console.log("Error: ", data.error);
+										}
+										$("#shadow").fadeOut("fast");
+
+									});
 								}
+								
 							});
 						});
 

@@ -288,9 +288,9 @@ module.exports = function (app, user) {
 
 		//  TODO: Check password for inappropriate symbols
 
-		res.setHeader('Content-Type', 'application/json');
+		res.setHeader("Content-Type", "application/json");
 		setCrossDomainHeaders(res, req);
-		user.getByMail(req.body.email, function(document) {
+		user.getByMail(req.body.email, function (document) {
 			if (!document) {
 				res.send({
 
@@ -330,4 +330,29 @@ module.exports = function (app, user) {
 
 	});
 
-}
+	app.post("/user/set", function (req, res) {
+
+		res.setHeader("Content-Type", "application/json");
+		var options = {};
+		options[req.body.field] = req.body.value;
+		user.set(req.session.currentUserId, options, function (affected, error) {
+			if (!error) {
+
+				console.log("Affected rows: ", affected);
+				res.send({
+					success: true
+				});
+
+			} else {
+				res.send({
+
+					success: false,
+					error: error
+
+				});
+			}
+		});
+
+	});
+
+};

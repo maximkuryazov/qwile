@@ -78,20 +78,20 @@ script(src='js/desktop.js')
 			tr.area
 				td.info
 					.profile-personal-row(title="Click to edit your information")
-						span.name Name:
-						span.value #{user.firstname}
+						span.name Firstname:
+						span.value #{user.firstname || "unknown"}
 					.profile-personal-row(title="Click to edit your information")
 						span.name Lastname:
-						span.value #{user.lastname}
+						span.value #{user.lastname || "unknown"}
 					.profile-personal-row(title="Click to edit your information")
 						span.name Middlename:
-						span.value #{user.middlename}
+						span.value #{user.middlename || "unknown"}
 					.profile-personal-row(title="Click to edit your information")
 						span.name Age:
-						span.value #{user.age}
+						span.value #{user.age || "unknown"}
 					.profile-personal-row(title="Click to edit your information")
 						span.name Gender:
-						span.value #{user.gender}
+						span.value #{user.gender || "unknown"}
 			tr
 				td.header
 					| Link
