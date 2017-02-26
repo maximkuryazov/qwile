@@ -73,6 +73,9 @@ module.exports = (function() {
 								});
 							});
 
+							var _ = require("underscore-node");
+							documents =_.sortBy(documents, function(object) { return object.added; });
+
 							if (!error) callback.call(this, documents);
 							else {
 
