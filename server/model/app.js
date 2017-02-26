@@ -24,7 +24,8 @@ module.exports = (function() {
 			developer: String,
 			rating: Number,
 			iframe: Boolean,
-			scroll: Boolean
+			scroll: Boolean,
+			url: String
 			
 		});
 		

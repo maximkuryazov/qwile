@@ -297,6 +297,14 @@ $(window).ready(function() {
 
 		});
 
+	}).delegate("li.application", "dblclick", function () {
+
+		Qwile.openApp($(this).find(".name").text(), $(this).data("app-id"), {
+
+			left: 480,
+			top: 200
+
+		});
 	});
 
 	/*************** test.js *********************** */

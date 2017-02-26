@@ -178,9 +178,9 @@ script(src='js/desktop.js')
 					<% } %>
 					.window-block
 					<% if (iframe) { %>
-					iframe(src='apps/conductor/index.html')
+					iframe(src!="<%= url %>" frameborder="0" allowfullscreen="true")
 					<% } else { %>
-					iframe(src="https://www.youtube.com/embed/LZDh-18F_rA" frameborder="0" allowfullscreen="true")
+					// ajax
 					<% } %>
 	// //////////////// WINDOW END ///////////////////
 	// ***************** WIDGET START ****************
