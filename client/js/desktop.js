@@ -146,6 +146,21 @@ $(window).ready(function() {
 						$("#profile .profile-photo").on("click tap", function() {
 							$("#profile-photo-uploader").click();
 						});
+						$("#profile-photo-uploader").change(function() {
+							$("form#upload-photo").ajaxSubmit({
+								success: function (json) {
+
+									json = JSON.parse(json);
+									if (json.success) { // ../img/profile.png
+										$("aside#profile .photo .profile-photo").css("background", "url('/user/getPhoto?cache=" + Math.random() + "') no-repeat");
+									}
+
+								},
+								error: function () {
+									console.log("Error: ", null);
+								}
+							});
+						});
 
 						$("#profile").resizable({
 							

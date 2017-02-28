@@ -71,7 +71,8 @@ script(src='js/desktop.js')
 			tr.area.open
 				td.photo
 					.profile-photo(title="Click on the image to change your profile photo!")
-					input#profile-photo-uploader(type="file")
+					form#upload-photo(action="/user/uploadPhoto", enctype="multipart/form-data" ref="uploadForm" method="post" style="display: none;")
+						input#profile-photo-uploader(type="file", name="uploadedFile")
 			tr
 				td.header
 					| Info

@@ -354,5 +354,68 @@ module.exports = function (app, user) {
 		});
 
 	});
+	
+	app.post("/user/uploadPhoto", function (req, res) {
+
+		console.log("FILES: ", req.files);
+		console.log("ID: ", req.session.currentUserId);
+
+		if (!req.files) {
+			return res.status(400).send("No files were uploaded.");
+		} else {
+
+			var uploadedFile = req.files.uploadedFile;
+			var format = uploadedFile.name.split(".")[1].toLowerCase();
+
+			if (format != "jpeg" && format != "jpg" && format != "png" && format != "gif") {
+				return res.status(500).send(JSON.stringify({
+
+					success: false,
+					error: "You may upload only images."
+
+				}));
+			}
+			console.log("Size: ", req.headers["content-length"] +  " bytes");
+
+			if (req.headers["content-length"] > 2062336) {	// 1mb
+				return res.status(400).send("Your file is too big.");
+			} else {
+				uploadedFile.mv("./storage/" + req.session.currentUserId + "/__profile/" + "_currentPhoto." + format, function (error) {
+					if (error) {
+						return res.status(500).send(JSON.stringify({
+
+							success: false,
+							error: error
+
+						}));
+					} else {
+						return res.status(200).send(JSON.stringify({
+
+							success: true,
+							message: "Upload  finished. Your file has been successfully uploaded."
+
+						}));
+					}
+				});
+			}
+		}
+		
+	});
+
+	app.get("/user/getPhoto", function (req, res) {
+
+		var fs = require("fs");
+		fs.readFile("storage/" + req.session.currentUserId + "/__profile/_currentPhoto.jpg", function (error, data) {
+
+			if (error) {
+				return console.log(error);
+			}
+			console.log(data);
+			res.setHeader("Content-type", "image/jpeg");
+			res.end(data);
+
+		});
+
+	});
 
 };

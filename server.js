@@ -117,6 +117,13 @@
 
         });
 
+        app.get("/webrtc", function (req, res) {
+            var fs = require('fs');
+            fs.readFile('./client/apps/chat/index.html', "utf-8", function (error, data) {
+                res.send(data);
+            });
+        });
+
         app.get("/templateController", function (req, res) {
 
             console.log("Session: ", req.session.email);
