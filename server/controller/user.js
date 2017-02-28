@@ -8,6 +8,7 @@ module.exports = function (app, user) {
 	const crypto = require('crypto');
 	const cookieParser = require('cookie-parser');
 	const session = require('express-session');
+	const Jimp = require('jimp');
 	const port = 80;
 
 	function setCrossDomainHeaders(res, req) {
@@ -394,15 +395,25 @@ module.exports = function (app, user) {
 						}));
 					} else {
 
-						if (error) throw error;
-						console.log("Resized " + newImagePath + "min." + format + " to fit within 256x256px");
+						Jimp.read(newImagePath + newImageName + format, function (error, image) {
+							if (error) throw error;
 
-						return res.status(200).send(JSON.stringify({
+							// TODO: must save proportions
 
-							success: true,
-							message: "Upload  finished. Your file has been successfully uploaded."
+							image.resize(256, 256)
+								.quality(100)
+								//.greyscale()
+								.write(newImagePath + newImageName + "min." + "jpg");
 
-						}));
+							console.log("Resized " + newImageName + "min." + format + " to fit within 256x256px");
+							return res.status(200).send(JSON.stringify({
+
+								success: true,
+								message: "Upload  finished. Your file has been successfully uploaded."
+
+							}));
+
+						});
 
 					}
 				});
@@ -415,7 +426,7 @@ module.exports = function (app, user) {
 	app.get("/user/getPhoto", function (req, res) {
 
 		var fs = require("fs");
-		fs.readFile("storage/" + req.session.currentUserId + "/__profile/_currentPhoto.jpg", function (error, data) {
+		fs.readFile("storage/" + req.session.currentUserId + "/__profile/_currentPhoto.min.jpg", function (error, data) {
 
 			if (error) {
 				return console.log(error);

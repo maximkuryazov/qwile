@@ -151,13 +151,24 @@ $(window).ready(function() {
 								success: function (json) {
 
 									json = JSON.parse(json);
-									if (json.success) { // ../img/profile.png
-										$("aside#profile .photo .profile-photo").css("background", "url('/user/getPhoto?cache=" + Math.random() + "') no-repeat");
+									if (json.success) {
+										$("aside#profile .photo .profile-photo")
+											.css("background", "url('/user/getPhoto?cache=" + Math.random() + "') no-repeat");
 									}
 
 								},
-								error: function () {
-									console.log("Error: ", null);
+								error: function (xhr, error) {
+
+									console.error("Error: ", error);
+									try {
+
+										var json = JSON.parse(xhr.responseText);
+										alert(json.error);
+
+									} catch (error) {
+										console.error("Error: ", error);
+									}
+
 								}
 							});
 						});

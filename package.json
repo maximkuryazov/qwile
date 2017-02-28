@@ -13,6 +13,7 @@
     "express-fileupload": "^0.1.1",
     "gulp": "^3.9.1",
     "jade": "1.11.0",
+    "jimp": "^0.2.27",
     "mongoose": "4.7.9",
     "nib": "1.1.x",
     "node-gyp": "^3.5.0",
