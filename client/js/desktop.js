@@ -111,6 +111,7 @@ $(window).ready(function() {
 									});
 									$("#profile .area").eq(i).slideDown(0, function () {
 										$(this).addClass("open").find("div").hide().slideDown("slow");
+										$(this).find("td.photo").hide().slideDown("slow");
 									});
 								}
 							});
@@ -153,7 +154,8 @@ $(window).ready(function() {
 									json = JSON.parse(json);
 									if (json.success) {
 										$("aside#profile .photo .profile-photo")
-											.css("background", "url('/user/getPhoto?cache=" + Math.random() + "') no-repeat");
+											//.css("background", "url('/user/getPhoto?cache=" + Math.random() + "') no-repeat");
+											.attr("src", "/user/getPhoto?cache=" + Math.random());
 									}
 
 								},
@@ -274,12 +276,20 @@ $(window).ready(function() {
 						}, 1000);
 
 						$("#leftpanel tr").each(function() {
-							
+
 							var title = $(this).attr('title');
 							Tipped.create(this, function(element) {
 								return '<span class="tooptip-text">' + title + '</span>';
 							}, { position: 'right', skin: 'blue', showDelay: 1000 });
-							
+
+						});
+
+						$("tr.area div").each(function() {
+
+							Tipped.create(this, function() {
+								return '<span class="tooptip-text">Click to edit your information</span>';
+							}, { position: "left" });
+
 						});
 
 						var $soundTab = $("aside#leftpanel .sound");

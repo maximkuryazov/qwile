@@ -70,7 +70,7 @@ script(src='js/desktop.js')
 					| Profile
 			tr.area.open
 				td.photo
-					.profile-photo(title="Click on the image to change your profile photo!")
+					img.profile-photo(title="Click on the image to change your profile photo!", src="/user/getPhoto")
 					form#upload-photo(action="/user/uploadPhoto", enctype="multipart/form-data" ref="uploadForm" method="post" style="display: none;")
 						input#profile-photo-uploader(type="file", name="uploadedFile")
 			tr
@@ -78,19 +78,19 @@ script(src='js/desktop.js')
 					| Info
 			tr.area
 				td.info
-					.profile-personal-row(title="Click to edit your information")
+					.profile-personal-row
 						span.name Firstname:
 						span.value #{user.firstname || "unknown"}
-					.profile-personal-row(title="Click to edit your information")
+					.profile-personal-row
 						span.name Lastname:
 						span.value #{user.lastname || "unknown"}
-					.profile-personal-row(title="Click to edit your information")
+					.profile-personal-row
 						span.name Middlename:
 						span.value #{user.middlename || "unknown"}
-					.profile-personal-row(title="Click to edit your information")
+					.profile-personal-row
 						span.name Age:
 						span.value #{user.age || "unknown"}
-					.profile-personal-row(title="Click to edit your information")
+					.profile-personal-row
 						span.name Gender:
 						span.value #{user.gender || "unknown"}
 			tr
@@ -98,16 +98,16 @@ script(src='js/desktop.js')
 					| Link
 			tr.area
 				td.link
-					.profile-link-row(title="Click to edit your information")
+					.profile-link-row
 						span.name Mobile:
 						span.value +7 (915) 272-17-15
-					.profile-link-row(title="Click to edit your information")
+					.profile-link-row
 						span.name ICQ:
 						span.value 390-291-581
-					.profile-link-row(title="Click to edit your information")
+					.profile-link-row
 						span.name ICQ:
 						span.value 390-291-581
-					.profile-link-row(title="Click to edit your information")
+					.profile-link-row
 						span.name Email:
 						span.value #{user.email}
 			tr
@@ -115,16 +115,16 @@ script(src='js/desktop.js')
 					| Adress
 			tr.area
 				td.adress
-					.profile-adress-row(title="Click to edit your information")
+					.profile-adress-row
 						span.name Country:
 						span.value Russian Federation
-					.profile-adress-row(title="Click to edit your information")
+					.profile-adress-row
 						span.name City:
 						span.value Moscow
-					.profile-adress-row(title="Click to edit your information")
+					.profile-adress-row
 						span.name Street:
 						span.value Sumskaya
-					.profile-adress-row(title="Click to edit your information")
+					.profile-adress-row
 						span.name House
 						span.value 6/5
 			tr
@@ -132,16 +132,16 @@ script(src='js/desktop.js')
 					| Interests
 			tr.area
 				td.iterests
-					.profile-interest-row(title="Click to edit your information")
+					.profile-interest-row
 						span.name Occupation:
 						span.value Programming
-					.profile-interest-row(title="Click to edit your information")
+					.profile-interest-row
 						span.name Job:
 						span.value Qwile Incorporated
-					.profile-interest-row(title="Click to edit your information")
+					.profile-interest-row
 						span.name Position:
 						span.value Lead programmer
-					.profile-interest-row(title="Click to edit your information")
+					.profile-interest-row
 						span.name Hobbie:
 						span.value Chess, Swimming
 	// //////////////// USER END ///////////////

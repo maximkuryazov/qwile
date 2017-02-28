@@ -396,16 +396,13 @@ module.exports = function (app, user) {
 					} else {
 
 						Jimp.read(newImagePath + newImageName + format, function (error, image) {
+
 							if (error) throw error;
 
-							// TODO: must save proportions
-
-							image.resize(256, 256)
-								.quality(100)
-								//.greyscale()
+							image.resize(220, Jimp.AUTO).quality(100)
 								.write(newImagePath + newImageName + "min." + "jpg");
 
-							console.log("Resized " + newImageName + "min." + format + " to fit within 256x256px");
+							console.log("Resized " + newImageName + "min." + format + " to fit within 220xAUTO");
 							return res.status(200).send(JSON.stringify({
 
 								success: true,
