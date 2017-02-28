@@ -380,7 +380,11 @@ module.exports = function (app, user) {
 			if (req.headers["content-length"] > 2062336) {	// 1mb
 				return res.status(400).send("Your file is too big.");
 			} else {
-				uploadedFile.mv("./storage/" + req.session.currentUserId + "/__profile/" + "_currentPhoto." + format, function (error) {
+
+				var newImagePath = "./storage/" + req.session.currentUserId + "/__profile/";
+				var newImageName = "_currentPhoto.";
+
+				uploadedFile.mv(newImagePath + newImageName + format, function (error) {
 					if (error) {
 						return res.status(500).send(JSON.stringify({
 
@@ -389,14 +393,20 @@ module.exports = function (app, user) {
 
 						}));
 					} else {
+
+						if (error) throw error;
+						console.log("Resized " + newImagePath + "min." + format + " to fit within 256x256px");
+
 						return res.status(200).send(JSON.stringify({
 
 							success: true,
 							message: "Upload  finished. Your file has been successfully uploaded."
 
 						}));
+
 					}
 				});
+
 			}
 		}
 		
