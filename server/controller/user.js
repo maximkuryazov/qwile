@@ -398,11 +398,11 @@ module.exports = function (app, user) {
 						Jimp.read(newImagePath + newImageName + format, function (error, image) {
 
 							if (error) throw error;
-
-							image.resize(220, Jimp.AUTO).quality(100)
-								.write(newImagePath + newImageName + "min." + "jpg");
-
-							console.log("Resized " + newImageName + "min." + format + " to fit within 220xAUTO");
+							function saveResizedImage (width, path) {
+								image.resize(width, Jimp.AUTO).quality(100).write(path + "jpg");
+							}
+							saveResizedImage(220, newImagePath + newImageName);
+							saveResizedImage(50, newImagePath + newImageName + "min.");
 							return res.status(200).send(JSON.stringify({
 
 								success: true,
@@ -421,19 +421,17 @@ module.exports = function (app, user) {
 	});
 
 	app.get("/user/getPhoto", function (req, res) {
-
-		var fs = require("fs");
-		fs.readFile("storage/" + req.session.currentUserId + "/__profile/_currentPhoto.min.jpg", function (error, data) {
-
-			if (error) {
-				return console.log(error);
-			}
-			console.log(data);
+		user.getPhoto("_currentPhoto.jpg", req.session.currentUserId, function (data) {
 			res.setHeader("Content-type", "image/jpeg");
 			res.end(data);
-
 		});
+	});
 
+	app.get("/user/getPhotoIcon", function (req, res) {
+		user.getPhoto("_currentPhoto.min.jpg", req.session.currentUserId, function (data) {
+			res.setHeader("Content-type", "image/jpeg");
+			res.end(data);
+		});
 	});
 
 };

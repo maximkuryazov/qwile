@@ -143,6 +143,21 @@ module.exports = (function() {
 
 		get: function ( ) {
 
+		},
+
+		getPhoto : function (file, currentUserId, callback) {
+
+			var fs = require("fs");
+			fs.readFile("storage/" + currentUserId + "/__profile/" + file, function (error, data) {
+
+				if (error) {
+					return console.log(error);
+				}
+				console.log(data);
+				callback(data);
+
+			});
+
 		}
 		
 	};

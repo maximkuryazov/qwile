@@ -156,6 +156,7 @@ $(window).ready(function() {
 										$("aside#profile .photo .profile-photo")
 											//.css("background", "url('/user/getPhoto?cache=" + Math.random() + "') no-repeat");
 											.attr("src", "/user/getPhoto?cache=" + Math.random());
+										$("#photo div").css("background-image", "url('/user/getPhotoIcon?cache=" + Math.random() + "')");
 									}
 
 								},
