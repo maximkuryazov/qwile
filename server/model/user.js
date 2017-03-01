@@ -107,6 +107,8 @@ module.exports = (function() {
 
 					fs.mkdirSync(_dir + "/" + currentUser._id);
 					fs.mkdirSync(_dir + "/" + currentUser._id + "/__profile");
+					var writeStream = fs.createWriteStream(_dir + "/" + currentUser._id + "/__profile/_currentPhoto.jpg");
+					fs.createReadStream("./client/img/no-photo.jpg").pipe(writeStream);
 
 				}
 
@@ -146,8 +148,6 @@ module.exports = (function() {
 		},
 
 		getPhoto : function (file, currentUserId, callback) {
-
-			var fs = require("fs");
 			fs.readFile("storage/" + currentUserId + "/__profile/" + file, function (error, data) {
 
 				if (error) {
@@ -157,7 +157,6 @@ module.exports = (function() {
 				callback(data);
 
 			});
-
 		}
 		
 	};
