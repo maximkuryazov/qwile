@@ -183,6 +183,13 @@
             console.log('Dynamic server listening on port 80!');
         });
         var io = require('socket.io').listen(server);
+        // server:
+        io.on('connection', function (socket) {
+            console.log("Socket connected");
+            socket.on('ferret', function (name, fn) {
+                fn('woot');
+            });
+        });
 
     });
 
