@@ -1,6 +1,11 @@
-define(["backbone"], function (Backbone) {
+define(["backbone", "socketio"], function (Backbone, io) {
 
 	(function (Qwile) {
+
+		var socket = io("http://" + document.domain);
+		socket.on("connect", function () {
+			//alert(3);
+		});
 
 		Qwile.app.View = Backbone.View.extend({
 

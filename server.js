@@ -179,9 +179,10 @@
 
         });
 
-        app.listen(port, "0.0.0.0", function () {
+        var server = app.listen(port, "0.0.0.0", function () {
             console.log('Dynamic server listening on port 80!');
         });
+        var io = require('socket.io').listen(server);
 
     });
 

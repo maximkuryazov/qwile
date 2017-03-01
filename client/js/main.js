@@ -38,14 +38,15 @@
 			"jquery-form":      "lib/jquery.form.min",
 			"jquery-cookie":    "lib/jquery.cookie",
 			"jquery-transform": "lib/jquery.transform2d",
-			"howler":			"lib/howler"
+			"howler":			"lib/howler",
+			"socketio":         "lib/socket.io.min"
 		}
 	});
 
 	require(["jquery", "underscore", "tipped", "jquery-form", "jquery-ui", "jquery-cookie"], function($, _, Tipped) {
 
 		window.Tipped = Tipped;
-
+		
 		require(["jquery-transform"], function() {
 
 			$.ajaxSetup({
