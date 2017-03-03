@@ -1,14 +1,14 @@
-﻿link(rel='stylesheet', href='css/bootstrap.min.css')
-link(rel='stylesheet', href='css/dataTables.bootstrap.min.css')
-link(rel='stylesheet', href='css/bootstrap-theme.min.css')
-link(rel='stylesheet', href='css/tipped.css')
-script(src='js/jquery.min.js')
-script(src='js/jquery.form.min.js')
-script(src='js/bootstrap.min.js')
-script(src='js/jquery.dataTables.min.js')
-script(src='js/dataTables.bootstrap4.min.js')
-script(src='js/tipped.js')
-link(rel='stylesheet', type='text/css', href='css/conductor.css')
+﻿link(rel='stylesheet', href='/apps/conductor/css/bootstrap.min.css')
+link(rel='stylesheet', href='/apps/conductor/css/dataTables.bootstrap.min.css')
+link(rel='stylesheet', href='/apps/conductor/css/bootstrap-theme.min.css')
+link(rel='stylesheet', href='/apps/conductor/css/tipped.css')
+script(src='/apps/conductor/js/jquery.min.js')
+script(src='/apps/conductor/js/jquery.form.min.js')
+script(src='/apps/conductor/js/bootstrap.min.js')
+script(src='/apps/conductor/js/jquery.dataTables.min.js')
+script(src='/apps/conductor/js/dataTables.bootstrap4.min.js')
+script(src='/apps/conductor/js/tipped.js')
+link(rel='stylesheet', type='text/css', href='/apps/conductor/css/conductor.css')
 nav.navbar.navbar-default
 	form#upload-form(enctype='multipart/form-data', ref='uploadForm', method='post', style='display: none;', action='/app/upload')
 		input#attachment.file(type='file', name='upload', onchange='fileSelected(this)')
@@ -44,7 +44,7 @@ nav.navbar.navbar-default
 		.progress
 .input-group.input-group-sm.conductor-search-input.conductor-search
 	#sizing-addon3.input-group-addon
-		img(src='img/loop.png')
+		img(src='/apps/conductor/img/loop.png')
 table.conductor-table.table.table-striped.table-responsive.table-bordered
 	thead
 		tr
@@ -63,7 +63,7 @@ table.conductor-table.table.table-striped.table-responsive.table-bordered
 			td.box
 				input(type='checkbox')
 			td.icon
-				img(src='img/photo.png')
+				img(src='/apps/conductor/img/photo.png')
 			td.name John
 			td.date 01.07.2017 17.45
 			td.type Image
@@ -72,7 +72,7 @@ table.conductor-table.table.table-striped.table-responsive.table-bordered
 			td.box
 				input(type='checkbox')
 			td.icon
-				img(src='img/photo.png')
+				img(src='/apps/conductor/img/photo.png')
 			td.name Mary
 			td.date 02.03.2017 17.45
 			td.type Image
@@ -81,7 +81,7 @@ table.conductor-table.table.table-striped.table-responsive.table-bordered
 			td.box
 				input(type='checkbox')
 			td.icon
-				img(src='img/photo.png')
+				img(src='/apps/conductor/img/photo.png')
 			td.name Max
 			td.date 02.03.2017 17.45
 			td.type Image
@@ -90,7 +90,7 @@ table.conductor-table.table.table-striped.table-responsive.table-bordered
 			td.box
 				input(type='checkbox')
 			td.icon
-				img(src='img/folder.png')
+				img(src='/apps/conductor/img/folder.png')
 			td.name July
 			td.date 04.07.2017 17.45
 			td.type Folder
@@ -99,7 +99,7 @@ table.conductor-table.table.table-striped.table-responsive.table-bordered
 			td.box
 				input(type='checkbox')
 			td.icon
-				img(src='img/folder.png')
+				img(src='/apps/conductor/img/folder.png')
 			td.name May
 			td.date 04.07.2017 17.45
 			td.type Folder
@@ -108,7 +108,7 @@ table.conductor-table.table.table-striped.table-responsive.table-bordered
 			td.box
 				input(type='checkbox')
 			td.icon
-				img(src='img/folder.png')
+				img(src='/apps/conductor/img/folder.png')
 			td.name April
 			td.date 04.07.2017 17.45
 			td.type Folder
@@ -117,7 +117,7 @@ table.conductor-table.table.table-striped.table-responsive.table-bordered
 			td.box
 				input(type='checkbox')
 			td.icon
-				img(src='img/folder.png')
+				img(src='/apps/conductor/img/folder.png')
 			td.name March
 			td.date 04.07.2017 17.45
 			td.type Folder
@@ -126,7 +126,7 @@ table.conductor-table.table.table-striped.table-responsive.table-bordered
 			td.box
 				input(type='checkbox')
 			td.icon
-				img(src='img/folder.png')
+				img(src='/apps/conductor/img/folder.png')
 			td.name June
 			td.date 04.07.2017 17.45
 			td.type Folder
@@ -135,7 +135,7 @@ table.conductor-table.table.table-striped.table-responsive.table-bordered
 			td.box
 				input(type='checkbox')
 			td.icon
-				img(src='img/folder.png')
+				img(src='/apps/conductor/img/folder.png')
 			td.name July
 			td.date 04.07.2017 17.45
 			td.type Folder
@@ -144,7 +144,7 @@ table.conductor-table.table.table-striped.table-responsive.table-bordered
 			td.box
 				input(type='checkbox')
 			td.icon
-				img(src='img/folder.png')
+				img(src='/apps/conductor/img/folder.png')
 			td.name July
 			td.date 04.07.2017 17.45
 			td.type Folder
@@ -153,7 +153,7 @@ table.conductor-table.table.table-striped.table-responsive.table-bordered
 			td.box
 				input(type='checkbox')
 			td.icon
-				img(src='img/folder.png')
+				img(src='/apps/conductor/img/folder.png')
 			td.name July
 			td.date 04.07.2017 17.45
 			td.type Folder
@@ -162,7 +162,7 @@ table.conductor-table.table.table-striped.table-responsive.table-bordered
 			td.box
 				input(type='checkbox')
 			td.icon
-				img(src='img/folder.png')
+				img(src='/apps/conductor/img/folder.png')
 			td.name July
 			td.date 04.07.2017 17.45
 			td.type Folder
@@ -171,7 +171,7 @@ table.conductor-table.table.table-striped.table-responsive.table-bordered
 			td.box
 				input(type='checkbox')
 			td.icon
-				img(src='img/folder.png')
+				img(src='/apps/conductor/img/folder.png')
 			td.name July
 			td.date 04.07.2017 17.45
 			td.type Folder
@@ -180,9 +180,9 @@ table.conductor-table.table.table-striped.table-responsive.table-bordered
 			td.box
 				input(type='checkbox')
 			td.icon
-				img(src='img/folder.png')
+				img(src='/apps/conductor/img/folder.png')
 			td.name July
 			td.date 04.07.2017 17.45
 			td.type Folder
 			td.size 0 KB
-script(src='js/conductor.js')
+script(src='/apps/conductor/js/conductor.js')

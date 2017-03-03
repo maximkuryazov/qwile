@@ -41,7 +41,7 @@
     }));
     app.use(bodyParser.json());         // to support JSON-encoded bodies
     app.set('view engine', 'jade');
-    app.set('views', path.join(__dirname, '/client/views'));
+    app.set('views', path.join(__dirname, '/client/'));
 
     // timeout may affect long file uploads
     app.use(timeout(12000));
@@ -141,13 +141,13 @@
                         
                         res.cookie("redirect", "desktop");
                         console.log(document);
-                        res.render('desktop', { user: document });
+                        res.render('views/desktop', { user: document });
                         
                     });
                 } else {
                     
                     res.cookie("redirect", "/");
-                    res.render('login');
+                    res.render('views/login');
                     
                 }
             }
@@ -158,7 +158,7 @@
                         checkLogin();
                      } else {
                         res.cookie("redirect", "/");
-                        res.render('login');
+                        res.render('views/login');
                      }
                 break;
                 case "desktop":
