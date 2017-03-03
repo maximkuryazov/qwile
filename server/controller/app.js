@@ -108,4 +108,15 @@ module.exports = function (app, user, mongoose, db) {
 
 	});
 
+	app.get("/app/render", function (req, res) {
+
+		// TODO: check for req.query.id
+		appModel.getAppById(req.query.id, function (document, error) {
+			if (!error && document) {
+				res.render(document.url);
+			}
+		});
+
+	});
+
 };

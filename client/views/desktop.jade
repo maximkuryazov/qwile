@@ -179,7 +179,8 @@ script(src='js/desktop.js')
 					<% } %>
 					.window-block
 					<% if (iframe) { %>
-					iframe(src!="<%= url %>", frameborder="0", allowfullscreen="true", marginheight="0", marginwidth="0", height="100%", width="100%")
+					<% var appURL = native ? "/app/render?id=" + id : url; %>
+					iframe(src!="<%= appURL %>", frameborder="0", allowfullscreen="true", marginheight="0", marginwidth="0", height="100%", width="100%")
 					<% } else { %>
 					// ajax
 					<% } %>

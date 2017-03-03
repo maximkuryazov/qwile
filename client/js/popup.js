@@ -49,9 +49,7 @@ define(["backbone", "app"], function (Backbone) {
  			this.$popup.animate({ bottom: 40 }, "slow", _.bind(function () {
 
 				if (Qwile.settings.sound) this.sound.play();
-
 				$(this).css("z-index", "1001");
-
 				Qwile.popup.currentPopups.add(this.options.model);
 				console.log("CurrentPopups: ", Qwile.popup.currentPopups);
 
@@ -77,8 +75,13 @@ define(["backbone", "app"], function (Backbone) {
 		goToApp: function () {
 
 			this.remove();
-			if (Qwile.settings.sound) this.sound.play();
-			this.options.boundAppModel.view.activate();
+			var sound = new Howl({
+				src: ["sounds/close.mp3"]
+			});
+			if (Qwile.settings.sound) sound.play();
+			if (this.options.boundAppModel) {
+				this.options.boundAppModel.view.activate();
+			}
 
 		},
 
