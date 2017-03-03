@@ -366,7 +366,7 @@ module.exports = function (app, user) {
 		} else {
 
 			var uploadedFile = req.files.uploadedFile;
-			var format = uploadedFile.name.split(".")[1].toLowerCase();
+			var format = uploadedFile.name.replace(/(.*)(\.)(.*)$/, "$3").toLowerCase(); console.log(format);
 
 			if (format != "jpeg" && format != "jpg" && format != "png" && format != "gif") {
 				return res.status(500).send(JSON.stringify({
