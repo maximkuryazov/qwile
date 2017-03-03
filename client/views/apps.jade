@@ -9,7 +9,7 @@ each app in apps
                   td.content
                      .top
                         .name= app.name
-                        .rating
+                        .rating(title="Click to rate this application!")
                            - for (var i = 0; i < app.rating; i++) {
                               .star.filled
                            - }

@@ -333,7 +333,39 @@ $(window).ready(function() {
 	/*************** menu ajax *********************** */
 
 	$.get("/app/get/all", function (data) {
+
 		$("ul#apps-list").html(data);
+
+		var switcher = true;
+		$("ul#apps-list .rating").click(function() {
+
+			if (switcher) {
+
+				$(this).delegate(".star", "mouseover", function () {
+
+					var self = this;
+					$(this).parent().find(".star").each(function (index) {
+						if (index < $(self).index()) {
+							$(this).removeClass("blank").addClass("filled");
+
+						} else {
+							$(this).addClass("blank").removeClass("filled");
+						}
+					});
+					$(this).removeClass("blank").addClass("filled");
+
+				});
+				switcher = false;
+
+			} else {
+
+				switcher = true;
+				$(this).undelegate(".star", "mouseover");
+
+			}
+
+		});
+
 	});
 
 	$("#menu").delegate(".switcher", "click", function () {

@@ -36,7 +36,7 @@ module.exports = function (app, user, mongoose, db) {
 
 			console.log("List of return apps:  ", documents);
 			if (!error) {
-				res.render("apps", {
+				res.render("views/apps", {
 					apps: documents
 				});
 			} else {

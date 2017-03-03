@@ -25,7 +25,8 @@ module.exports = (function() {
 			rating: Number,
 			iframe: Boolean,
 			scroll: Boolean,
-			url: String
+			url: String,
+			native: Boolean
 			
 		});
 		
@@ -88,7 +89,7 @@ module.exports = (function() {
 						}
 				});
 
-			}).limit(20);
+			}).limit(10);
 		},
 
 		add: function (userId, appId, callback) {
