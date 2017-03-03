@@ -337,7 +337,7 @@ $(window).ready(function() {
 		$("ul#apps-list").html(data);
 
 		var switcher = true;
-		$("ul#apps-list .rating").click(function() {
+		$("ul#apps-list .rating").click(function (event) {
 
 			if (switcher) {
 
@@ -361,6 +361,9 @@ $(window).ready(function() {
 
 				switcher = true;
 				$(this).undelegate(".star", "mouseover");
+				$.get("/app/rate", { mark: $(event.target).index() + 1 }, function (data) {
+					alert(data);
+				});
 
 			}
 

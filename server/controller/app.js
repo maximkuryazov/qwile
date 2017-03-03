@@ -119,4 +119,9 @@ module.exports = function (app, user, mongoose, db) {
 
 	});
 
+	app.get("/app/rate", function (req, res) {
+		console.log(req.query.mark);
+		res.end(req.query.mark);
+	});
+
 };
