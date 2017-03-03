@@ -424,19 +424,4 @@ define(["backbone", "socketio"], function (Backbone, io) {
 
 	})(window.Qwile);
 
-	Qwile.openApp("Player", "58ab1532d3c4b878ce485a31", {
-
-		left: 480,
-		top: 200
-
-	});
-
-	Qwile.openApp("Conductor", "58ab1513d3c4b878ce485a22", {
-
-		left: 180,
-		top: 100,
-		width: 800
-
-	});
-
 });
