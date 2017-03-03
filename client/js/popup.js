@@ -12,7 +12,11 @@ define(["backbone", "app"], function (Backbone) {
 			this.options = options;
 			this.el = document.createElement("div");
 			this.options.model.view = this;
+			this.sound = new Howl({
+				src: [options.sound || "sounds/message.mp3"]
+			});
 			this.render();
+			console.log("Popup view options: ", options);
 
 		},
 
@@ -44,10 +48,7 @@ define(["backbone", "app"], function (Backbone) {
 
  			this.$popup.animate({ bottom: 40 }, "slow", _.bind(function () {
 
-				var sound = new Howl({
-					src: ["sounds/message.mp3"]
-				});
-				if (Qwile.settings.sound) sound.play();
+				if (Qwile.settings.sound) this.sound.play();
 
 				$(this).css("z-index", "1001");
 
@@ -76,10 +77,7 @@ define(["backbone", "app"], function (Backbone) {
 		goToApp: function () {
 
 			this.remove();
-			var sound = new Howl({
-				src: ["sounds/close.mp3"]
-			});
-			if (Qwile.settings.sound) sound.play();
+			if (Qwile.settings.sound) this.sound.play();
 			this.options.boundAppModel.view.activate();
 
 		},

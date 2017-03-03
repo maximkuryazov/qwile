@@ -108,7 +108,8 @@ function fileSelected () {
 
 						}),
 						method: "showWithBlink",
-						arguments: [3000, 800]
+						arguments: [3000, 800],
+						sound: "sounds/complete.mp3"
 
 					});
 					// re-render all the table from server
