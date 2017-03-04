@@ -346,13 +346,13 @@ $(window).ready(function() {
 					var self = this;
 					$(this).parent().find(".star").each(function (index) {
 						if (index < $(self).index()) {
-							$(this).removeClass("blank").addClass("filled");
+							$(this).removeClass("blank").addClass("rated filled");
 
 						} else {
-							$(this).addClass("blank").removeClass("filled");
+							$(this).addClass("blank").removeClass("rated filled");
 						}
 					});
-					$(this).removeClass("blank").addClass("filled");
+					$(this).removeClass("blank").addClass("rated");
 
 				});
 				switcher = false;

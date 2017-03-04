@@ -128,18 +128,21 @@ module.exports = function (app, user, mongoose, db) {
 					rating: calculatedRating
 				}, function (affected, error) {
 
-					res.setHeader("Content-type", "application/json")
+					res.setHeader("Content-type", "application/json");
 					if (!error)  {
+						appModel.setRelationProperty(req.query.id, req.session.currentUserId, {
+							voted: true
+						}, function (affected) {
+							if (affected) {
+								res.status(200).send(JSON.stringify({
 
-						appModel.setRelationProperty();
-						res.status(200).send(JSON.stringify({
+									success: true,
+									rating: calculatedRating
 
-							success: true,
-							rating: calculatedRating
-
-						}));
-					}
-					else {
+								}));
+							}
+						});
+					} else {
 						res.status(200).send(JSON.stringify({
 
 							success: false,
@@ -148,7 +151,7 @@ module.exports = function (app, user, mongoose, db) {
 						}));
 					}
 
-				})
+				});
 
 			}
 		});

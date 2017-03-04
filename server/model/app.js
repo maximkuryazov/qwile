@@ -38,7 +38,7 @@ module.exports = (function() {
 
 			app: String,
 			user: String,
-			voted: Number
+			voted: Boolean
 
 		});
 		private.AppsUsersModel = private.mongoose.model("Apps-user", appsUsersSchema);
@@ -96,6 +96,7 @@ module.exports = (function() {
 		},
 
 		add: function (userId, appId, callback) {
+			// TODO: Refactor (this.getRelation() to use)
 			private.AppsUsersModel.findOne({
 
 				app: appId,
@@ -136,8 +137,26 @@ module.exports = (function() {
 
 		},
 
-		setRelationProperty: function (app, user, options, callback) {
+		getRelation: function (appId, userId, callback) {
+			private.AppsUsersModel.findOne({
 
+				app: appId,
+				user: userId
+
+			}, callback);
+		},
+
+		setRelationProperty: function (app, user, options, callback) {
+			private.AppsUsersModel.update({ 
+				
+				app: app,
+				user: user
+				
+			}, {
+				$set: options,
+			}, function (error, affected) {
+				callback(affected, error);
+			});
 		}
 
 	};
