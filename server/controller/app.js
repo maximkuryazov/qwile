@@ -120,8 +120,38 @@ module.exports = function (app, user, mongoose, db) {
 	});
 
 	app.get("/app/rate", function (req, res) {
-		console.log(req.query.mark);
-		res.end(req.query.mark);
+		appModel.getAppById(req.query.id, function (document, error) {
+			if (!error && document) {
+
+				var calculatedRating = Math.round((Number(document.rating) + Number(req.query.mark)) / 2);
+				appModel.set(req.query.id, {
+					rating: calculatedRating
+				}, function (affected, error) {
+
+					res.setHeader("Content-type", "application/json")
+					if (!error)  {
+
+						appModel.setRelationProperty();
+						res.status(200).send(JSON.stringify({
+
+							success: true,
+							rating: calculatedRating
+
+						}));
+					}
+					else {
+						res.status(200).send(JSON.stringify({
+
+							success: false,
+							error: error
+
+						}));
+					}
+
+				})
+
+			}
+		});
 	});
 
 };

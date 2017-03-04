@@ -361,8 +361,13 @@ $(window).ready(function() {
 
 				switcher = true;
 				$(this).undelegate(".star", "mouseover");
-				$.get("/app/rate", { mark: $(event.target).index() + 1 }, function (data) {
-					alert(data);
+				$.get("/app/rate", {
+
+					mark: $(event.target).index() + 1,
+					id: $(this).parents("li").data("app-id")
+
+				}, function (data) {
+					console.log(data.rating);
 				});
 
 			}

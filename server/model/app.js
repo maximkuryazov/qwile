@@ -4,6 +4,8 @@
 
 module.exports = (function() {
 
+	const util = require("util");
+
 	const private = {
 		
 		mongoose: {},
@@ -35,7 +37,8 @@ module.exports = (function() {
 		var appsUsersSchema = private.mongoose.Schema({
 
 			app: String,
-			user: String
+			user: String,
+			voted: Number
 
 		});
 		private.AppsUsersModel = private.mongoose.model("Apps-user", appsUsersSchema);
@@ -120,6 +123,21 @@ module.exports = (function() {
 					}
 				}
 			});
+		},
+
+		set: function (id, options, callback) {
+
+			console.log(util.inspect(options, false, null));
+			private.AppModel.update({ _id: id }, {
+				$set: options,
+			}, function (error, affected) {
+				callback(affected, error);
+			});
+
+		},
+
+		setRelationProperty: function (app, user, options, callback) {
+
 		}
 
 	};
