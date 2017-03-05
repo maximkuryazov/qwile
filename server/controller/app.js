@@ -120,39 +120,57 @@ module.exports = function (app, user, mongoose, db) {
 	});
 
 	app.get("/app/rate", function (req, res) {
-		appModel.getAppById(req.query.id, function (document, error) {
-			if (!error && document) {
+		appModel.getRelation(req.query.id, req.session.currentUserId, function (error, relation) {
+			if (!error) {
+				appModel.getAppById(req.query.id, function (document, error) {
+					if (!error && document) {
 
-				var calculatedRating = Math.round((Number(document.rating) + Number(req.query.mark)) / 2);
-				appModel.set(req.query.id, {
-					rating: calculatedRating
-				}, function (affected, error) {
+						if (!relation.voted) {
+							var calculatedRating = Math.round((Number(document.rating) + Number(req.query.mark)) / 2);
+						} else {
 
-					res.setHeader("Content-type", "application/json");
-					if (!error)  {
-						appModel.setRelationProperty(req.query.id, req.session.currentUserId, {
-							voted: true
-						}, function (affected) {
-							if (affected) {
+							var oldRating = Number(document.rating) * 2 - relation.voted;
+							var calculatedRating = Math.round((oldRating + Number(req.query.mark)) / 2);
+							
+						}
+						appModel.set(req.query.id, {
+							rating: calculatedRating
+						}, function (affected, error) {
+
+							res.setHeader("Content-type", "application/json");
+							if (!error)  {
+								appModel.setRelationProperty(req.query.id, req.session.currentUserId, {
+									voted: Number(req.query.mark)
+								}, function (affected) {
+									if (affected) {
+										res.status(200).send(JSON.stringify({
+
+											success: true,
+											rating: calculatedRating
+
+										}));
+									}
+								});
+							} else {
 								res.status(200).send(JSON.stringify({
 
-									success: true,
-									rating: calculatedRating
+									success: false,
+									error: error
 
 								}));
 							}
+
 						});
-					} else {
-						res.status(200).send(JSON.stringify({
 
-							success: false,
-							error: error
-
-						}));
 					}
-
 				});
+			} else {
+				res.status(200).send(JSON.stringify({
 
+					success: false,
+					error: error
+
+				}));
 			}
 		});
 	});

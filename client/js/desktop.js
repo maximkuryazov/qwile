@@ -336,43 +336,47 @@ $(window).ready(function() {
 
 		$("ul#apps-list").html(data);
 
-		var switcher = true;
-		$("ul#apps-list .rating").click(function (event) {
+			var switcher = true;
+			$("ul#apps-list").delegate("li.added .rating", "mousedown", function () {
+				$(this).css("opacity", .7);
+			}).delegate("li.added .rating", "mouseup", function () {
+				$(this).css("opacity", 1);
+			}).delegate("li.added .rating", "click", function (event) {
 
-			if (switcher) {
+				if (switcher) {
 
-				$(this).delegate(".star", "mouseover", function () {
+					$(this).delegate(".star", "mouseover", function () {
 
-					var self = this;
-					$(this).parent().find(".star").each(function (index) {
-						if (index < $(self).index()) {
-							$(this).removeClass("blank").addClass("rated filled");
+						var self = this;
+						$(this).parent().find(".star").each(function (index) {
+							if (index < $(self).index()) {
+								$(this).removeClass("blank").addClass("rated filled");
 
-						} else {
-							$(this).addClass("blank").removeClass("rated filled");
-						}
+							} else {
+								$(this).addClass("blank").removeClass("rated filled");
+							}
+						});
+						$(this).removeClass("blank").addClass("rated");
+
 					});
-					$(this).removeClass("blank").addClass("rated");
+					switcher = false;
 
-				});
-				switcher = false;
+				} else {
 
-			} else {
+					switcher = true;
+					$(this).undelegate(".star", "mouseover");
+					$.get("/app/rate", {
 
-				switcher = true;
-				$(this).undelegate(".star", "mouseover");
-				$.get("/app/rate", {
+						mark: $(event.target).index() + 1,
+						id: $(this).parents("li").data("app-id")
 
-					mark: $(event.target).index() + 1,
-					id: $(this).parents("li").data("app-id")
+					}, function (data) {
+						console.log(data.rating);
+					});
 
-				}, function (data) {
-					console.log(data.rating);
-				});
+				}
 
-			}
-
-		});
+			});
 
 	});
 

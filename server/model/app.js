@@ -38,7 +38,7 @@ module.exports = (function() {
 
 			app: String,
 			user: String,
-			voted: Boolean
+			voted: Number
 
 		});
 		private.AppsUsersModel = private.mongoose.model("Apps-user", appsUsersSchema);
