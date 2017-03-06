@@ -4,7 +4,23 @@ $(window).ready(function() {
 	var loadingAnimateTime 	= 0; 		// 5000
 	var logoAnimateTime 	= 0;		// 1800
 
-	Qwile.settings.sound = true;
+	Qwile.settings.sound = checkSound();
+
+	function checkSound () {
+
+		var sound = false;
+		$.ajax({
+
+			url: "/user/sound",
+			async: false,
+			success: function (data) {
+				sound = data.sound;
+			}
+
+		});
+		return sound;
+
+	}
 
 	var inithtml = $('div#digits').html();
 	var interval;
@@ -312,7 +328,10 @@ $(window).ready(function() {
 						$soundTab.on("click tap", function() {
 
 							$(this).toggleClass("disabled");
+
 							Qwile.settings.sound = !$(this).hasClass("disabled");
+							$.get("/user/sound", { set: Qwile.settings.sound });
+
 							if (Qwile.settings.sound) {
 								var soundsOnSound = new Howl({
 									src: ['sounds/unmute.mp3']

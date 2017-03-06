@@ -61,6 +61,15 @@ module.exports = (function() {
 			});
 		},
 
+		getById: function (id, callback) {
+			private.UserModel.findOne({ _id: id }, function (error, doc) {
+
+				if (!error) callback(doc);
+				else console.log("Error " + error + " occurred.");
+
+			});
+		},
+
 		remove: function (id, callback) {
 			private.UserModel.remove({ "_id": id }, function (error) {
 				if (!error) {
@@ -129,7 +138,7 @@ module.exports = (function() {
 		set: function (id, options, callback) {
 
 			console.log(util.inspect(options, false, null));
-
+			
 			private.UserModel.update({ _id: id }, {
 				$set: options,
 			}, function (error, affected) {
@@ -141,9 +150,11 @@ module.exports = (function() {
 			});
 
 		},
-
-		get: function ( ) {
-
+		
+		get: function (id, property, callback) {
+			this.getById(id, function (document) {
+				callback.call(document, document[property]);
+			});
 		},
 
 		getPhoto : function (file, currentUserId, callback) {

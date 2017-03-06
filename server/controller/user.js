@@ -39,10 +39,37 @@ module.exports = function (app, user) {
 		});
 	});
 
+	app.get("/user/sound", function (req, res) {
+
+		res.set("Content-Type", "application/json");
+		if (req.query.set) {
+			
+			user.set(req.session.currentUserId, { sound: req.query.set }, function (updated) {
+				if (updated) {
+					res.send({
+						success: true
+					});
+				} else {
+					res.send({
+						success: false
+					});
+				}
+			});
+			
+		} else {
+			user.get(req.session.currentUserId, "sound", function (value) {
+				res.send({
+					sound: value
+				});
+			});
+		}
+		
+	});
+
 	app.post("/user/new", function (req, res) {
 
 		setCrossDomainHeaders(res, req);
-		res.set('Content-Type', 'application/json');
+		res.set("Content-Type", "application/json");
 
 		console.log("Cookie: " + util.inspect(req.cookies, false, null));
 		console.log("User create post params: ", util.inspect(req.body, false, null));
