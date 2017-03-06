@@ -465,6 +465,7 @@ $(window).ready(function() {
 		} else {
 			$("#widget_select").fadeIn("slow");
 			document.getElementById('widget_select').style.display = 'table';
+			$(window).resize();	// Styles init for slick
 		}
 	}
 

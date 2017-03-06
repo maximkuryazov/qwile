@@ -1192,17 +1192,21 @@ aside#leftpanel .lock {
 }
 .slick-arrow {
   width: 48px !important;
-  height: 80px  !important;
-  background-image: url('../img/arrow.png');
+  height: 80px !important;
+  background-image: url('../img/arrow.png') !important;
   float: left;
   cursor: pointer;
 }
 .slick-prev.slick-arrow {
 
 	background-position: -48px;
-	margin-left: -10%;
+	margin-left: -25%;
 
-	&:hover, &:focus {
+	&:focus {
+	  background-position: -48px;
+	}
+
+	&:hover {
 	  background-position: -145px;
 	}
 	&:active {
@@ -1212,9 +1216,13 @@ aside#leftpanel .lock {
 .slick-next.slick-arrow {
 
 	background-position: 0;
-	margin-right: -10%;
+	margin-right: -25%;
 
-	 &:hover, &:focus {
+     &:focus {
+	   background-position: 0;
+	 }
+
+	 &:hover {
 	   background-position: -97px;
 	 }
 	 &:active {
@@ -1315,6 +1323,6 @@ aside#leftpanel .lock {
 .tooptip-text {
   font: bold 10px Verdana;
 }
-.tpd-tooltip {					/* external libraty class */
+.tpd-tooltip {					/* external library class */
 
 }
