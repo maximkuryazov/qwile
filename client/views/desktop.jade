@@ -4,6 +4,8 @@ link(rel='stylesheet', type='text/css', href='css/lib/resizable.css')
 link(rel='stylesheet', type='text/css', href='css/widget/clock.css')
 link(rel='stylesheet', type='text/css', href='css/widget/calc.css')
 link(rel='stylesheet', type='text/css', href='css/lib/tipped.css')
+link(rel='stylesheet', type='text/css', href='css/lib/slick.css')
+link(rel='stylesheet', type='text/css', href='css/lib/slick-theme.css')
 link(rel='stylesheet', type='text/css', href='css/desktop.css')
 script(src='js/desktop.js')
 
@@ -264,17 +266,42 @@ script(src='js/desktop.js')
 			table(width='100%')
 				tr
 					td(width='48')
-						.left-arrow
+						//.left-arrow
 					td
-						.widgets_list(align='center')
+					//	.widgets_list(align='center')
 							.img.clock(data-name="clock", title="Click to add this widget on Desktop.")
 								.mark
 								.title Clock
 							.img.calc(data-name="calc", title="Click to add this widget on Desktop.")
 								.mark
 								.title Calculator
+					.widgets_list.regular.slider(align='center')
+						.block(style="height:200px;")
+							.img.clock(data-name="clock", title="Click to add this widget on Desktop.")
+								.mark
+							.title Clock
+						.block
+							.img.calc(data-name="calc", title="Click to add this widget on Desktop.")
+								.mark
+							.title Calculator
+						.block
+							.img.jams(data-name="jams", title="Click to add this widget on Desktop.")
+								.mark
+							.title Jams
+						.block
+							.img.notes(data-name="notes", title="Click to add this widget on Desktop.")
+								.mark
+							.title Notes
+						.block
+							.img.calendar(data-name="calendar", title="Click to add this widget on Desktop.")
+								.mark
+							.title Calendar
+						.block
+							.img.currency(data-name="currency", title="Click to add this widget on Desktop.")
+								.mark
+							.title Currency
 					td(width='48')
-						.right-arrow
+						//.right-arrow
 	// ///////////// WIDGET SELECT END ///////////////////
 	.footer-push
 // ***************** LOGO LOAD START *************

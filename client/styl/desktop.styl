@@ -1069,7 +1069,7 @@ aside#leftpanel .lock {
  	height: -webkit-calc(100% - 90px);
  	z-index: 4;
 }
-::i-block-chrome, #widget_select {			/* shity Safari 5.0 */
+::i-block-chrome, #widget_select {			/* Safari 5.0 */
 	width: 94%;
  	height: 100%;
 }
@@ -1112,144 +1112,208 @@ aside#leftpanel .lock {
   	height: 160px;
 }
 .widgets_list div.img.clock {
-  	background: url('../img/clock.png');
+  	background: url('../img/clock.png') center no-repeat;
 }
 .widgets_list div.img.calc {
-  	background: url('../img/calc.png');
+  	background: url('../img/calc.png') center no-repeat;
 }
 .widgets_list div.img {
   opacity: 0.8;
-  width: 130px;
+  /*width: 130px;*/
+  width: 100%;
   height: 130px;
   border: 1px solid rgba(000, 000, 000, 0);
   display: inline-block;
-  margin: 0 12px;
   background-repeat: no-repeat;
   cursor: pointer;
-
-  .title {
-		height: 20px;
-	  	position: absolute;
-		top: 165px;
-		padding-top: 6px;
-	  	font: bold 11px Verdana;
-	  	text-align: center;
-	  	background: linear-gradient(to bottom, rgba(0, 3 ,4, 0.8) 0%, rgba(41, 137, 216, 0.8) 100%, rgba(0, 43, 63, 0.8) 100%);
-	  	width: 130px;
-	  	color: white;
-	  	border-radius: 5px;
-	  	cursor: default;
-	}
+  background: url("http://placehold.it/350x300?text=6");
+  overflow: visible;
+  margin-left: auto;
+  margin-right: auto;
+  background-position: center;
+}
+.widgets_list .title {
+  height: 20px;
+  padding-top: 3px;
+  font: bold 11px Verdana;
+  text-align: center;
+  background: linear-gradient(to bottom, rgba(0, 3 ,4, 0.8) 0%, rgba(41, 137, 216, 0.8) 100%, rgba(0, 43, 63, 0.8) 100%);
+  width: 130px;
+  color: white;
+  border-radius: 5px;
+  cursor: default;
+  text-align: center;
+  overflow: hidden;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5px;
 }
 .widgets_list .mark {
-	width: 35px;
-	height: 35px;
-	background: url('../img/installed.png') no-repeat rgba(999, 999, 999, 0.8) center;
-	float: right;
-	position: relative;
-	right: 0px;
-	z-index: 1;
-	border: 1px solid deepskyblue;
+  width: 35px;
+  height: 35px;
+  background: url('../img/installed.png') no-repeat rgba(999, 999, 999, 0.8) center;
+  float: right;
+  position: relative;
+  right: 0px;
+  z-index: 1;
+  border: 1px solid deepskyblue;
 }
 .widgets_list div.img:hover, .widgets_list div.img.focus {
-	opacity: 1;
+  opacity: 1;
 }
 .widgets_list div.img:active {
-	border: 1px solid deepskyblue;
+  border: 1px solid deepskyblue;
+}
+
+/* Slick */
+
+.regular.slider * {
+  box-sizing: border-box;
+}
+
+.slider {
+  width: 50%;
+  margin: 20px auto;
+}
+
+.slick-slide {
+  margin: 0 20px;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: black;
+  display: none;
+}
+
+.widget.title {
+  text-align: center;
+  overflow: hidden;
+}
+.slick-arrow {
+  width: 48px !important;
+  height: 80px  !important;
+  background-image: url('../img/arrow.png');
+  float: left;
+  cursor: pointer;
+}
+.slick-prev.slick-arrow {
+
+	background-position: -48px;
+	margin-left: -10%;
+
+	&:hover, &:focus {
+	  background-position: -145px;
+	}
+	&:active {
+	  background-position: -242px;
+	}
+}
+.slick-next.slick-arrow {
+
+	background-position: 0;
+	margin-right: -10%;
+
+	 &:hover, &:focus {
+	   background-position: -97px;
+	 }
+	 &:active {
+	   background-position: -194px;
+	 }
 }
 
 /* dialog */
 
 .shadow {
-	display: none;
-	position: absolute;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	background: rgba(000, 020, 023, 0.7);
-	z-index: 1000;
+  display: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(000, 020, 023, 0.7);
+  z-index: 1000;
 }
 .inner-shadow {
-	width: 50%;
-	height: 50%;
-	overflow: auto;
-	color: white;
-	margin: auto;
-	position: absolute;
-	top: 0; 
-	left: 0; 
-	bottom: 0; 
-	right: 0;
+  width: 50%;
+  height: 50%;
+  overflow: auto;
+  color: white;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 .dialog-content {
-	position: relative;
-	width: 400px;
-	margin-left: auto;
-	margin-right: auto;
-	height: 149px;
-	background-image: url('../img/dialog.png');
-	background-color: rgba(000, 000, 000, 0.1);
-	border-radius: 8px;
-	margin-top: 12%;
-  	display: none;
+  position: relative;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 149px;
+  background-image: url('../img/dialog.png');
+  background-color: rgba(000, 000, 000, 0.1);
+  border-radius: 8px;
+  margin-top: 12%;
+  display: none;
 }
 .dialog-text {
-	cursor: default;
-	color: black;
-	font: bold 12px Verdana;
-	width: 360px;
-	margin-right: auto;
-	margin-left: auto;
-	position: relative;
-	top: 25px;
+  cursor: default;
+  color: black;
+  font: bold 12px Verdana;
+  width: 360px;
+  margin-right: auto;
+  margin-left: auto;
+  position: relative;
+  top: 25px;
 }
 .dialog-content .buttons {
-	height: 30px;
-	position: absolute;
-	bottom: 15px;
-	width: 97%;
+  height: 30px;
+  position: absolute;
+  bottom: 15px;
+  width: 97%;
 }
 .dialog-content .buttons .btn-warning {
-	color: black;
+  color: black;
 }
 .dialog-content .buttons button {
-	margin-right: 2px;
-	font: bold 12px Verdana;
+  margin-right: 2px;
+  font: bold 12px Verdana;
 }
 .dialog-close {
-	margin-top: 3px;
-	float: right;
-	margin-right: 3px;
-	background: url('../img/dialog-close.png');
-	width: 15px;
-	height: 14px;
-	cursor: pointer;
+  margin-top: 3px;
+  float: right;
+  margin-right: 3px;
+  background: url('../img/dialog-close.png');
+  width: 15px;
+  height: 14px;
+  cursor: pointer;
 }
 .dialog-close:hover {
-	background-position: 15px;
+  background-position: 15px;
 }
 .dialog-close:active {
-	background-position: 30px;
+  background-position: 30px;
 }
 .dialog-icon {
-	width: 16px;
-	height: 16px;
-	margin-left: 6px;
-	margin-top: -5px;
+  width: 16px;
+  height: 16px;
+  margin-left: 6px;
+  margin-top: -5px;
 }
 .modal-dialog {
-	margin-top: 20% !important;
-	width: 280px;
-	color: #970101 !important;
-	font: 12px verdana;
-	text-align: center;
+  margin-top: 20% !important;
+  width: 280px;
+  color: #970101 !important;
+  font: 12px verdana;
+  text-align: center;
 }
 .modal-content {
-	background: rgba(999, 999, 999, 0.7) !important;
+  background: rgba(999, 999, 999, 0.7) !important;
 }
 
 .tooptip-text {
-	font: bold 10px Verdana;
+  font: bold 10px Verdana;
 }
 .tpd-tooltip {					/* external libraty class */
 
