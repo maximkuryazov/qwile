@@ -167,10 +167,14 @@ module.exports = function (app, user) {
 	app.get("/user/logout", function(req, res) {
 
 		setCrossDomainHeaders(res, req);
-		res.set('Content-Type', 'application/json');
-		req.session.destroy();
-		console.log("Logout. Session was destroyed");
-		res.send(JSON.stringify({ success: true }));
+		user.set(req.session.currentUserId, { online: false }, function () {
+
+			res.set('Content-Type', 'application/json');
+			req.session.destroy();
+			console.log("Logout. Session was destroyed");
+			res.send(JSON.stringify({ success: true }));
+
+		});
 
 	});
 
@@ -201,18 +205,20 @@ module.exports = function (app, user) {
 
 				var cipherPassword = crypto.createHash('md5').update(req.body.password).digest("hex");
 				if (document.password === cipherPassword) {
+					user.set(document._id, { online: true }, function () {
 
-					var remember = false;
-					if (req.body.remember) {
+						var remember = false;
+						if (req.body.remember) {
 
-						res.cookie("remember", '{ "email": "' + req.body.email + '", "password": "' + cipherPassword + '" }');
-						remember = true;
+							res.cookie("remember", '{ "email": "' + req.body.email + '", "password": "' + cipherPassword + '" }');
+							remember = true;
 
-					}
-					req.session.email = req.body.email;
-					req.session.currentUserId = document._id;
-					sendResponse(true, remember, true);
+						}
+						req.session.email = req.body.email;
+						req.session.currentUserId = document._id;
+						sendResponse(true, remember, true);
 
+					});
 				} else {
 					sendResponse(false, false, true);
 				}

@@ -37,8 +37,7 @@ module.exports = (function() {
 			activated: Boolean,
 			activationCode: Number,
 			restoreCode: Number,
-			image: String,
-			apps: Array
+			online: Boolean
 
 		});
 
