@@ -141,7 +141,43 @@
                         
                         res.cookie("redirect", "desktop");
                         console.log(document);
-                        res.render('views/desktop', { user: document });
+                        res.render('views/desktop', {
+
+                            user: document,
+                            widgets: [
+                                {
+                                    name: "calc",
+                                    title: "Calculator",
+                                    added: true,
+                                    image: "img/calc.png"
+                                },
+                                {
+                                    name: "clock",
+                                    title: "Clock",
+                                    added: true,
+                                    image: "img/clock.png"
+                                },
+                                {
+                                    name: "jams",
+                                    title: "Traffic jams",
+                                    added: false,
+                                    image: "http://placehold.it/350x300?text=3"
+                                },
+                                {
+                                    name: "notes",
+                                    title: "Notes",
+                                    added: false,
+                                    image: "http://placehold.it/350x300?text=4"
+                                },
+                                {
+                                    name: "calendar",
+                                    title: "Calendar",
+                                    added: false,
+                                    image: "http://placehold.it/350x300?text=5"
+                                }
+                            ]
+
+                        });
                         
                     });
                 } else {

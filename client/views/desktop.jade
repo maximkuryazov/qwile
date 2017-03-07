@@ -222,7 +222,13 @@ script(src='js/desktop.js')
 					.key.action -
 					.key.action x
 					.key.last.action /
-
+	script#widget-view(type='text/template')
+		.widget
+			.buttons
+				.close(title='Close')
+				.resize(title='Scale')
+				.settings(title='Customize')
+			section.content Content
 	// //////////////// WIDGET END ///////////////////
 	// ***************** MENU START *******************
 	#menu
@@ -263,45 +269,13 @@ script(src='js/desktop.js')
 	// ************** WIDGET SELECT START ***************
 	#widget_select
 		#widget_select_inside
-			table(width='100%')
-				tr
-					td(width='48')
-						//.left-arrow
-					td
-					//	.widgets_list(align='center')
-							.img.clock(data-name="clock", title="Click to add this widget on Desktop.")
+			.widgets_list.regular.slider(align='center')
+				each widget in widgets
+					.block
+						.img(data-name!="#{widget.name}", style!="background-image:url(#{widget.image})", title="Click to add this widget on Desktop.")
+							if widget.added
 								.mark
-								.title Clock
-							.img.calc(data-name="calc", title="Click to add this widget on Desktop.")
-								.mark
-								.title Calculator
-					.widgets_list.regular.slider(align='center')
-						.block(style="height:200px;")
-							.img.clock(data-name="clock", title="Click to add this widget on Desktop.")
-								.mark
-							.title Clock
-						.block
-							.img.calc(data-name="calc", title="Click to add this widget on Desktop.")
-								.mark
-							.title Calculator
-						.block
-							.img.jams(data-name="jams", title="Click to add this widget on Desktop.")
-								.mark
-							.title Jams
-						.block
-							.img.notes(data-name="notes", title="Click to add this widget on Desktop.")
-								.mark
-							.title Notes
-						.block
-							.img.calendar(data-name="calendar", title="Click to add this widget on Desktop.")
-								.mark
-							.title Calendar
-						.block
-							.img.currency(data-name="currency", title="Click to add this widget on Desktop.")
-								.mark
-							.title Currency
-					td(width='48')
-						//.right-arrow
+						.title= widget.title
 	// ///////////// WIDGET SELECT END ///////////////////
 	.footer-push
 // ***************** LOGO LOAD START *************
