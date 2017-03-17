@@ -124,6 +124,9 @@
             });
         });
 
+        let WidgetController = require("./server/controller/widget");
+        let widgetController = new WidgetController(app, user, mongoose, db);
+
         app.get("/templateController", function (req, res) {
 
             console.log("Session: ", req.session.email);
@@ -138,44 +141,49 @@
                 // Are you logged in?
                 if (req.session.email) {
                     user.getByMail(req.session.email, function(document) {
-                        
-                        res.cookie("redirect", "desktop");
-                        console.log(document);
-                        res.render('views/desktop', {
 
-                            user: document,
-                            widgets: [
-                                {
-                                    name: "calc",
-                                    title: "Calculator",
-                                    added: true,
-                                    image: "img/calc.png"
-                                },
-                                {
-                                    name: "clock",
-                                    title: "Clock",
-                                    added: true,
-                                    image: "img/clock.png"
-                                },
-                                {
-                                    name: "jams",
-                                    title: "Traffic jams",
-                                    added: false,
-                                    image: "http://placehold.it/350x300?text=3"
-                                },
-                                {
-                                    name: "notes",
-                                    title: "Notes",
-                                    added: false,
-                                    image: "http://placehold.it/350x300?text=4"
-                                },
-                                {
-                                    name: "calendar",
-                                    title: "Calendar",
-                                    added: false,
-                                    image: "http://placehold.it/350x300?text=5"
-                                }
-                            ]
+                        widgetController.getAllWidgets(req.session.currentUserId, function (widgets) {
+
+                            res.cookie("redirect", "desktop");
+                            console.log(document);
+                            res.render('views/desktop', {
+
+                                user: document,
+                                widgets: widgets
+                                /*widgets: [
+                                    {
+                                        name: "calc",
+                                        title: "Calculator",
+                                        added: true,
+                                        image: "img/calc.png"
+                                    },
+                                    {
+                                        name: "clock",
+                                        title: "Clock",
+                                        added: true,
+                                        image: "img/clock.png"
+                                    },
+                                    {
+                                        name: "jams",
+                                        title: "Traffic jams",
+                                        added: false,
+                                        image: "http://placehold.it/350x300?text=3"
+                                    },
+                                    {
+                                        name: "notes",
+                                        title: "Notes",
+                                        added: false,
+                                        image: "http://placehold.it/350x300?text=4"
+                                    },
+                                    {
+                                        name: "calendar",
+                                        title: "Calendar",
+                                        added: false,
+                                        image: "http://placehold.it/350x300?text=5"
+                                    }
+                                ]*/
+
+                            });
 
                         });
                         

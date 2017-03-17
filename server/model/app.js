@@ -2,7 +2,7 @@
  * Created by User on 2/21/2017.
  */
 
-module.exports = (function() {
+module.exports = (function () {
 
 	const util = require("util");
 
