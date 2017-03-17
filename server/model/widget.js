@@ -36,7 +36,7 @@ module.exports = (function () {
 
 		});
 
-		private.WidgetsUsersModel = private.mongoose.model("Widgets-user", widgetsUsersSchema);
+		private.WidgetsUsersModel = mongoose.model("Widgets-user", widgetsUsersSchema);
 
 	}
 
@@ -67,6 +67,36 @@ module.exports = (function () {
 					console.error("Error in getAllWidgets: ", error);
 				}
 			});
+		},
+		
+		install: function (userId, widgetId, callback) {
+			private.WidgetsUsersModel.findOne({
+
+				widget: widgetId,
+				user: userId
+
+			}, function (error, relation) {
+				if (!error) {
+					if (relation) {
+						callback(relation, "Document already exists.");
+					} else {
+
+						var relationship = new private.WidgetsUsersModel({
+
+							widget: widgetId,
+							user: userId
+
+						});
+						relationship.save(function (error, relation) {
+
+							if (!error) callback(relation);
+							else callback(relation, error);
+
+						});
+
+					}
+				}
+			})
 		}
 		
 	};

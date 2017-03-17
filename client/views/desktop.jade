@@ -271,7 +271,7 @@ script(src='js/desktop.js')
 		#widget_select_inside
 			.widgets_list.regular.slider(align='center')
 				each widget in widgets
-					.block
+					.block(data-id!="#{widget._id}")
 						.img(data-name!="#{widget.name}", style!="background-image:url(#{widget.image})", title="Click to add this widget on Desktop.")
 							if widget.added
 								.mark

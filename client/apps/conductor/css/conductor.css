@@ -13,7 +13,7 @@
 }
 body {
     /*background: url('img/logo-mono.png') 49% no-repeat #fff;*/
-    background: url('img/logo-mono.png') top no-repeat #fff;
+    background: url('../img/logo-mono.png') top no-repeat #fff;
     margin: 0;
     padding: 0;
     overflow-x: hidden;

@@ -497,8 +497,33 @@ $(window).ready(function() {
 
 	// NEED REFACTOR!!!!!!!!!!
 
-	$(".widgets_list div.img").click(function() {
+	$(".widgets_list div.img").click(function(event) {
+
 		$('.widget.' + $(this).data("name")).show();
+		$.ajax({
+
+			url: "/widget/install",
+			method: "PUT",
+			data: { id: $(this).parent().data("id") },
+
+			success: _.bind(function (response) {
+				if (response.success) {
+
+					var mark = document.createElement("div");
+					mark.className = "mark";
+					mark.style.display = "none";
+					$(this).append(mark);
+					$(this).find(".mark").show("slow");
+
+				}
+			}, event.target),
+
+			error: function (xhr, status, error) {
+
+			}
+
+		});
+
 	});
 
 	/* *********************** test.js end ********************** */
