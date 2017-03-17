@@ -43,9 +43,26 @@ module.exports = (function () {
 	constructor.prototype = {
 
 		getAllWidgets: function (currentUserId, callback) {
-			private.WidgetModel.find({}, function (error, documents) {
+			private.WidgetModel.find({}, function (error, widgets) {
 				if (!error) {
-					callback(documents);
+					private.WidgetsUsersModel.find({
+						user: currentUserId
+					}, function (error, relations) {
+						if (!error) {
+
+							widgets.forEach(function (widget) {
+								relations.forEach(function (relation) {
+									if (relation.widget == widget._id) {
+										widget.added = true;
+									}
+								});
+							});
+							callback(widgets);
+
+						} else {
+							console.error("Error in getAllWidgets/relation: ", error);
+						}
+					});
 				} else {
 					console.error("Error in getAllWidgets: ", error);
 				}

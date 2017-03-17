@@ -21,6 +21,7 @@
     "nodemailer": "latest",
     "nodemon": "1.11.0",
     "request": "^2.79.0",
+    "robokassa": "0.0.4",
     "simple-peer": "^6.4.3",
     "socket.io": "^1.7.2",
     "stylus": "0.54.5",
