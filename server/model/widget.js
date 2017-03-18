@@ -22,7 +22,6 @@ module.exports = (function () {
 
 			name: String,
 			title: String,
-			added: Boolean,
 			image: String
 
 		});
@@ -123,6 +122,28 @@ module.exports = (function () {
 
 				} else {
 					console.log("Error in getInstalled: ", error);
+				}
+			});
+		},
+
+		uninstall: function (widgetId, userId, callback) {
+			private.WidgetsUsersModel.remove({
+
+				widget: widgetId,
+				user: userId
+
+			}, function (error, removedCount) {
+				if (!error) {
+
+					console.log("Removed object: ", removedCount);
+					if (removedCount.result.n == 1) {
+						callback.call(this, removedCount);
+					} else {
+						callback.call(this);
+					}
+
+				} else {
+					callback.call(this, removedCount, error);
 				}
 			});
 		}

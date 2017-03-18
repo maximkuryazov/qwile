@@ -12,8 +12,9 @@ module.exports = (function () {
 		private.widgetModel = new WidgetModel(mongoose, db);
 
 		app.put("/widget/install", this.install);
+		app.delete("/widget/uninstall", this.uninstall);
 		app.get("/widget/getInstalled", this.getInstalled);
-		
+
 	}
 
 	WidgetConstructor.prototype = {
@@ -68,6 +69,29 @@ module.exports = (function () {
 					}));
 				}
 				
+			});
+		},
+
+		uninstall: function (req, res) {
+			private.widgetModel.uninstall(req.body.id, req.session.currentUserId, function (count, error) {
+
+				res.setHeader("Content-Type", "application/json");
+				if (!error && count) {
+					res.status(200).send(JSON.stringify({
+						success: true
+					}));
+				} else {
+
+					console.log("Error in uninstall: ", error);
+					res.status(500).send(JSON.stringify({
+
+						success: false,
+						errorMessage: error
+
+					}));
+
+				}
+
 			});
 		}
 		
