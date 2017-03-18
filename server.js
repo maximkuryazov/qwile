@@ -43,8 +43,25 @@
     app.set('view engine', 'jade');
     app.set('views', path.join(__dirname, '/client/'));
 
-    // timeout may affect long file uploads
     app.use(timeout(12000));
+    app.use(function (req, res, next) {
+
+        setTimeout(function () {
+            if (req.timedout) {
+
+                res.set('Content-Type', 'application/json');
+                res.send(JSON.stringify({
+
+                    success: false,
+                    error: "Server timeout error."
+
+                }));
+
+            }
+        }, 12000);
+        next();
+
+    });
     app.use(express.static('./client'));
 
     db.once('open', function () {
@@ -65,7 +82,7 @@
 
         }
 
-        app.all('*', function(req, res, next) {
+        app.all("*", function(req, res, next) {
 
             console.log(req.url);
 
