@@ -29,7 +29,7 @@ module.exports = (function () {
 
 		private.WidgetModel = mongoose.model("Widget", widgetSchema);
 
-		var widgetsUsersSchema = private.mongoose.Schema({
+		var widgetsUsersSchema = mongoose.Schema({
 
 			widget: String,
 			user: String
@@ -97,6 +97,34 @@ module.exports = (function () {
 					}
 				}
 			})
+		},
+
+		getInstalled: function (userId, callback) {
+			private.WidgetsUsersModel.find({
+				user: userId
+			}, function (error, relations) {
+				if (!error) {
+
+					var ids = [];
+					relations.forEach(function (item) {
+						ids.push(private.mongoose.Types.ObjectId(item.widget));
+					});
+
+					private.WidgetModel.find({
+						"_id": {
+							$in: ids
+						}
+					}, function (error, widgets) {
+
+						if (!error) callback(widgets);
+						else callback([], error);
+
+					});
+
+				} else {
+					console.log("Error in getInstalled: ", error);
+				}
+			});
 		}
 		
 	};

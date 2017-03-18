@@ -10,7 +10,9 @@ module.exports = (function () {
 	function WidgetConstructor (app, user, mongoose, db) {
 
 		private.widgetModel = new WidgetModel(mongoose, db);
+
 		app.put("/widget/install", this.install);
+		app.get("/widget/getInstalled", this.getInstalled);
 		
 	}
 
@@ -44,9 +46,32 @@ module.exports = (function () {
 				}
 			});
 
+		},
+
+		getInstalled: function (req, res) {
+			private.widgetModel.getInstalled(req.session.currentUserId, function (widgets, error) {
+				
+				res.setHeader("Content-Type", "application/json");
+				if (!error) {
+					res.status(200).send(JSON.stringify({
+
+						success: true,
+						widgets: widgets
+
+					}));
+				} else {
+					res.status(500).send(JSON.stringify({
+
+						success: false,
+						errorMessage: error
+
+					}));
+				}
+				
+			});
 		}
 		
-	} 
+	}
 	
 	return WidgetConstructor;
 	
