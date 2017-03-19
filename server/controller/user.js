@@ -19,7 +19,7 @@ module.exports = function (app, user) {
 	}
 
 	app.get("/user/remove", function (req, res) {
-		user.remove(req.query.id, function(error) {
+		user.remove(req.session.currentUserId, function(error) {
 
 			res.set('Access-Control-Allow-Origin', '*');
 			res.setHeader('Content-Type', 'application/json');
