@@ -21,7 +21,7 @@ define(["backbone"], function (Backbone) {
 			var template = _.template($("#widget-view").html());
 			this.$el.html(template());
 			this.$el.appendTo(".wrapper");
-			
+
 		},
 		
 		events: {
@@ -33,13 +33,23 @@ define(["backbone"], function (Backbone) {
 		remove: function () {
 
 			this.$el.remove();
+			this.model.uninstall();
 
 		}
 
 	});
 
-	Qwile.widget.Model = Backbone.Model.extend({});
+	Qwile.widget.Model = Backbone.Model.extend({
+
+		uninstall: function () {
+			//alert("Uninstall"); works!
+		}
+
+	});
 	
-	var widgetView = new Qwile.widget.View();
+	var widgetView = new Qwile.widget.View({
+		model: new Qwile.widget.Model()
+	});
+	widgetView.remove();
 	
 });
