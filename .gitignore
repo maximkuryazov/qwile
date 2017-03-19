@@ -1,6 +1,11 @@
 .idea
-db
+db/*
 dist/*
-npm-debug.log
+# npm-debug.log
 node_modules/*
 storage/*
+
+!node_modules/.gitkeep
+!storage/.gitkeep
+!dist/.gitkeep
+!db/.gitkeep
