@@ -42,13 +42,13 @@ define(["backbone"], function (Backbone) {
 			}, this));
 			this.model.destroy({
 
+				urlRoot: "/widget/uninstall",
 				wait: true,
 				success: function (model, response) {
 					alert(response);
 				}
 
 			});
-			//this.model.uninstall();
 
 		},
 
@@ -102,6 +102,10 @@ define(["backbone"], function (Backbone) {
 		model: new Qwile.widget.Model(),
 		className: "calc"
 
+	});
+
+	$.get("/widget/getInstalled", function (data) {
+		console.log("Widgets: ", data);
 	});
 	
 });
