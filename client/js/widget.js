@@ -42,7 +42,7 @@ define(["backbone"], function (Backbone) {
 			}, this));
 			this.model.destroy({
 
-				urlRoot: "/widget/uninstall",
+				url: _.bind(function () { return "/widget/uninstall/" + this.get("_id") }, this.model)(),
 				wait: true,
 				success: function (model, response) {
 					alert(response);
@@ -80,32 +80,31 @@ define(["backbone"], function (Backbone) {
 		urlRoot: "/widget/",
 		idAttribute: "_id",
 
-		defaults: {
-			_id: "widget_id"	// here should be real widget._id from MongoDB
-		},
-
 		uninstall: function () {
 			alert("Uninstall");
 		}
 
 	});
-	
-	var clockView = new Qwile.widget.View({
-
-		model: new Qwile.widget.Model(),
-		className: "clock"
-
-	});
-
-	var calcView = new Qwile.widget.View({
-
-		model: new Qwile.widget.Model(),
-		className: "calc"
-
-	});
 
 	$.get("/widget/getInstalled", function (data) {
-		console.log("Widgets: ", data);
+		if (data.success) {
+
+			console.log("Widgets: ", data);
+
+			var addedWidgets = [];
+			_.each(data.widgets, function (widget) {
+
+				var viewInstance = new Qwile.widget.View({
+
+					model: new Qwile.widget.Model({ _id: widget._id }),
+					className: widget.name
+
+				});
+				addedWidgets.push(viewInstance);
+
+			});
+
+		}
 	});
 	
 });
