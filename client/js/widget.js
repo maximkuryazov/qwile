@@ -42,10 +42,14 @@ define(["backbone"], function (Backbone) {
 			}, this));
 			this.model.destroy({
 
-				url: _.bind(function () { return "/widget/uninstall/" + this.get("_id") }, this.model)(),
+				url: "/widget/uninstall",
+				contentType: "application/json",
+				data: JSON.stringify({ 
+					id: _.bind(function () { return this.get("_id") }, this.model)()
+				}),
 				wait: true,
 				success: function (model, response) {
-					alert(response);
+					console.log(response);
 				}
 
 			});
@@ -86,23 +90,26 @@ define(["backbone"], function (Backbone) {
 
 	});
 
+	Qwile.installedWidgets = new Backbone.Collection;
+
 	$.get("/widget/getInstalled", function (data) {
 		if (data.success) {
 
 			console.log("Widgets: ", data);
 
-			var addedWidgets = [];
 			_.each(data.widgets, function (widget) {
 
-				var viewInstance = new Qwile.widget.View({
+				var widgetModel = new Qwile.widget.Model({ _id: widget._id });
+				widgetModel.view = new Qwile.widget.View({
 
-					model: new Qwile.widget.Model({ _id: widget._id }),
+					model: widgetModel,
 					className: widget.name
 
 				});
-				addedWidgets.push(viewInstance);
+				Qwile.installedWidgets.add(widgetModel);
 
 			});
+			console.log("Installed widgets: ", Qwile.installedWidgets);
 
 		}
 	});
