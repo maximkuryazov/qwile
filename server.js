@@ -5,14 +5,17 @@
     const util = require('util');
     const mongoose = require('mongoose');
     const databaseName = "qwile";
+
     mongoose.connect('mongodb://localhost/' + databaseName);
     const db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'Connection error:'));
+    db.on('error', console.error.bind(console, 'Connection error: '));
 
     const crypto = require('crypto');
     const cookieParser = require('cookie-parser');
     const session = require('express-session');
     const fileUpload = require('express-fileupload');
+    const http = require('http');
+    const https = require('https');
 
     const port = 80;
 
@@ -218,16 +221,18 @@
 
         });
 
-        var server = app.listen(port, "0.0.0.0", function () {
+        var server = http.createServer(app).listen(port, "0.0.0.0", function () {
             console.log('Dynamic server listening on port 80!');
         });
+
         var io = require('socket.io').listen(server);
-        // server:
         io.on('connection', function (socket) {
+
             console.log("Socket connected");
             socket.on('ferret', function (name, fn) {
                 fn('woot');
             });
+
         });
 
     });
