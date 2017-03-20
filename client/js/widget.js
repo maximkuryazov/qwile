@@ -19,37 +19,89 @@ define(["backbone"], function (Backbone) {
 		render: function () {
 
 			var template = _.template($("#widget-view").html());
-			this.$el.html(template());
+			this.$el.html(template()).addClass(this.options.className).addClass("widget");
 			this.$el.appendTo(".wrapper");
+			this.$el.show();
+			this.setUI();
 
 		},
 		
 		events: {
 
-			"click .close": "remove"
+			"click .close": "remove",
+			"mouseover": 	"showButtons",
+			"tap": 			"showButtons",
+			"mouseleave": 	"hideButtons"
 		
 		},
 
 		remove: function () {
 
-			this.$el.remove();
-			this.model.uninstall();
+			this.$el.fadeOut("slow", _.bind(function () {
+				this.$el.remove();
+			}, this));
+			this.model.destroy({
 
+				wait: true,
+				success: function (model, response) {
+					alert(response);
+				}
+
+			});
+			//this.model.uninstall();
+
+		},
+
+		setUI: function () {
+			this.$el.draggable({
+
+				containment: "parent",
+				handle: ".content"
+
+			});
+		},
+
+		showButtons: function () {
+			if (this.$el.find(".buttons").css("opacity") == 0) {
+				this.$el.find(".buttons").stop().css("visibility", "visible").animate({ opacity: 1 }, "slow");
+			}
+		},
+
+		hideButtons: function () {
+			this.$el.find(".buttons").animate({ opacity: 0 }, "fast", function () {
+				$(this).css("visibility", "hidden");
+			});
 		}
 
 	});
 
 	Qwile.widget.Model = Backbone.Model.extend({
 
+		urlRoot: "/widget/",
+		idAttribute: "_id",
+
+		defaults: {
+			_id: "widget_id"	// here should be real widget._id from MongoDB
+		},
+
 		uninstall: function () {
-			//alert("Uninstall"); works!
+			alert("Uninstall");
 		}
 
 	});
 	
-	var widgetView = new Qwile.widget.View({
-		model: new Qwile.widget.Model()
+	var clockView = new Qwile.widget.View({
+
+		model: new Qwile.widget.Model(),
+		className: "clock"
+
 	});
-	widgetView.remove();
+
+	var calcView = new Qwile.widget.View({
+
+		model: new Qwile.widget.Model(),
+		className: "calc"
+
+	});
 	
 });

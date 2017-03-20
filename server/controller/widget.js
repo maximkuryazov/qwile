@@ -12,7 +12,7 @@ module.exports = (function () {
 		private.widgetModel = new WidgetModel(mongoose, db);
 
 		app.put("/widget/install", this.install);
-		app.delete("/widget/uninstall", this.uninstall);
+		app.delete("/widget", this.uninstall);
 		app.get("/widget/getInstalled", this.getInstalled);
 		app.get("/widget/timeout", this.timeout);
 

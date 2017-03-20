@@ -11,6 +11,7 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.13.3",
     "express-fileupload": "^0.1.1",
+    "express-htaccess-middleware": "^0.1.0",
     "gulp": "^3.9.1",
     "jade": "1.11.0",
     "jimp": "^0.2.27",

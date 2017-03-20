@@ -1,8 +1,6 @@
 title Qwile - OS that changes your life
 link(rel='stylesheet', type='text/css', href='css/lib/bootstrap.buttons.min.css')
 link(rel='stylesheet', type='text/css', href='css/lib/resizable.css')
-link(rel='stylesheet', type='text/css', href='css/widget/clock.css')
-link(rel='stylesheet', type='text/css', href='css/widget/calc.css')
 link(rel='stylesheet', type='text/css', href='css/lib/tipped.css')
 link(rel='stylesheet', type='text/css', href='css/lib/slick.css')
 link(rel='stylesheet', type='text/css', href='css/lib/slick-theme.css')
@@ -188,13 +186,15 @@ script(src='js/desktop.js')
 					<% } %>
 	// //////////////// WINDOW END ///////////////////
 	// ***************** WIDGET START ****************
-	.widget.clock
+	//.widget.clock
 		.buttons
 			.close(title='Close')
 			.resize(title='Scale')
 			.settings(title='Customize')
 		canvas.content#clock(width='150', height='150')
-	.widget.calc
+		link(rel='stylesheet', type='text/css', href='css/widget/clock.css')
+		script(src='js/widget/clock.js')
+	//.widget.calc
 		.buttons
 			.close(title='Close')
 			.resize(title='Scale')
@@ -222,13 +222,14 @@ script(src='js/desktop.js')
 					.key.action -
 					.key.action x
 					.key.last.action /
+		link(rel='stylesheet', type='text/css', href='css/widget/calc.css')
+		script(type='text/javascript', src='js/widget/calculator.js')
 	script#widget-view(type='text/template')
-		.widget
-			.buttons
-				.close(title='Close')
-				.resize(title='Scale')
-				.settings(title='Customize')
-			section.content Content
+		.buttons
+			.close(title='Close')
+			.resize(title='Scale')
+			.settings(title='Customize')
+		section.content Content
 	// //////////////// WIDGET END ///////////////////
 	// ***************** MENU START *******************
 	#menu
@@ -293,9 +294,3 @@ footer
 			img.icon(src!='img/<%= icon %>')
 			span.title <%= name %>
 			.close
-	//.task(data-app-name="player")
-	//	img.icon(src='img/player.png')
-	//	span.title Player
-	//	.close
-script(src='js/widget/clock.js')
-script(type='text/javascript', src='js/widget/calculator.js')

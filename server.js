@@ -64,6 +64,16 @@
     });
     app.use(express.static('./client'));
 
+    var RewriteMiddleware = require('express-htaccess-middleware');
+    var RewriteOptions = {
+
+        file: path.resolve(__dirname, '.htaccess'),
+        verbose: (process.env.ENV_NODE == 'development'),
+        watch: (process.env.ENV_NODE == 'development')
+
+    };
+    app.use(RewriteMiddleware(RewriteOptions));
+
     db.once('open', function () {
 
         // Start listening server requests only after connection to Mongo established
