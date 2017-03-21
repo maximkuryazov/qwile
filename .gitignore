@@ -4,6 +4,7 @@ dist/*
 npm-debug.log
 node_modules/*
 storage/*
+server/credentials.json
 
 !node_modules/.gitkeep
 !storage/.gitkeep

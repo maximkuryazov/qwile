@@ -11,7 +11,7 @@ define(["backbone"], function (Backbone) {
 			this.options = options;
 			this.el = document.createElement("div");
 			_.bindAll(this, "render");
-			this.model.bind("change", this.render);
+			this.model.bind("change:content", _.bind(this.setContent, this));
 			this.render();
 
 		},
@@ -21,7 +21,6 @@ define(["backbone"], function (Backbone) {
 			var template = _.template($("#widget-view").html());
 			this.$el.html(template()).addClass(this.options.className).addClass("widget");
 			this.$el.appendTo(".wrapper");
-			this.$el.show();
 			this.setUI();
 
 		},
@@ -42,7 +41,7 @@ define(["backbone"], function (Backbone) {
 			}, this));
 			this.model.destroy({
 
-				url: "/widget/uninstall",
+				url: _.bind(function () { return "/widget/uninstall/" + this.get("_id"); }, this.model)(),
 				contentType: "application/json",
 				data: JSON.stringify({ 
 					id: _.bind(function () { return this.get("_id") }, this.model)()
@@ -75,6 +74,13 @@ define(["backbone"], function (Backbone) {
 			this.$el.find(".buttons").animate({ opacity: 0 }, "fast", function () {
 				$(this).css("visibility", "hidden");
 			});
+		},
+
+		setContent: function () {
+
+			this.$el.find("content").html(this.model.get("content"));
+			this.$el.show("slow");
+
 		}
 
 	});
@@ -84,10 +90,12 @@ define(["backbone"], function (Backbone) {
 		urlRoot: "/widget/",
 		idAttribute: "_id",
 
-		uninstall: function () {
-			alert("Uninstall");
+		initialize : function() {
+			$.get("/widget/getContent", { path: this.get("path") }, _.bind(function (data) {
+				this.set({ content: data }, { silent: false });
+			}, this));
 		}
-
+		
 	});
 
 	Qwile.installedWidgets = new Backbone.Collection;
@@ -99,7 +107,12 @@ define(["backbone"], function (Backbone) {
 
 			_.each(data.widgets, function (widget) {
 
-				var widgetModel = new Qwile.widget.Model({ _id: widget._id });
+				var widgetModel = new Qwile.widget.Model({
+
+					_id: widget._id,
+					path: widget.path
+
+				});
 				widgetModel.view = new Qwile.widget.View({
 
 					model: widgetModel,

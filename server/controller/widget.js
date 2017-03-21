@@ -14,6 +14,7 @@ module.exports = (function () {
 		app.put("/widget/install", this.install);
 		app.delete("/widget/uninstall", this.uninstall);
 		app.get("/widget/getInstalled", this.getInstalled);
+		app.get("/widget/getContent", this.getContent);
 		app.get("/widget/timeout", this.timeout);
 
 	}
@@ -94,6 +95,10 @@ module.exports = (function () {
 				}
 
 			});
+		},
+			
+		getContent: function (req, res) {
+			res.render("widgets/" + req.query.path);
 		},
 
 		timeout: (req, res) => {
