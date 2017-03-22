@@ -85,6 +85,8 @@ $(window).ready(function() {
 
 								});
 
+								Qwile.initInstalledWidgets();
+
 							});
 
 						});
@@ -103,23 +105,6 @@ $(window).ready(function() {
 						}, time);
 
 						$('#leftpanel').mouseleave(hideLeftPanel).mouseover(showLeftPanel);
-
-						$('.widget .close').click(function() {
-							$(this).parents('.widget').fadeOut();
-						});
-
-						$('.widget').draggable({
-							containment: "parent",
-							handle: ".content"
-						}).on("tap mouseover", function() {
-							if ($(".buttons", this).css("opacity") == 0) {
-								$(".buttons", this).stop().css("visibility", "visible").animate({ opacity: 1 }, 'slow');
-							}
-						}).mouseleave(function() {
-							$(".buttons", this).animate({ opacity: 0 }, 'fast', function() {
-								$(this).css("visibility", "hidden");
-							});
-						});
 
 						$('#quit').click(function() {
 							$('#cover').show();

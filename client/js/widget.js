@@ -100,31 +100,33 @@ define(["backbone"], function (Backbone) {
 
 	Qwile.installedWidgets = new Backbone.Collection;
 
-	$.get("/widget/getInstalled", function (data) {
-		if (data.success) {
+	Qwile.initInstalledWidgets = function () {
+		$.get("/widget/getInstalled", function (data) {
+			if (data.success) {
 
-			console.log("Widgets: ", data);
+				console.log("Widgets: ", data);
 
-			_.each(data.widgets, function (widget) {
+				_.each(data.widgets, function (widget) {
 
-				var widgetModel = new Qwile.widget.Model({
+					var widgetModel = new Qwile.widget.Model({
 
-					_id: widget._id,
-					path: widget.path
+						_id: widget._id,
+						path: widget.path
+
+					});
+					widgetModel.view = new Qwile.widget.View({
+
+						model: widgetModel,
+						className: widget.name
+
+					});
+					Qwile.installedWidgets.add(widgetModel);
 
 				});
-				widgetModel.view = new Qwile.widget.View({
+				console.log("Installed widgets: ", Qwile.installedWidgets);
 
-					model: widgetModel,
-					className: widget.name
-
-				});
-				Qwile.installedWidgets.add(widgetModel);
-
-			});
-			console.log("Installed widgets: ", Qwile.installedWidgets);
-
-		}
-	});
+			}
+		});
+	}
 	
 });
