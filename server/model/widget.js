@@ -22,7 +22,8 @@ module.exports = (function () {
 
 			name: String,
 			title: String,
-			image: String
+			image: String,
+			path: String
 
 		});
 
