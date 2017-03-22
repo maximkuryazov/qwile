@@ -13,7 +13,7 @@ module.exports = (function () {
 
 	};
 
-	function constructor (mongoose, db) {
+	function Constructor (mongoose, db) {
 
 		private.mongoose = mongoose;
 		private.db = db;
@@ -40,7 +40,18 @@ module.exports = (function () {
 
 	}
 
-	constructor.prototype = {
+	Constructor.prototype = {
+
+		get: function (id, callback) {
+			private.WidgetModel.findOne({
+				_id: id
+			}, function (error, widget) {
+
+				if (!error) callback(widget);
+				else console.log("Error in model/widget/get: ", error);
+
+			});
+		},
 
 		getAllWidgets: function (currentUserId, callback) {
 			private.WidgetModel.find({}, function (error, widgets) {
@@ -70,6 +81,8 @@ module.exports = (function () {
 		},
 		
 		install: function (userId, widgetId, callback) {
+
+			var self = this;
 			private.WidgetsUsersModel.findOne({
 
 				widget: widgetId,
@@ -78,7 +91,7 @@ module.exports = (function () {
 			}, function (error, relation) {
 				if (!error) {
 					if (relation) {
-						callback(relation, "Document already exists.");
+						callback(relation, undefined, "Document already exists.");
 					} else {
 
 						var relationship = new private.WidgetsUsersModel({
@@ -88,15 +101,18 @@ module.exports = (function () {
 
 						});
 						relationship.save(function (error, relation) {
+							self.get(widgetId, function (widget) {
 
-							if (!error) callback(relation);
-							else callback(relation, error);
+								if (!error) callback(relation, widget);
+								else callback(relation, widget, error);
 
+							});
 						});
 
 					}
 				}
-			})
+			});
+
 		},
 
 		getInstalled: function (userId, callback) {
@@ -151,6 +167,6 @@ module.exports = (function () {
 		
 	};
 	
-	return constructor;
+	return Constructor;
 
 })();

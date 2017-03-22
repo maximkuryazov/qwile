@@ -19,7 +19,8 @@ define(["backbone"], function (Backbone) {
 		render: function () {
 
 			var template = _.template($("#widget-view").html());
-			this.$el.html(template()).addClass(this.options.className).addClass("widget");
+			this.$el.html(template()).addClass(this.options.className)
+				.attr("data-id", this.model.get("_id")).addClass("widget");
 			this.$el.appendTo(".wrapper");
 			this.setUI();
 
@@ -35,10 +36,6 @@ define(["backbone"], function (Backbone) {
 		},
 
 		remove: function () {
-
-			this.$el.fadeOut("slow", _.bind(function () {
-				this.$el.remove();
-			}, this));
 			this.model.destroy({
 
 				url: _.bind(function () { return "/widget/uninstall/" + this.get("_id"); }, this.model)(),
@@ -47,12 +44,19 @@ define(["backbone"], function (Backbone) {
 					id: _.bind(function () { return this.get("_id") }, this.model)()
 				}),
 				wait: true,
-				success: function (model, response) {
+				success: _.bind(function (model, response) {
+
 					console.log(response);
-				}
+					this.$el.fadeOut("slow", _.bind(function () {
+
+						this.$el.remove();
+						$("#widget_select").find("[data-id='" + this.model.get("_id") + "'] .mark").remove();
+
+					}, this));
+
+				}, this)
 
 			});
-
 		},
 
 		setUI: function () {
@@ -99,30 +103,31 @@ define(["backbone"], function (Backbone) {
 	});
 
 	Qwile.installedWidgets = new Backbone.Collection;
+	
+	Qwile.renderInstalledWidget = function (widget) {
+
+		var widgetModel = new Qwile.widget.Model({
+
+			_id: widget._id,
+			path: widget.path
+
+		});
+		widgetModel.view = new Qwile.widget.View({
+
+			model: widgetModel,
+			className: widget.name
+
+		});
+		Qwile.installedWidgets.add(widgetModel);
+
+	};
 
 	Qwile.initInstalledWidgets = function () {
 		$.get("/widget/getInstalled", function (data) {
 			if (data.success) {
 
 				console.log("Widgets: ", data);
-
-				_.each(data.widgets, function (widget) {
-
-					var widgetModel = new Qwile.widget.Model({
-
-						_id: widget._id,
-						path: widget.path
-
-					});
-					widgetModel.view = new Qwile.widget.View({
-
-						model: widgetModel,
-						className: widget.name
-
-					});
-					Qwile.installedWidgets.add(widgetModel);
-
-				});
+				_.each(data.widgets, Qwile.renderInstalledWidget);
 				console.log("Installed widgets: ", Qwile.installedWidgets);
 
 			}

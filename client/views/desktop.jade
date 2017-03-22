@@ -235,7 +235,7 @@ script(src='js/desktop.js')
 			.widgets_list.regular.slider(align='center')
 				each widget in widgets
 					.block(data-id!="#{widget._id}")
-						.img(data-name!="#{widget.name}", style!="background-image:url(#{widget.image})", title="Click to add this widget on Desktop.")
+						.img(data-name!="#{widget.name}", data-id!="#{widget._id}", style!="background-image:url(#{widget.image})", title="Click to add this widget on Desktop.")
 							if widget.added
 								.mark
 						.title= widget.title

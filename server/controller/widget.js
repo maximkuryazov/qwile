@@ -5,7 +5,7 @@
 module.exports = (function () {
 
 	let WidgetModel = require("../model/widget");
-	var private = {}
+	var private = {};
 	
 	function WidgetConstructor (app, user, mongoose, db) {
 
@@ -29,12 +29,15 @@ module.exports = (function () {
 
 			console.log("Widget ID: ", req.body.id);
 			res.setHeader("Content-Type", "application/json");
-			private.widgetModel.install(req.session.currentUserId, req.body.id, function (relation, error) {
+			private.widgetModel.install(req.session.currentUserId, req.body.id, function (relation, widget, error) {
 				if (!error) {
 
 					console.log("Inserted document: ", relation);
 					res.status(200).send(JSON.stringify({
-						success: true
+
+						success: true,
+						widget: widget
+					
 					}));
 
 				} else {
@@ -104,7 +107,6 @@ module.exports = (function () {
 		timeout: (req, res) => {
 
 		}
-
 		
 	}
 	
