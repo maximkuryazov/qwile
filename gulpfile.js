@@ -5,6 +5,7 @@ const minifyCSS     = require('gulp-minify-css');
 const uglify        = require('gulp-uglify');
 const pump          = require('pump');
 const imagemin      = require('gulp-imagemin');
+const browserSync   = require('browser-sync').create();
 
 gulp.task('default', function(callback) {
 
@@ -64,6 +65,33 @@ gulp.task("image", function () {
         .pipe(gulp.dest('dist/img'));
 
 });
+
+// browser reloading
+
+gulp.task("watch", function (done) {
+
+    browserSync.reload();
+    done();
+
+});
+
+gulp.task("serve", function () {
+
+    browserSync.init({
+	/*
+        server: {
+            baseDir: "./"
+        },
+	*/
+	proxy: "http://localhost",
+        port: 80
+
+    });
+    gulp.watch("client/*", ["watch"]);
+
+});
+
+// deploy
 
 gulp.task('deploy', function() {
     console.log("It should rename dist folder to client, and client folder to client.dev.");
