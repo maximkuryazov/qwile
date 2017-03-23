@@ -10,7 +10,7 @@ module.exports = (function() {
 		send: function (options, successCallback, errorCallback) {
 
 			const nodeMailer = require("nodemailer");
-			var credentials = JSON.parse(fs.readFileSync("credentials.json", "utf8"));
+			var credentials = JSON.parse(fs.readFileSync("./server/credentials.json", "utf8"));
 
 			var transporter = nodeMailer.createTransport({
 				service: "Gmail",
