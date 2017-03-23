@@ -10,13 +10,14 @@ module.exports = (function() {
 		send: function (options, successCallback, errorCallback) {
 
 			const nodeMailer = require("nodemailer");
+			var credentials = JSON.parse(fs.readFileSync("credentials.json", "utf8"));
 
 			var transporter = nodeMailer.createTransport({
 				service: "Gmail",
 				auth: {
 
-					user: "maximkuryazov@gmail.com",
-					pass: "322538631abcdE"
+					user: credentials.mail,
+					pass: credentials.pass
 
 				}
 			});
