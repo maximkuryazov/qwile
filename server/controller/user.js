@@ -179,13 +179,13 @@ module.exports = function (app, user) {
 				}, function() {
 
 					res.setHeader("Content-type", "text/html; charset=utf-8");
-					res.render("activationComplete", {
+					res.render("views/activationComplete", {
 						domain: defaultDomain
 					});
 
 				});
 			} else {
-				res.render("invalidActivation");
+				res.render("views/invalidActivation");
 			}
 		});
 
@@ -265,32 +265,40 @@ module.exports = function (app, user) {
 
 			if (!document) {
 				res.send({
+
 					success: false,
 					error: "There is no such E-Mail in system."
+
 				});
 			} else {
 
 				var restoreCode = Math.round((Math.random() * 100000));
 				let mail = require("../mail.js");
 				var options = {
+
 					to:         req.body.email,
 					from:       "Qwile OS <admin@qwile.com>",
 					subject:    "Qwile: Account restore",
 					html:       'To restore your account, please, follow this link: <br /><a href="http://95.31.9.74/user/changePassword?code='
 					+ restoreCode + '&email=' + req.body.email +'">Restore your password</a>'
+
 				};
 
 				user.set(document._id, { restoreCode: restoreCode }, function(info, error) {
 					if (!error) {
 						mail.send(options, function (info) {
 							res.send({
+
 								success: true,
 								info: info
+
 							});
 						}, function (error) {
 							res.send({
+
 								success: false,
 								error: error
+
 							});
 						});
 					}
@@ -306,13 +314,13 @@ module.exports = function (app, user) {
 		res.setHeader("Content-type", "text/html; charset=utf-8");
 		user.getByMail(req.query.email, function(document) {
 			if (!document) {
-				res.render("invalidRestoreLink");
+				res.render("views/invalidRestoreLink");
 			} else if (document.restoreCode == req.query.code && document.email == req.query.email) {
-				res.render("setNewPassword", {
+				res.render("views/setNewPassword", {
 					domain: defaultDomain
 				});
 			} else {
-				res.render("invalidRestoreLink");
+				res.render("views/invalidRestoreLink");
 			}
 		});
 
@@ -455,15 +463,19 @@ module.exports = function (app, user) {
 
 	app.get("/user/getPhoto", function (req, res) {
 		user.getPhoto("_currentPhoto.jpg", req.session.currentUserId, function (data) {
+
 			res.setHeader("Content-type", "image/jpeg");
 			res.end(data);
+			
 		});
 	});
 
 	app.get("/user/getPhotoIcon", function (req, res) {
 		user.getPhoto("_currentPhoto.min.jpg", req.session.currentUserId, function (data) {
+
 			res.setHeader("Content-type", "image/jpeg");
 			res.end(data);
+
 		});
 	});
 

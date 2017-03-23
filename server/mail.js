@@ -16,7 +16,7 @@ module.exports = (function() {
 				auth: {
 
 					user: "maximkuryazov@gmail.com",
-					pass: "322538631"
+					pass: "322538631abcdE"
 
 				}
 			});
