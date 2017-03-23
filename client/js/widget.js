@@ -12,6 +12,7 @@ define(["backbone"], function (Backbone) {
 			this.el = document.createElement("div");
 			_.bindAll(this, "render");
 			this.model.bind("change:content", _.bind(this.setContent, this));
+			this.model.bind("save", this.model.save);
 			this.render();
 
 		},
@@ -65,6 +66,18 @@ define(["backbone"], function (Backbone) {
 				containment: "parent",
 				handle: ".content"
 
+			}, {
+				stop: _.bind(function (event, ui) {
+
+					this.model.set({
+
+						x: $(ui.helper).offset().left,
+						y: $(ui.helper).offset().top
+
+					}, { silent: true });
+					this.model.trigger("save");
+
+				}, this)
 			});
 		},
 
@@ -91,6 +104,7 @@ define(["backbone"], function (Backbone) {
 
 	Qwile.widget.Model = Backbone.Model.extend({
 
+		url: "/widget/",
 		urlRoot: "/widget/",
 		idAttribute: "_id",
 
@@ -109,7 +123,16 @@ define(["backbone"], function (Backbone) {
 		var widgetModel = new Qwile.widget.Model({
 
 			_id: widget._id,
-			path: widget.path
+			path: widget.path,
+			x: widget.x,
+			y: widget.y,
+
+			sync: function () {
+
+				alert(this.get("x"));
+				alert(this.get("y"));
+
+			}
 
 		});
 		widgetModel.view = new Qwile.widget.View({

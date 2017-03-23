@@ -32,7 +32,9 @@ module.exports = (function () {
 		var widgetsUsersSchema = mongoose.Schema({
 
 			widget: String,
-			user: String
+			user: String,
+			x: Number,
+			y: Number
 
 		});
 
@@ -50,6 +52,25 @@ module.exports = (function () {
 				if (!error) callback(widget);
 				else console.log("Error in model/widget/get: ", error);
 
+			});
+		},
+
+		// TODO: We should create method setCords, because set is more general (not only x, y)
+		setForUser: function (id, data, callback) {
+			private.WidgetsUsersModel.update({
+
+				user: id,
+				widget: data._id
+
+			}, {
+				$set: {
+
+					x: data.x,
+					y: data.y
+
+				}
+			}, function (error, affected) {
+				callback(affected, error);
 			});
 		},
 

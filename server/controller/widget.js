@@ -16,6 +16,7 @@ module.exports = (function () {
 		app.get("/widget/getInstalled", this.getInstalled);
 		app.get("/widget/getContent", this.getContent);
 		app.get("/widget/timeout", this.timeout);
+		app.put("/widget/", this.setForUser);
 
 	}
 
@@ -37,7 +38,7 @@ module.exports = (function () {
 
 						success: true,
 						widget: widget
-					
+
 					}));
 
 				} else {
@@ -102,6 +103,24 @@ module.exports = (function () {
 			
 		getContent: function (req, res) {
 			res.render("widgets/" + req.query.path);
+		},
+
+		setForUser: function (req, res) {
+			private.widgetModel.setForUser(req.session.currentUserId, req.body, function (affected, error) {
+
+				res.set("Content-Type", "application/json");
+				if (!error && affected) {
+					res.send(JSON.stringify({ success: true }));
+				} else {
+					res.status(503).send(JSON.stringify({
+
+						success: false,
+						error: error
+
+					}));
+				}
+
+			});
 		},
 
 		timeout: (req, res) => {

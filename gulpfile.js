@@ -87,8 +87,7 @@ gulp.task("serve", function () {
         port: 80
 
     });
-    gulp.watch("client/*", ["watch"]);
-
+    gulp.watch(["client/js/*.js", "client/view/*.jade", "client/styl/*.styl"], ["watch"]);
 });
 
 // deploy
