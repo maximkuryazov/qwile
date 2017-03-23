@@ -152,10 +152,24 @@ module.exports = (function () {
 							$in: ids
 						}
 					}, function (error, widgets) {
+						if (!error) {
 
-						if (!error) callback(widgets);
+							for (var i = 0; i < relations.length; i++) {
+								for (var j = 0; j < widgets.length; j++) {
+
+									if (widgets[j]._id == relations[i].widget) {
+
+										widgets[j] = widgets[j].toObject();
+										widgets[j].x = relations[i].x;
+										widgets[j].y = relations[i].y;
+
+									}
+								}
+							}
+							callback(widgets);
+
+						}
 						else callback([], error);
-
 					});
 
 				} else {

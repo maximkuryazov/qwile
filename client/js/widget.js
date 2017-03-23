@@ -23,6 +23,7 @@ define(["backbone"], function (Backbone) {
 			this.$el.html(template()).addClass(this.options.className)
 				.attr("data-id", this.model.get("_id")).addClass("widget");
 			this.$el.appendTo(".wrapper");
+			this.setProperties();
 			this.setUI();
 
 		},
@@ -81,6 +82,15 @@ define(["backbone"], function (Backbone) {
 			});
 		},
 
+		setProperties: function () {
+			this.$el.css({
+
+				top:  this.model.get("y") + "px",
+				left: this.model.get("x") + "px"
+
+			});
+		},
+
 		showButtons: function () {
 			if (this.$el.find(".buttons").css("opacity") == 0) {
 				this.$el.find(".buttons").stop().css("visibility", "visible").animate({ opacity: 1 }, "slow");
@@ -125,14 +135,7 @@ define(["backbone"], function (Backbone) {
 			_id: widget._id,
 			path: widget.path,
 			x: widget.x,
-			y: widget.y,
-
-			sync: function () {
-
-				alert(this.get("x"));
-				alert(this.get("y"));
-
-			}
+			y: widget.y
 
 		});
 		widgetModel.view = new Qwile.widget.View({
