@@ -36,8 +36,6 @@ module.exports = (function() {
 			restoreCode: Number,
 			online: Boolean,
 
-			// юзер сохраняется раньше чем настройка, поэтому он не может положить айди настройки к себе,
-			// т.к. на тот момент её ещё нету, поэтому пустой массив. Надо положить айди настройки сюда через update повторным запросом.
 			settings: [{
 
 				type: mongoose.Schema.Types.ObjectId,
@@ -161,7 +159,6 @@ module.exports = (function() {
 
 					private.SettingModel.update({ _id: settingDocument._id }, {
 						$set: {
-							sound: false,
 							_owner: private.mongoose.Types.ObjectId(currentUser._id)
 						}
 					}, function (error, updated) {
