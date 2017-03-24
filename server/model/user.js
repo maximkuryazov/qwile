@@ -16,7 +16,7 @@ module.exports = (function() {
 		
 	};
 
-	function constructor (mongoose, db) {
+	function Constructor (mongoose, db) {
 		
 		private.mongoose = mongoose;
 		this.data = {};
@@ -31,26 +31,55 @@ module.exports = (function() {
 			gender: String,
 			age: Number,
 			birthday: Date,
-			sound: Boolean,
-			animations: Boolean,
-			visible: Boolean,
 			activated: Boolean,
 			activationCode: Number,
 			restoreCode: Number,
-			online: Boolean
+			online: Boolean,
+
+			// юзер сохраняется раньше чем настройка, поэтому он не может положить айди настройки к себе,
+			// т.к. на тот момент её ещё нету, поэтому пустой массив. Надо положить айди настройки сюда через update повторным запросом.
+			settings: [{
+
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "Setting"
+
+			}]
 
 		});
 
-		userSchema.methods.showData = function () {
+		var settingSchema = mongoose.Schema({
+
+			sound: Boolean,
+			animations: Boolean,
+			visible: Boolean,
+			security: Boolean,
+			popups: Boolean,
+			wallpaper: String,
+
+			_owner: {
+
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "User"
+
+			}
+
+		});
+
+		userSchema.methods.showEmail = function () {
 			console.log("Email: " + this.email);
 		};
 
-		private.UserModel = mongoose.model("User", userSchema);
+		var User = mongoose.model("User", userSchema);
+		var Setting = mongoose.model("Setting", settingSchema);
+
+		private.UserModel = User;
+		private.SettingModel = Setting;
+
 		private.db = db;
 
 	}
 
-	constructor.prototype = {
+	Constructor.prototype = {
 
 		getByMail: function (email, callback) {
 			private.UserModel.findOne({ email: email }, function (error, doc) {
@@ -67,6 +96,8 @@ module.exports = (function() {
 				if (!error) callback(doc);
 				else console.log("Error " + error + " occurred.");
 
+			}).populate("settings").exec(function (error, user) {
+				console.log("Populated user: ", user);
 			});
 		},
 
@@ -96,42 +127,78 @@ module.exports = (function() {
 			var mongoose = private.mongoose;
 			this.data = data;
 
-			var currentUser = new private.UserModel({
+			var setting = new private.SettingModel({
 
-				email: this.data.email,
-				password: crypto.createHash("md5").update(this.data.password).digest("hex"),
-				age: 27,
-				birthday: new Date(),
-				activated: false,
-				activationCode: this.data.activationCode
-
-			});
-
-			currentUser.save(function (error, currentUser) {
-
-				if (error) return console.error(error);
-				currentUser.showData();
-				if (!fs.existsSync(_dir + "/" + currentUser._id)){
-
-					fs.mkdirSync(_dir + "/" + currentUser._id);
-					fs.mkdirSync(_dir + "/" + currentUser._id + "/__profile");
-					var writeStream = fs.createWriteStream(_dir + "/" + currentUser._id + "/__profile/_currentPhoto.jpg");
-					fs.createReadStream("./client/img/no-photo.jpg").pipe(writeStream);
-
-				}
+				sound: true,
+				animations: true,
+				visible: true,
+				security: true,
+				popups: true,
+				wallpaper: true,
+				_owner: private.mongoose.Types.ObjectId(0)
 
 			});
 
-			private.UserModel.find(function (error, users) {
+			var _ = require("underscore-node");
+			setting.save(_.bind(function (error, settingDocument) {
 
-				if (error) return console.error(error);
-				console.log("Users: " + users);
-				for (var key in users) {
-					console.log("Email: " + users[key].email);
-					console.log("ID: " + users[key]._id);
-				}
+				var currentUser = new private.UserModel({
 
-			});
+					email: this.data.email,
+					password: crypto.createHash("md5").update(this.data.password).digest("hex"),
+					age: 27,
+					birthday: new Date(),
+					activated: false,
+					activationCode: this.data.activationCode,
+					settings: [setting._id]
+
+				});
+
+				currentUser.save(function (error, currentUser) {
+
+					if (error) return console.error(error);
+					currentUser.showEmail();
+
+					private.SettingModel.update({ _id: settingDocument._id }, {
+						$set: {
+							sound: false,
+							_owner: private.mongoose.Types.ObjectId(currentUser._id)
+						}
+					}, function (error, updated) {
+
+						if (error) console.log("Error in setting.update: ", error);
+						else {
+
+							console.log("Обновляем настройку!");
+
+							if (!fs.existsSync(_dir + "/" + currentUser._id)) {
+
+								fs.mkdirSync(_dir + "/" + currentUser._id);
+								fs.mkdirSync(_dir + "/" + currentUser._id + "/__profile");
+								var writeStream = fs.createWriteStream(_dir + "/" + currentUser._id + "/__profile/_currentPhoto.jpg");
+								fs.createReadStream("./client/img/no-photo.jpg").pipe(writeStream);
+
+							}
+						}
+
+					});
+
+				});
+
+				private.UserModel.find(function (error, users) {
+
+					if (error) return console.error(error);
+					console.log("Users: " + users);
+					for (var key in users) {
+
+						console.log("Email: " + users[key].email);
+						console.log("ID: " + users[key]._id);
+
+					}
+
+				});
+
+			}, this));
 
 		},
 		
@@ -170,6 +237,6 @@ module.exports = (function() {
 		}
 		
 	};
-	return constructor;
+	return Constructor;
 
 })();
