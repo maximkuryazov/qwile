@@ -133,11 +133,11 @@ module.exports = function (app, user, mongoose, db) {
 					if (!error && document) {
 
 						if (!relation.voted) {
-							var calculatedRating = Math.round((Number(document.rating) + Number(req.query.mark)) / 2);
+							var calculatedRating = ((Number(document.rating) + Number(req.query.mark)) / 2);
 						} else {
 
-							var oldRating = Number(document.rating) * 2 - relation.voted;
-							var calculatedRating = Math.round((oldRating + Number(req.query.mark)) / 2);
+							var oldRating = Number(document.rating) * 2 - Number(relation.voted);
+							var calculatedRating = ((oldRating + Number(req.query.mark)) / 2);
 							
 						}
 						appModel.set(req.query.id, {

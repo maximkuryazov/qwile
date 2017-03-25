@@ -10,10 +10,10 @@ each app in apps
                      .top
                         .name= app.name
                         .rating(title="Click to rate this application!")
-                           - for (var i = 0; i < app.rating; i++) {
+                           - for (var i = 0; i < Math.round(app.rating); i++) {
                               .star.filled
                            - }
-                           - for (var j = 0; j < 5 - app.rating; j++) {
+                           - for (var j = 0; j < 5 - Math.round(app.rating); j++) {
                               .star.blank
                            - }
                      .bottom
