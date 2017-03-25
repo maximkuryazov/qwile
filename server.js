@@ -16,6 +16,7 @@
     const fileUpload = require('express-fileupload');
     const http = require('http');
     const https = require('https');
+    const favicon = require('express-favicon');
 
     const port = 80;
 
@@ -76,6 +77,7 @@
 
     };
     app.use(RewriteMiddleware(RewriteOptions));
+    app.use(favicon(__dirname + '/img/favicon.ico'));
 
     db.once('open', function () {
 
