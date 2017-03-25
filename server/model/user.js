@@ -8,6 +8,7 @@ module.exports = (function() {
 	const crypto = require("crypto");
 	const fs = require("fs");
 	const _dir = "./storage";
+	const Jimp = require('jimp');
 
 	const private = {
 		
@@ -165,15 +166,22 @@ module.exports = (function() {
 
 						if (error) console.log("Error in setting.update: ", error);
 						else {
-
-							console.log("Обновляем настройку!");
-
 							if (!fs.existsSync(_dir + "/" + currentUser._id)) {
 
 								fs.mkdirSync(_dir + "/" + currentUser._id);
 								fs.mkdirSync(_dir + "/" + currentUser._id + "/__profile");
-								var writeStream = fs.createWriteStream(_dir + "/" + currentUser._id + "/__profile/_currentPhoto.jpg");
-								fs.createReadStream("./client/img/no-photo.jpg").pipe(writeStream);
+
+								var path = _dir + "/" + currentUser._id;
+								var noPhotoPath = "./client/img/no-photo.jpg";
+
+								var writeStream = fs.createWriteStream(path + "/__profile/_currentPhoto.jpg");
+								fs.createReadStream(noPhotoPath).pipe(writeStream);
+								Jimp.read(noPhotoPath, function (error, image) {
+
+									if (error) console.log("Error in Jimp: ", error);
+									image.resize(50, Jimp.AUTO).quality(100).write(path + "/__profile/_currentPhoto.min.jpg");
+
+								});
 
 							}
 						}

@@ -113,7 +113,14 @@ module.exports = function (app, user, mongoose, db) {
 		// TODO: check for req.query.id
 		appModel.getAppById(req.query.id, function (document, error) {
 			if (!error && document) {
-				res.render("apps/" + document.url);
+				try {
+
+					res.render("apps/" + document.url);
+					res.end();
+
+				} catch (renderError) {
+					console.log("error in app/render: ", renderError);
+				}
 			}
 		});
 
