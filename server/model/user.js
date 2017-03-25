@@ -214,6 +214,24 @@ module.exports = (function() {
 			});
 
 		},
+
+		setSetting: function (_owner, options, callback) {
+			private.SettingModel.update({ _owner: _owner }, {
+				$set: options,
+			}, function (error, affected) {
+
+				console.log("User setting set error: ", error);
+				console.log("User setting set affected: ", affected);
+				callback(affected, error);
+
+			});
+		},
+
+		getSetting: function (id, property, callback) {
+			private.SettingModel.findOne({ _owner: id }, function (error, document) {
+				callback.call(document, document[property]);
+			});
+		},
 		
 		get: function (id, property, callback) {
 			this.getById(id, function (document) {

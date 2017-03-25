@@ -11,7 +11,7 @@ $(window).ready(function() {
 		var sound = false;
 		$.ajax({
 
-			url: "/user/sound",
+			url: "/user/settings/sound",
 			async: false,
 			success: function (data) {
 				sound = data.sound;
@@ -315,7 +315,7 @@ $(window).ready(function() {
 							$(this).toggleClass("disabled");
 
 							Qwile.settings.sound = !$(this).hasClass("disabled");
-							$.get("/user/sound", { set: Qwile.settings.sound });
+							$.get("/user/settings/sound", { set: Qwile.settings.sound });
 
 							if (Qwile.settings.sound) {
 								var soundsOnSound = new Howl({

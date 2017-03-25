@@ -39,12 +39,12 @@ module.exports = function (app, user) {
 		});
 	});
 
-	app.get("/user/sound", function (req, res) {
+	app.get("/user/settings/sound", function (req, res) {
 
 		res.set("Content-Type", "application/json");
 		if (req.query.set) {
 			
-			user.set(req.session.currentUserId, { sound: req.query.set }, function (updated) {
+			user.setSetting(req.session.currentUserId, { sound: req.query.set }, function (updated) {
 				if (updated) {
 					res.send({
 						success: true
@@ -57,12 +57,15 @@ module.exports = function (app, user) {
 			});
 			
 		} else {
-			user.get(req.session.currentUserId, "sound", function (value) {
+			user.getSetting(req.session.currentUserId, "sound", function (value) {
 				res.send({
 					sound: value
 				});
 			});
 		}
+
+		// just for settings test
+		user.getById(req.session.currentUserId, new Function);
 		
 	});
 
