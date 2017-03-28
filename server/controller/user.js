@@ -18,13 +18,13 @@ module.exports = function (app, user, models) {
 
 	}
 
-	app.get("/user/remove", function (req, res) {
+	app.delete("/user", function (req, res) {
 
 		var id = req.session.currentUserId;
 		user.remove(id, function(error) {
 
-			res.set('Access-Control-Allow-Origin', '*');
-			res.setHeader('Content-Type', 'application/json');
+			res.set("Access-Control-Allow-Origin", "*");
+			res.setHeader("Content-Type", "application/json");
 
 			function sendError () {
 				res.send(JSON.stringify({
@@ -40,20 +40,18 @@ module.exports = function (app, user, models) {
 					if (!error) {
 						models.widgetsUsersModel.remove({ "user": id }, function (error) {
 							if (!error) {
-								res.send(JSON.stringify({
-									success: true
-								}));
-							} else {
-								sendError(error);
-							}
+								req.session.destroy(function(error) {
+									if (!error) {
+										res.send(JSON.stringify({
+											success: true
+										}));
+									} else sendError(error);
+								});
+							} else sendError(error);
 						});
-					} else {
-						sendError(error);
-					}
+					} else sendError(error);
 				});
-			} else {
-				sendError(error);
-			}
+			} else sendError(error);
 
 		});
 

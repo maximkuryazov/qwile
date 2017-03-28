@@ -7,6 +7,9 @@ mongod --dbpath C:\qwile\db
 Create dumps:
 mongodump --out C:\qwile\dump
 
+Import dumps:
+mongorestore --db qwile C:\qwile\dump\qwile
+
 MongoDB installation guide:
 https://code.msdn.microsoft.com/Mongo-Database-setup-on-6963f46f
 
