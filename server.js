@@ -210,9 +210,14 @@
                 break;
             }
         });
-        
-        let userController = require("./server/controller/user")(app, user);
-        let appController = require("./server/controller/app")(app, user, mongoose, db);
+
+        let AppController = require("./server/controller/app")(app, mongoose, db);
+        let UserController = require("./server/controller/user")(app, user, {
+
+            appsUsersModel: AppController.static.getAppsUsersModel(),
+            widgetsUsersModel: WidgetController.static.getWidgetsUsersModel()
+            
+        });
 
         app.get('/captcha', function (req, res) {
 

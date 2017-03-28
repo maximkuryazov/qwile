@@ -20,6 +20,12 @@ module.exports = (function () {
 
 	}
 
+	WidgetConstructor.static = {
+		getWidgetsUsersModel: function () {
+			return private.widgetModel.getWidgetsUsersModel();
+		}
+	};
+
 	WidgetConstructor.prototype = {
 
 		getAllWidgets: function (currentUserId, callback) {

@@ -157,6 +157,10 @@ module.exports = (function () {
 			}, function (error, affected) {
 				callback(affected, error);
 			});
+		},
+		
+		getAppsUsersModel: function () {
+			return private.AppsUsersModel;
 		}
 
 	};

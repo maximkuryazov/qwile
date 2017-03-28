@@ -2,7 +2,7 @@
  * Created by User on 2/21/2017.
  */
 
-module.exports = function (app, user, mongoose, db) {
+module.exports = function (app, mongoose, db) {
 	
 	var AppModel = require("../model/app");
 	var appModel = new AppModel(mongoose, db);
@@ -181,5 +181,13 @@ module.exports = function (app, user, mongoose, db) {
 			}
 		});
 	});
+
+	return {
+		static: {
+			getAppsUsersModel: function () {
+				return appModel.getAppsUsersModel();
+			}
+		}
+	}
 
 };

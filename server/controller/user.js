@@ -2,7 +2,7 @@
  * Created by User on 2/20/2017.
  */
 
-module.exports = function (app, user) {
+module.exports = function (app, user, models) {
 
 	const util = require('util');
 	const crypto = require('crypto');
@@ -19,15 +19,14 @@ module.exports = function (app, user) {
 	}
 
 	app.get("/user/remove", function (req, res) {
-		user.remove(req.session.currentUserId, function(error) {
+
+		var id = req.session.currentUserId;
+		user.remove(id, function(error) {
 
 			res.set('Access-Control-Allow-Origin', '*');
 			res.setHeader('Content-Type', 'application/json');
-			if (!error) {
-				res.send(JSON.stringify({
-					success: true
-				}));
-			} else {
+
+			function sendError () {
 				res.send(JSON.stringify({
 
 					success: false,
@@ -36,7 +35,28 @@ module.exports = function (app, user) {
 				}));
 			}
 
+			if (!error) {
+				models.appsUsersModel.remove({ "user": id }, function (error) {
+					if (!error) {
+						models.widgetsUsersModel.remove({ "user": id }, function (error) {
+							if (!error) {
+								res.send(JSON.stringify({
+									success: true
+								}));
+							} else {
+								sendError(error);
+							}
+						});
+					} else {
+						sendError(error);
+					}
+				});
+			} else {
+				sendError(error);
+			}
+
 		});
+
 	});
 
 	app.get("/user/settings/sound", function (req, res) {

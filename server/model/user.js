@@ -17,7 +17,7 @@ module.exports = (function() {
 		
 	};
 
-	function Constructor (mongoose, db) {
+	function Constructor (mongoose, db, models) {
 		
 		private.mongoose = mongoose;
 		this.data = {};
@@ -103,15 +103,19 @@ module.exports = (function() {
 		remove: function (id, callback) {
 			private.UserModel.remove({ "_id": id }, function (error) {
 				if (!error) {
+					private.SettingModel.remove({ "_owner": id }, function (error) {
+						if (!error) {
 
-					var rimraf = require("rimraf");
-					rimraf(_dir + "/" + id, function () {
+							var rimraf = require("rimraf");
+							rimraf(_dir + "/" + id, function () {
 
-						console.log("User with id " + id + "had been removed.");
-						callback();
+								console.log("User with id " + id + "had been removed.");
+								callback();
 
+							});
+
+						}
 					});
-					
 				} else {
 					
 					console.log("Error " + error + " occurred during the deletion.");

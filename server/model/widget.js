@@ -198,6 +198,10 @@ module.exports = (function () {
 					callback.call(this, removedCount, error);
 				}
 			});
+		},
+
+		getWidgetsUsersModel: function () {
+			return private.WidgetsUsersModel;
 		}
 		
 	};
