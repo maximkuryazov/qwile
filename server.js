@@ -17,8 +17,10 @@
     const http = require('http');
     const https = require('https');
     const favicon = require('express-favicon');
+    const fs = require('fs');
 
-    const port = 80;
+    //const port = 80;
+    const port = 443;
 
     // Static and dynamic server in one
 
@@ -104,8 +106,6 @@
             setCrossDomainHeaders(res, req);
 
             if (req.url == "/desktop") {
-
-                var fs = require('fs');
                 fs.readFile('client/index.html', 'utf8', function (error, data) {
                     
                     if (error) {
@@ -115,7 +115,6 @@
                     res.end(data);
                     
                 });
-
             } else {
 
                 var requestString = '/templateController?template=';
@@ -228,7 +227,15 @@
 
         });
 
-        var server = http.createServer(app).listen(port, "0.0.0.0", function () {
+        let credentials = {
+
+            key: fs.readFileSync("./ssl/server.key", "utf8"),
+            cert: fs.readFileSync("./ssl/server.crt", "utf8"),
+            passphrase: "123456"
+
+        };
+
+        var server = https.createServer(credentials, app).listen(port, "0.0.0.0", function () {
             console.log('Dynamic server listening on port 80!');
         });
 
