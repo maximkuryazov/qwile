@@ -66,28 +66,27 @@ gulp.task("image", function () {
 
 });
 
-// browser reloading
+// NOTE: Browser reloading doesn't work with nodemon activated!
+// only when server started as $ node server.js ?[https 443]
 
-gulp.task("watch", function (done) {
+gulp.task("reload", function (done) {
 
     browserSync.reload();
     done();
 
 });
 
-gulp.task("serve", function () {
+gulp.task("watch", function () {
 
     browserSync.init({
-	/*
-        server: {
-            baseDir: "./"
-        },
-	*/
+
         proxy: "https://localhost",
-        port: 80
+        port: 80,
+        open: true
 
     });
-    gulp.watch(["client/js/*.js", "client/view/*.jade", "client/styl/*.styl"], ["watch"]);
+    gulp.watch(["client/js/*.js", "client/view/*.jade", "client/styl/*.styl"], ["reload"]);
+
 });
 
 // deploy

@@ -19,8 +19,7 @@
     const favicon = require('express-favicon');
     const fs = require('fs');
 
-    //const port = 80;
-    const port = 443;
+    const port = process.argv[3] || 80;
 
     // Static and dynamic server in one
 
@@ -246,9 +245,17 @@
 
         };
 
-        var server = https.createServer(credentials, app).listen(port, "0.0.0.0", function () {
-            console.log('Dynamic server listening on port 80!');
-        });
+        function serverRunningCallback () {
+            console.log('Dynamic server listening on port!' + port);
+        }
+
+        var server;
+
+        if (process.argv[2] == "https") {
+            server = https.createServer(credentials, app).listen(port, "0.0.0.0", serverRunningCallback);
+        } else {
+            server = http.createServer(app).listen(port, "0.0.0.0", serverRunningCallback);
+        }
 
         var io = require('socket.io').listen(server);
         io.on('connection', function (socket) {
