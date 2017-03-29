@@ -79,12 +79,14 @@
 
         app.use(session({
 
-            secret: "123", //crypto.randomBytes(64).toString('hex'),
+            secret: "123456", // crypto.randomBytes(64).toString('hex'),
             key: 'session.id',
             proxy: true,
             resave: true,
             saveUninitialized: true,
-            cookie: { maxAge: 10000000 },
+            cookie: {
+                maxAge: 10000000
+            },
             store: new MongoStore({
                 db: mongoose.connection.db
             }, function () {

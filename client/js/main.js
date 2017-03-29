@@ -76,7 +76,7 @@
 
 					}
 					onPageLoad();
-					if (template == "desktop") require(["howler", "app", "popup", "widget"]);
+					if (template == "desktop") require(["howler", "app", "popup", "widget", "dialog"]);
 
 				});
 			}
