@@ -83,7 +83,7 @@ gulp.task("serve", function () {
             baseDir: "./"
         },
 	*/
-	proxy: "http://localhost",
+        proxy: "https://localhost",
         port: 80
 
     });
