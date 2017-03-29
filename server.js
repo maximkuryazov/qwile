@@ -29,18 +29,12 @@
     var bodyParser = require('body-parser');
     var timeout = require('connect-timeout');
     var compression = require('compression');
+    var MongoStore = require('connect-mongo')(session);
 
     var app = express();
     app.use(cookieParser());
     app.use(compression());
     app.use(fileUpload());
-
-    app.use(session({
-        
-        secret: require('crypto').randomBytes(64).toString('hex'),
-        key: 'session.id'
-        
-    }));
 
     app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
         extended: true
@@ -82,6 +76,22 @@
     app.use(favicon(__dirname + '/img/favicon.ico'));
 
     db.once('open', function () {
+
+        app.use(session({
+
+            secret: "123", //crypto.randomBytes(64).toString('hex'),
+            key: 'session.id',
+            proxy: true,
+            resave: true,
+            saveUninitialized: true,
+            cookie: { maxAge: 10000000 },
+            store: new MongoStore({
+                db: mongoose.connection.db
+            }, function () {
+                console.log("DB session connection is open.");
+            })
+
+        }));
 
         // Start listening server requests only after connection to Mongo established
         console.log('Connected to MongoDB to ' + databaseName + ' database!');
@@ -149,7 +159,6 @@
         });
 
         app.get("/webrtc", function (req, res) {
-            var fs = require('fs');
             fs.readFile('./client/apps/chat/index.html', "utf-8", function (error, data) {
                 res.send(data);
             });
