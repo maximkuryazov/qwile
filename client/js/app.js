@@ -2,7 +2,9 @@ define(["backbone", "socketio"], function (Backbone, io) {
 
 	(function (Qwile) {
 
-		var socket = io("https://" + document.domain, { secure: true });
+		// TODO: check if we on HTTP or HTTPS mode to change the link!
+
+		var socket = io(location.protocol + "//" + document.domain, { secure: true });
 		socket.on("connect", function () {
 			console.log("Socket connected.");
 		});
