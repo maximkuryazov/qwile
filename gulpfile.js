@@ -7,6 +7,7 @@ const pump          = require('pump');
 const imagemin      = require('gulp-imagemin');
 const browserSync   = require('browser-sync').create();
 const stripDebug    = require('gulp-strip-debug');
+const jshint        = require('gulp-jshint');
 
 gulp.task('default', function(callback) {
 
@@ -67,6 +68,12 @@ gulp.task("image", function () {
         .pipe(imagemin())
         .pipe(gulp.dest('dist/img'));
 
+});
+
+gulp.task("lint", function() {
+    return gulp.src(["./client/*.js", "./server/*.js"])
+        .pipe(jshint())
+        .pipe(jshint.reporter("jshint-stylish"));
 });
 
 // NOTE: Browser reloading doesn't work with nodemon activated!
