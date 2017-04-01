@@ -6,6 +6,7 @@ const uglify        = require('gulp-uglify');
 const pump          = require('pump');
 const imagemin      = require('gulp-imagemin');
 const browserSync   = require('browser-sync').create();
+const stripDebug    = require('gulp-strip-debug');
 
 gulp.task('default', function(callback) {
 
@@ -43,12 +44,14 @@ gulp.task('default', function(callback) {
                 // desktop js files
 
                 gulp.src(['client/js/*.js']),
+                stripDebug(),
                 uglify(),
                 gulp.dest('dist/js'),
 
                 // widgets js files
 
                 gulp.src(['client/js/widget/*.js']),
+                stripDebug(),
                 uglify(),
                 gulp.dest('dist/js/widget')
 
@@ -92,5 +95,5 @@ gulp.task("watch", function () {
 // deploy
 
 gulp.task('deploy', function() {
-    console.log("It should rename dist folder to client, and client folder to client.dev.");
+    console.log("It should rename dist folder to client, and client folder to client-dev.");
 });

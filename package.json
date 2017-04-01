@@ -47,6 +47,7 @@
     "gulp-livereload": "*",
     "gulp-minify-css": "*",
     "gulp-rename": "*",
+    "gulp-strip-debug": "^1.1.0",
     "gulp-stylus": "*",
     "gulp-uglify": "^2.0.1",
     "gulp-uncss": "*",

@@ -246,7 +246,7 @@
         };
 
         function serverRunningCallback () {
-            console.log('Dynamic server listening on port!' + port);
+            console.log('Dynamic server listening on port ' + port);
         }
 
         var server;

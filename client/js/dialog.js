@@ -33,23 +33,23 @@ define(["backbone"], function (Backbone) {
 		},
 
 		open: function () {
-			this.$el.fadeIn("slow");
+			this.$el.fadeIn("fast");
 		},
 
 		close: function () {
-			this.$el.fadeOut("slow");
+			this.$el.fadeOut("fast");
 		}
 
 	});
 
 	var ConfirmDialogView = AbstractDialogView.extend({
 
-		ok: function () {
-			alert("OK");
+		OK: function (callback) {
+			callback.call(this);
 		},
 
 		cancel: function () {
-
+			this.close();
 		}
 
 	});
@@ -63,8 +63,12 @@ define(["backbone"], function (Backbone) {
 		text: "Are you sure you want to exit?"
 
 	});
+
 	confirmDialogView.open();
-	confirmDialogView.ok();
+
+	confirmDialogView.OK(function() {
+		console.log("OK");
+	});
 
 	var PromptDialogView = AbstractDialogView.extend({ });
 	var ContentDialogView = AbstractDialogView.extend({ });
