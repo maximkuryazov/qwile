@@ -52,6 +52,7 @@
     "gulp-stylus": "*",
     "gulp-uglify": "^2.0.1",
     "gulp-uncss": "*",
+    "gulp.spritesmith": "^6.4.0",
     "imagemin-pngquant": "*",
     "jshint": "^2.9.4",
     "jshint-stylish": "^2.2.1",
