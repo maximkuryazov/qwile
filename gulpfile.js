@@ -8,6 +8,7 @@ const imagemin      = require('gulp-imagemin');
 const browserSync   = require('browser-sync').create();
 const stripDebug    = require('gulp-strip-debug');
 const jshint        = require('gulp-jshint');
+const spritesmith   = require('gulp.spritesmith');
 
 gulp.task('default', function(callback) {
 
@@ -67,6 +68,18 @@ gulp.task("image", function () {
     gulp.src('client/img/*')
         .pipe(imagemin())
         .pipe(gulp.dest('dist/img'));
+
+});
+
+gulp.task("sprite", function () {
+
+    var spriteData = gulp.src("./client/img/sprites/*.png").pipe(spritesmith({
+
+        imgName: "sprites.png",
+        cssName: "../styl/sprites.styl"
+
+    }));
+    return spriteData.pipe(gulp.dest("./client/img/"));
 
 });
 
