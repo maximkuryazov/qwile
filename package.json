@@ -15,7 +15,7 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.13.3",
     "express-favicon": "^2.0.0",
-    "express-fileupload": "^0.1.1",
+    "express-fileupload": "^0.1.4",
     "express-htaccess-middleware": "^0.1.0",
     "express-session": "^1.15.3",
     "gulp": "^3.9.1",
