@@ -19,7 +19,7 @@
     const favicon = require('express-favicon');
     const fs = require('fs');
 
-    const port = process.argv[3] || 80;
+    const port = process.argv[2] || 80;
 
     // Static and dynamic server in one
 
