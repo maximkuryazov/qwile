@@ -195,7 +195,7 @@ $(window).ready(function() {
 						$("#profile").resizable({
 							
 							handles: "w",
-							minWidth: 200,
+							minWidth: 215,
 							maxWidth: 400
 							
 						});

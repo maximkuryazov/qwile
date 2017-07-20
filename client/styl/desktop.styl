@@ -323,14 +323,15 @@ div#digits {
 	background-position: -15px 0%;
 }
 aside#profile {
-	width: 200px;
+	width: 215px;
 	height: calc(100% - 90px);				/* Android, iOS and Safari don't support this stuff */
 	height: -webkit-calc(100% - 90px);
 	background: url('../img/panel.png');
 	position: absolute;
 	z-index: 2;
-	right: -200px;
-    left: auto;
+	right: -215px;
+    left: calc(100% - 215px);
+ 	left: -webkit-calc(100% - 215px);
 	border-left: 6px solid #154d54;
 	border-top: 1px solid #154d54;
 	box-shadow: 10px black;
