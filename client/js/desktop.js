@@ -1,8 +1,20 @@
 $(window).ready(function() {
 
-	var scaleAnimateTime 	= 0;  		// 1000
-	var loadingAnimateTime 	= 0; 		// 5000
-	var logoAnimateTime 	= 0;		// 1800
+	var debugMode = false;
+
+	if (debugMode) {
+
+		var scaleAnimateTime 	= 0;  		// 1000
+		var loadingAnimateTime 	= 0; 		// 5000
+		var logoAnimateTime 	= 0;		// 1800
+
+	} else {
+
+		var scaleAnimateTime 	= 1000;
+		var loadingAnimateTime 	= 5000;
+		var logoAnimateTime 	= 1800;
+
+	}
 
 	Qwile.settings.sound = checkSound();
 
@@ -53,7 +65,7 @@ $(window).ready(function() {
 
 							$('.window, .widget').fadeIn('slow');
 							$('#leftpanel').animate({ left: 0 }, 'slow');
-							$('#profile').animate({ right: 0 }, 'slow', function() {
+							$('#profile').animate({ left: $(document.body).width()  - $('#profile').width() }, 'slow', function() {
 
 								var options = {
 
@@ -110,11 +122,12 @@ $(window).ready(function() {
 							$('#cover').show();
 						});
 
+						var isProfileVisible = true;
 						$('#photo').click(function() {
-							var isVisible = $('#profile').css("right") == '0px';
-							$('#profile').css("left", "auto").animate({
-								right: isVisible ? -$('#profile').width() : 0
+							$('#profile').animate({
+								left: isProfileVisible ? $(document.body).width() : $(document.body).width() - $('#profile').width()
 							});
+							isProfileVisible = !isProfileVisible;
 						});
 
 						$("#profile .header").each(function(i) {

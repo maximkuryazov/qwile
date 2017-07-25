@@ -330,8 +330,7 @@ aside#profile {
 	position: absolute;
 	z-index: 2;
 	right: -215px;
-    left: calc(100% - 215px);
- 	left: -webkit-calc(100% - 215px);
+    left: 100%;
 	border-left: 6px solid #154d54;
 	border-top: 1px solid #154d54;
 	box-shadow: 10px black;
@@ -481,7 +480,7 @@ aside#leftpanel .lock {
 	width: 100%;
 }
 
-@-moz-document url-prefix() {				/* fucked ff doesn't set 100% height without table display */
+@-moz-document url-prefix() {				/* FF doesn't set 100% height without table display */
 	#leftpanel table td .add-widget, 
 	#leftpanel table td .sound, 
 	#leftpanel table td .visible, 
