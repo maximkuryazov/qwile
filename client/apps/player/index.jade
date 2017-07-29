@@ -1,0 +1,29 @@
+html
+    head
+        title Qwile TV Remote control.
+        link(href='/apps/player/css/video-js.css', rel='stylesheet')
+        script(src='/apps/player/js/videojs-ie8.min.js')
+    body
+        .wrapper(align='center')
+            .videocontent
+                video#clip.video-js(controls='', preload='auto', width='100%', height='100%', poster='MY_VIDEO_POSTER.jpg', data-setup='{"fluid": true}')
+                    source(src='/apps/player/content/video.mp4', type='video/mp4')
+                    p.vjs-no-js
+                        | To view this video please enable JavaScript, and consider upgrading to a web browser that
+                        a(href='http://videojs.com/html5-video-support/', target='_blank') supports HTML5 video
+            script(src='/apps/player/js/video.js')
+    style.
+        body {
+            margin: 0;
+            padding: 0;
+            background: black;
+        }
+        div.videocontent {
+            width: 100% !important;
+            height: 100% !important;
+        }
+        video {
+            outline: none;
+            width: 100% !important;
+            height: 100% !important;
+        }
