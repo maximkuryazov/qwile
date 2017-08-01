@@ -85,7 +85,9 @@ $(window).ready(function() {
 								Qwile.openApp("Player", "58ab1532d3c4b878ce485a31", {
 
 									left: 480,
-									top: 200
+									top: 200,
+									minWidth: 520,
+									minHeight: 329
 
 								});
 

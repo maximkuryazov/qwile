@@ -107,7 +107,7 @@ define(["backbone", "socketio"], function (Backbone, io) {
 						$(ui.helper).find(".inside .window-block").css({
 							height: iframe.height() + "px"
 						});
-						iframe.height($(ui.helper).find(".content").outerHeight() - 15);
+						iframe.height($(ui.helper).find(".content").outerHeight() - 6);
 
 					}
 
@@ -149,13 +149,15 @@ define(["backbone", "socketio"], function (Backbone, io) {
 					opacity: 1
 
 				}, "slow", function () {
-					$("iframe", $window).height($window.find(".content").outerHeight() - 15);
+					$("iframe", $window).height($window.find(".content").outerHeight() - 6);
 				}).css({
 					
 					top:    properties.top + "px",
 					left:   properties.left + "px",
 					width:  properties.width ? properties.width + "px" : undefined,
-					height: properties.height ? properties.height + "px" : undefined
+					height: properties.height ? properties.height + "px" : undefined,
+					minWidth: (properties.minWidth || 0) + "px",
+					minHeight: (properties.minHeight || 0) + "px"
 
 				});
 
@@ -293,6 +295,10 @@ define(["backbone", "socketio"], function (Backbone, io) {
 				cachefull.left = $window.offset().left;
 				cachefull.top = $window.offset().top;
 
+				function changeIdrameHeight () {
+					$("iframe", $window).height($window.find(".content").outerHeight() - 6);
+				}
+
 				$window.animate({
 
 					top: "50px",
@@ -302,9 +308,8 @@ define(["backbone", "socketio"], function (Backbone, io) {
 
 				}, {
 
-					complete: function () {
-						$("iframe", $window).height($window.find(".content").outerHeight() - 15);
-					},
+					complete: changeIdrameHeight,
+					progress: changeIdrameHeight,
 					duration: "fast"
 
 				});
@@ -319,6 +324,10 @@ define(["backbone", "socketio"], function (Backbone, io) {
 				var $window = this.$window;
 				var cachefull = this.fullScreenCache;
 
+				function changeIframeHeight () {
+					$("iframe", $window).height($window.find(".content").outerHeight() - 6);
+				}
+
 				$window.animate({
 
 					width: cachefull.width + "px",
@@ -329,9 +338,8 @@ define(["backbone", "socketio"], function (Backbone, io) {
 
 				}, {
 
-					complete: function() {
-						$("iframe", $window).height($window.find(".content").outerHeight() - 15);
-					},
+					complete: changeIframeHeight,
+					progress: changeIframeHeight,
 					duration: "fast"
 
 				});
