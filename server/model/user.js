@@ -36,6 +36,17 @@ module.exports = (function() {
 			activationCode: Number,
 			restoreCode: Number,
 			online: Boolean,
+			mobile: Number,
+			skype: String,
+			jabber: Number,
+			country: String,
+			city: String,
+			street: String,
+			house: String,
+			occupation: String,
+			company: String,
+			position: String,
+			hobbies: Array,
 
 			settings: [{
 
@@ -53,7 +64,10 @@ module.exports = (function() {
 			visible: Boolean,
 			security: Boolean,
 			popups: Boolean,
+			windows: Boolean,
 			wallpaper: String,
+			storage: Number,
+			avaliableStorage: Number,
 
 			_owner: {
 
