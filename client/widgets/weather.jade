@@ -1,0 +1,14 @@
+.content#weather(width='150', height='150')
+a.aw-widget-legal(href='https://www.accuweather.com/en/ru/moscow/294021/weather-forecast/294021')
+	// By accessing and/or using this code snippet, you agree to AccuWeather’s terms and conditions (in English) which can be found at https://www.accuweather.com/en/free-weather-widgets/terms and AccuWeather’s Privacy Statement (in English) which can be found at https://www.accuweather.com/en/privacy.
+#awcc1501660736679.aw-widget-current(data-locationkey='294021', data-unit='c', data-language='en-us', data-useip='true', data-uid='awcc1501660736679')
+script(type='text/javascript', src='https://oap.accuweather.com/launch.js')
+style.
+	#link_get_widget {
+		display: none;
+	}
+	.aw-widget-current {
+		width: 180px;
+	}
+script(type="text/javascript")
+	| $(".aw-widget-current").appendTo('.content#weather');
