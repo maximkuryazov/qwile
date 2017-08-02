@@ -183,7 +183,8 @@
 	
 	var $captcha = $("#captcha");
 	function initCaptcha() {
-		$captcha.attr("src", "http://" + document.domain + ":" + Qwile.serverPort + "/captcha?cache=" + Math.random());
+		//$captcha.attr("src", "http://" + document.domain + ":" + Qwile.serverPort + "/captcha?cache=" + Math.random());
+		$captcha.attr("src", "/captcha?cache=" + Math.random());
 	}
 	initCaptcha();
 	$captcha.click(function() {
