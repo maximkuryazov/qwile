@@ -148,12 +148,12 @@ $(window).ready(function() {
 							});
 						});
 
-						$("#profile .area td:not(.photo)").delegate("div", "click", function () {
+						$("#profile .area td:not(.photo)").delegate(".profile-row", "click", function () {
 							
 							var self = this;
 							$("#shadow").fadeIn("fast", function() {
 								
-								var value = prompt("Enter a new value: ");
+								var value = prompt("Enter a new value: ", $(self).find(".value").text());
 								if (value) {
 									$.post("/user/set", { 
 										
@@ -214,7 +214,7 @@ $(window).ready(function() {
 							maxWidth: 400
 							
 						}).on("resize", function(event, ui) {
-							$("aside#profile .area td .value").css("max-width", $(ui.helper).width() - 30 + "px");
+							$("aside#profile .area td .value").css("max-width", $(ui.helper).width() - 100 + "px");
 						});
 
 						$('body').mousedown(function(e) {

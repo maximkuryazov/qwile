@@ -79,19 +79,19 @@ script(src='js/desktop.js')
 					| Info
 			tr.area
 				td.info
-					.profile-personal-row
+					.profile-personal-row.profile-row
 						span.name Firstname:
 						span.value #{user.firstname || "unknown"}
-					.profile-personal-row
+					.profile-personal-row.profile-row
 						span.name Lastname:
 						span.value #{user.lastname || "unknown"}
-					.profile-personal-row
+					.profile-personal-row.profile-row
 						span.name Middlename:
 						span.value #{user.middlename || "unknown"}
-					.profile-personal-row
+					.profile-personal-row.profile-row
 						span.name Age:
 						span.value #{user.age || "unknown"}
-					.profile-personal-row
+					.profile-personal-row.profile-row
 						span.name Gender:
 						span.value #{user.gender || "unknown"}
 			tr
@@ -99,13 +99,13 @@ script(src='js/desktop.js')
 					| Link
 			tr.area
 				td.link
-					.profile-link-row
+					.profile-link-row.profile-row
 						span.name Mobile:
 						span.value #{user.mobile || "unknown"}
-					.profile-link-row
+					.profile-link-row.profile-row
 						span.name Jabber:
 						span.value #{user.jabber || "unknown"}
-					.profile-link-row
+					.profile-link-row.profile-row
 						span.name Skype:
 						span.value #{user.skype || "unknown"}
 					.profile-link-row#profile-email-field
@@ -116,16 +116,16 @@ script(src='js/desktop.js')
 					| Adress
 			tr.area
 				td.adress
-					.profile-adress-row
+					.profile-adress-row.profile-row
 						span.name Country:
 						span.value #{user.country || "unknown"}
-					.profile-adress-row
+					.profile-adress-row.profile-row
 						span.name City:
 						span.value #{user.city || "unknown"}
-					.profile-adress-row
+					.profile-adress-row.profile-row
 						span.name Street:
 						span.value #{user.street || "unknown"}
-					.profile-adress-row
+					.profile-adress-row.profile-row
 						span.name House
 						span.value #{user.house || "unknown"}
 			tr
@@ -133,18 +133,18 @@ script(src='js/desktop.js')
 					| Interests
 			tr.area
 				td.iterests
-					.profile-interest-row
+					.profile-interest-row.profile-row
 						span.name Occupation:
 						span.value #{user.occupation || "unknown"}
-					.profile-interest-row
+					.profile-interest-row.profile-row
 						span.name Company:
 						span.value #{user.company || "unknown"}
-					.profile-interest-row
+					.profile-interest-row.profile-row
 						span.name Position:
 						span.value #{user.position || "unknown"}
-					.profile-interest-row
-						span.name Hobbie:
-						span.value Chess, Swimming
+					.profile-interest-row.profile-row
+						span.name Hobbies:
+						div.value #{user.hobbies.toString().replace(",", ", ")}
 	// //////////////// USER END ///////////////
 	// **************** NOTIFICATION START ******************
 	script#popup-view(type="text/template")
