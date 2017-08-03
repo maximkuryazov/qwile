@@ -428,8 +428,19 @@ aside#profile .area td .profile-interest-row {
 	  cursor: pointer;
 	  color: deepskyblue;
 	  span.value {
-		color: white;
+			color: white;
 	  }
+	}
+}
+#profile-email-field {
+	cursor: default;
+	&:hover {
+		color: white !important;
+		cursor: default !important;
+	  	background: rgba(000,000,000,0.4) !important;
+		span.value {
+		  	color: silver !important;
+		}
 	}
 }
 aside#profile .area td .value {

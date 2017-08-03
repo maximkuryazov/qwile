@@ -396,6 +396,16 @@ module.exports = function (app, user, models) {
 	app.post("/user/set", function (req, res) {
 
 		res.setHeader("Content-Type", "application/json");
+
+		if (req.body.field == "email") {
+			res.send({
+
+				success: false,
+				error: "You can not change mail from here."
+
+			});
+		}
+
 		var options = {};
 		options[req.body.field] = req.body.value;
 		user.set(req.session.currentUserId, options, function (affected, error) {

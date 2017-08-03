@@ -318,7 +318,7 @@ $(window).ready(function() {
 
 						});
 
-						$("tr.area div").each(function() {
+						$("tr.area .profile-row").each(function() {
 
 							Tipped.create(this, function() {
 								return '<span class="tooptip-text">Click to edit your information</span>';
