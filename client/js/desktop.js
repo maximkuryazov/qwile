@@ -293,6 +293,10 @@ $(window).ready(function() {
 							return '<span class="tooptip-text">Announcements</span>';
 						}, { position: 'bottom' });
 
+						Tipped.create('#friends', function(element) {
+							return '<span class="tooptip-text">Friends</span>';
+						}, { position: 'bottom' });
+
 						Tipped.create('#photo', function(element) {
 							return '<span class="tooptip-text">View profile</span>';
 						}, { position: 'bottom' });

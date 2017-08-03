@@ -220,7 +220,21 @@ div#digits {
 #photo {
 	width: 43px;
 }
-#announce {
+#friends .glyphicon.glyphicon-user, #announce .glyphicon.glyphicon-bell {
+	color: silver;
+	font-size: 25px;
+	&:hover {
+	  color: white;
+	}
+	&:active {
+	  color: grey;
+	}
+	cursor: pointer;
+}
+#announce .glyphicon.glyphicon-bell {
+  margin-top: 6px;
+}
+#announce, #friends {
 
   width: 43px;
   span.new {
@@ -236,11 +250,12 @@ div#digits {
 	color: white;
 	background-color: #e85500;
   }
-  div {
+  /* this is not in use anymore, because we use svg icon for it */
+  /* div {
 	cursor: pointer;
 	background: url('../img/bell.png') no-repeat;
-	width: 31px;
-	height: 31px;
+	width: 30px;
+	height: 30px;
 	margin-top: -1px;
 
 	&:hover {
@@ -249,7 +264,8 @@ div#digits {
 	&:active {
 	  background-position: -62px 0px;
 	}
-  }
+  } */
+  /* this is not in use end */
 }
 #settings:active {
   background-position: -70px 0px;

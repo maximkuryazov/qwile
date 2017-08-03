@@ -26,14 +26,17 @@ script(src='js/desktop.js')
 			tr
 				td
 					#start(title='Click here to open menu')
+				td#announce
+					//div
+					span.glyphicon.glyphicon-bell
+					span.new 3
+				td#friends
+					span.glyphicon.glyphicon-user
 				td#search-td
 					div(align='center')
 						form.search
 							input.search(type='text', placeholder='Start typing to search...')
 							.button(title='Start search')
-				td#announce
-					div
-					span.new 3
 				td#email
 					span #{user.email}
 				td#photo
