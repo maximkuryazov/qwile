@@ -101,14 +101,14 @@ script(src='js/desktop.js')
 				td.link
 					.profile-link-row
 						span.name Mobile:
-						span.value +7 (915) 272-17-15
+						span.value #{user.mobile || "unknown"}
 					.profile-link-row
 						span.name Jabber:
-						span.value 390-291-581
+						span.value #{user.jabber || "unknown"}
 					.profile-link-row
 						span.name Skype:
-						span.value maxim.kuryazov
-					.profile-link-row
+						span.value #{user.skype || "unknown"}
+					.profile-link-row#profile-email-field
 						span.name Email:
 						span.value #{user.email}
 			tr
@@ -118,16 +118,16 @@ script(src='js/desktop.js')
 				td.adress
 					.profile-adress-row
 						span.name Country:
-						span.value Russian Federation
+						span.value #{user.country || "unknown"}
 					.profile-adress-row
 						span.name City:
-						span.value Moscow
+						span.value #{user.city || "unknown"}
 					.profile-adress-row
 						span.name Street:
-						span.value Sumskaya
+						span.value #{user.street || "unknown"}
 					.profile-adress-row
 						span.name House
-						span.value 6/5
+						span.value #{user.house || "unknown"}
 			tr
 				td.header
 					| Interests
@@ -135,13 +135,13 @@ script(src='js/desktop.js')
 				td.iterests
 					.profile-interest-row
 						span.name Occupation:
-						span.value Programming
+						span.value #{user.occupation || "unknown"}
 					.profile-interest-row
 						span.name Company:
-						span.value Qwile Incorporated
+						span.value #{user.company || "unknown"}
 					.profile-interest-row
 						span.name Position:
-						span.value Lead programmer
+						span.value #{user.position || "unknown"}
 					.profile-interest-row
 						span.name Hobbie:
 						span.value Chess, Swimming

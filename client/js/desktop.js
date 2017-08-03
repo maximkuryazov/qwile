@@ -213,6 +213,8 @@ $(window).ready(function() {
 							minWidth: 215,
 							maxWidth: 400
 							
+						}).on("resize", function(event, ui) {
+							$("aside#profile .area td .value").css("max-width", $(ui.helper).width() - 30 + "px");
 						});
 
 						$('body').mousedown(function(e) {

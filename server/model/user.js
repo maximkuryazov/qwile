@@ -68,6 +68,7 @@ module.exports = (function() {
 			wallpaper: String,
 			storage: Number,
 			avaliableStorage: Number,
+			maxOpenWindowsNumber: Number,
 
 			_owner: {
 
