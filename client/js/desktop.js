@@ -214,7 +214,7 @@ $(window).ready(function() {
 							maxWidth: 400
 							
 						}).on("resize", function(event, ui) {
-							$("aside#profile .area td .value").css("max-width", $(ui.helper).width() - 100 + "px");
+							$("aside#profile .area td .value").css("max-width", $(ui.helper).width() - 120 + "px");
 						});
 
 						$('body').mousedown(function(e) {
