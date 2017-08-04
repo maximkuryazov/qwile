@@ -405,6 +405,15 @@ $(window).ready(function() {
 
 	});
 
+	$.get("/app/getInstalled", function (data) {
+		if (data.success) {
+			var tpl = _.template($("#docket-template").html());
+			data.apps.forEach(function (item, index) {
+				$("#menu td.apps-td").append(tpl(item)).sortable();
+			});
+		}
+	});
+
 	$("#menu").delegate(".switcher", "click", function () {
 
 		var self = this;

@@ -213,9 +213,10 @@ script(src='js/desktop.js')
 								.button_forward
 						tr
 							td.apps-td(colspan='4' valign='top')
-								.docket
-									img.icon(src='img/conductor.png')
-									.docket_title Conductor
+								script#docket-template(type='text/template')
+									.docket
+										img.icon(src!='img/<%= icon %>')
+										.docket_title <%= name %>
 						tr.pager(align='center')
 							td(colspan='4')
 								ul.pagination
