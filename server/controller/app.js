@@ -34,7 +34,7 @@ module.exports = function (app, mongoose, db) {
 	app.get("/app/get/all", function (req, res) {
 		appModel.getAllApps(function (documents, error) {
 
-			console.log("List of return apps:  ", documents);
+			console.log("List of returned apps:  ", documents);
 			if (!error) {
 				res.render("views/apps", {
 					apps: documents
@@ -47,6 +47,25 @@ module.exports = function (app, mongoose, db) {
 			}
 
 		}, req.session.currentUserId);
+	});
+	
+	app.get("/app/getInstalled", function (req, res) {
+		appModel.getInstalled(req.session.currentUserId, function (documents, error) {
+			if (!error) {
+
+				console.log("List of returned apps:  ", documents);
+				res.setHeader("Content-Type", "application/json");
+				res.status(200).send(JSON.stringify({
+
+					success: true,
+					apps: documents
+
+				}));
+
+			} else {
+				console.error("Error in apps/getInstalled: ", error);
+			}
+		});
 	});
 
 	app.put('/app/add', function (req, res) {

@@ -95,6 +95,28 @@ module.exports = (function () {
 			}).limit(10);
 		},
 
+		getInstalled: function (currentUserId, callback) {
+			private.AppsUsersModel.find({
+				user: currentUserId
+			}, function (appsUsersError, relationships) {
+				if (!appsUsersError) {
+
+					let ids = [];
+					relationships.forEach(function (relationship) {
+						ids.push(relationship.app);
+					});
+					private.AppModel.find({
+						"_id": {
+							$in: ids
+						}
+					}, function (error, apps) {
+						callback(apps, error);
+					});
+
+				}
+			});
+		},
+
 		add: function (userId, appId, callback) {
 			// TODO: Refactor (this.getRelation() to use)
 			private.AppsUsersModel.findOne({

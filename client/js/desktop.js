@@ -280,7 +280,7 @@ $(window).ready(function() {
 							$('#shadow').fadeIn('fast');
 						});
 
-						$('#announce div').click(function() {
+						$('#announce .glyphicon').click(function() {
 							$('#shadow').fadeIn('fast');
 							$(this).parent().find("span.new").hide();
 						});
