@@ -226,16 +226,21 @@ script(src='js/desktop.js')
 									li
 									li
 				td.right-part
-					form.search
-						table
-							tr
-								td
-									input(type='text', placeholder='Type the name of application here...')
-								td(align='right', width='50')
-									.button
-					.placeholder(align='center') There are no results on your request.
-					ul#apps-list
-					button.btn.btn-primary#show-more Show more
+					table.main(cellspacing='0', cellpadding='0')
+						tr
+							td.main_right-part
+								form.search
+									table
+										tr
+											td
+												input(type='text', placeholder='Type the name of application here...')
+											td(align='right', width='50')
+												.button
+								.placeholder(align='center') There are no results on your request.
+								ul#apps-list
+						tr(height='60')
+							td
+								button.btn.btn-primary#show-more Show more
 	// //////////////// MENU END ///////////////////
 	// ************** WIDGET SELECT START ***************
 	#widget_select
