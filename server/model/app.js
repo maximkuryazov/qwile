@@ -118,7 +118,10 @@ module.exports = (function () {
 		},
 
 		add: function (userId, appId, callback) {
+
 			// TODO: Refactor (this.getRelation() to use)
+
+			var self = this;
 			private.AppsUsersModel.findOne({
 
 				app: appId,
@@ -136,11 +139,13 @@ module.exports = (function () {
 							user: userId
 
 						});
-						relationship.save(function (error, document) {
+						self.getAppById(appId, function (app) {
+							relationship.save(function (error, document) {
 
-							if (!error) callback(document);
-							else callback(document, error);
+								if (!error) callback(document, undefined, app);
+								else callback(document, error);
 
+							});
 						});
 
 					}

@@ -424,7 +424,13 @@ $(window).ready(function() {
 			data: "id=" + $(this).parents("li").data("app-id"),
 			success: function(data) {
 				if (data.success) {
+
 					$(self).parents("li").addClass("added");
+
+					// append to menu block
+					var tpl = _.template($("#docket-template").html());
+					$(tpl(data.app)).hide().appendTo("#menu td.apps-td").end().show("slow");
+
 				}
 			},
 			error: function (request, status, error) {

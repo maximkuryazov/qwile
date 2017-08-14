@@ -72,12 +72,15 @@ module.exports = function (app, mongoose, db) {
 
 		console.log("App ID: ", req.body.id);
 		res.setHeader("Content-Type", "application/json");
-		appModel.add(req.session.currentUserId, req.body.id, function (document, error) {
+		appModel.add(req.session.currentUserId, req.body.id, function (document, error, app) {
 			if (!error) {
 
 				console.log("Inserted document: ", document);
 				res.status(200).send(JSON.stringify({
-					success: true
+
+					success: true,
+					app: app
+
 				}));
 
 			} else {
