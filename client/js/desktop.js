@@ -459,6 +459,14 @@ $(window).ready(function() {
 		});
 	});
 
+	var $pagination = $("#menu .left-part table tr.pager li");
+	$pagination.click(function () {
+
+		$pagination.removeClass("active");
+		$(this).addClass("active");
+
+	});
+
 	$(".regular").slick({
 
 		dots: false,
