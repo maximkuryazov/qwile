@@ -463,6 +463,17 @@ $(window).ready(function() {
 		});
 	});
 
+	$('.dropables td').droppable({
+		over: function (event, ui) {
+			$(event.target).css("background", "rgba(103, 227, 252,0.5)");
+		},
+		out: function (event, ui) {
+			$(this).css("background", "rgba(255,255,255,0.1)");
+		},
+		drop: function (event, ui) {
+			$(this).css("background", "rgba(255,255,255,0.1)");
+		}
+	});
 	$('.dropables td:has(.to_bin)').droppable({
 		over: function (event, ui) {
 			$(event.target).css("background", "rgba(252,80,80,0.5)");
