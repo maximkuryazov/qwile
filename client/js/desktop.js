@@ -465,13 +465,16 @@ $(window).ready(function() {
 
 	$('.dropables td').droppable({
 		over: function (event, ui) {
-			$(event.target).css("background", "rgba(103, 227, 252,0.5)");
+			$(event.target).css("background", "rgba(103, 227, 252,0.3)");
 		},
 		out: function (event, ui) {
 			$(this).css("background", "rgba(255,255,255,0.1)");
 		},
 		drop: function (event, ui) {
+
 			$(this).css("background", "rgba(255,255,255,0.1)");
+			//$(ui.helper).remove();
+			
 		}
 	});
 	$('.dropables td:has(.to_bin)').droppable({
