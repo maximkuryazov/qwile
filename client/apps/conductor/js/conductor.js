@@ -68,9 +68,40 @@ $(document.body).delegate("li.delete", "click", function() {
 		alert("Select items you need to delete.");
 	}
 
-}).delegate("li.upload", "click", function() {
+}).delegate("li.upload", "click", function () {
 	$("#attachment").click();
 });
+
+function showUploadComplete (data) {
+
+	var $progressBar = $(".progress").show();
+	$progressBar.css("background", "#42ff71").fadeOut("slow", function() {
+
+		$(this).css("background", "#bee8ff").width(0);
+
+		var Q = window.parent.Qwile;
+		var model = Q.processes.find(function(model) {
+			return model.get("name") === "Conductor";
+		});
+
+		model.trigger("push", {
+
+			model: new Q.popup.Model({
+
+				picture: "conductor.png",
+				title: model.get("name"),
+				message: data.message
+
+			}),
+			method: "showWithBlink",
+			arguments: [3000, 800],
+			sound: "sounds/complete.mp3"
+
+		});
+		// re-render all the table from server
+	});
+
+}
 
 function fileSelected () {
 
@@ -81,43 +112,104 @@ function fileSelected () {
 
 		},
 
-		uploadProgress: function(event, position, total, percentComplete) {
+		uploadProgress: function (event, position, total, percentComplete) {
 			$progressBar.css("width", percentComplete + "%");
 		},
 
-		complete: function(xhr) {
+		complete: function (xhr) {
 
 			var data = JSON.parse(xhr.responseText);
 			if (data.success) {
-				$progressBar.css("background", "#42ff71").fadeOut("slow", function() {
-
-					$(this).css("background", "#bee8ff").width(0);
-
-					var Q = window.parent.Qwile;
-					var model = Q.processes.find(function(model) {
-						return model.get("name") === "Conductor";
-					});
-
-					model.trigger("push", {
-
-						model: new Q.popup.Model({
-
-							picture: "conductor.png",
-							title: model.get("name"),
-							message: data.message
-
-						}),
-						method: "showWithBlink",
-						arguments: [3000, 800],
-						sound: "sounds/complete.mp3"
-
-					});
-					// re-render all the table from server
-				});
+				showUploadComplete(data);
 			}
 		}
 
 	});
+
+}
+
+dropbox = document.body;
+dropbox.addEventListener("dragenter", dragenter, false);
+dropbox.addEventListener("dragover", dragover, false);
+dropbox.addEventListener("drop", drop, false);
+
+function dragenter (e) {
+
+	e.stopPropagation();
+	e.preventDefault();
+
+}
+
+function dragover (e) {
+
+	e.stopPropagation();
+	e.preventDefault();
+
+}
+
+function drop (e) {
+
+	e.stopPropagation();
+	e.preventDefault();
+
+	var dt = e.dataTransfer;
+	var files = dt.files;
+	var data = new FormData();
+
+	for (var i = 0; i < files.length; i++) {
+		data.append('upload', files[i]);
+	}
+	var $progressBar = $(".progress").show();
+
+	$.ajax({
+
+		type: "POST",
+		url: "/app/upload",
+		enctype: 'multipart/form-data',
+		contentType: false,
+		data: data,
+
+		xhr: function () {
+
+			var xhr = new window.XMLHttpRequest();
+
+			xhr.upload.addEventListener("progress", function (evt) {
+				if (evt.lengthComputable) {
+
+					var percentComplete = evt.loaded / evt.total;
+					console.log(percentComplete);
+					$progressBar.css("width", percentComplete * 100 + "%");
+
+				}
+			}, false);
+
+			xhr.addEventListener("progress", function (evt) {
+				if (evt.lengthComputable) {
+
+					var percentComplete = evt.loaded / evt.total;
+					console.log(percentComplete);
+					$progressBar.css("width", percentComplete * 100 + "%");
+
+				}
+			}, false);
+			return xhr;
+
+		},
+
+		success: function (data, status, xhr) {
+
+			var data = JSON.parse(xhr.responseText);
+			if (data.success) {
+				showUploadComplete(data);
+			}
+
+		},
+
+		processData: false,
+		cache: false
+
+	});
+
 }
 
 Tipped.create(".dropdown-menu .upload", function(element) {
