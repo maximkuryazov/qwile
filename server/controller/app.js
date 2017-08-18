@@ -96,6 +96,29 @@ module.exports = function (app, mongoose, db) {
 		});
 
 	});
+	
+	app.delete("/app/uninstall", function (req, res) {
+		appModel.uninstall(req.session.currentUserId, req.body.id, function (error, count) {
+
+			res.setHeader("Content-Type", "application/json");
+			if (!error) {
+				res.status(200).send(JSON.stringify({
+
+					success: true,
+					removed: count
+
+				}));
+			} else {
+				res.status(503).send(JSON.stringify({
+
+					success: false,
+					removed: count
+
+				}));
+			}
+
+		});
+	});
 
 	app.post("/app/upload", function (req, res) {
 

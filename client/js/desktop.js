@@ -477,6 +477,7 @@ $(window).ready(function() {
 			
 		}
 	});
+
 	$('.dropables td:has(.to_bin)').droppable({
 		over: function (event, ui) {
 			$(event.target).css("background", "rgba(252,80,80,0.5)");
@@ -487,7 +488,26 @@ $(window).ready(function() {
 		drop: function (event, ui) {
 
 			$(this).css("background", "rgba(255,255,255,0.1)");
-			$(ui.helper).remove();
+			$.ajax({
+
+				url: "/app/uninstall",
+				type: "DELETE",
+				data: {
+					id: $(ui.helper).data("id")
+				},
+				success: function (data) {
+					if (data.success) {
+
+						$(ui.helper).remove();
+						$("li.application.added[data-app-id='" + $(ui.helper).data("id") + "']").removeClass("added");
+
+					}
+				},
+				error: function (data) {
+					console.log("Error in uninstall application: ", data.error);
+				}
+
+			});
 
 		}
 	});

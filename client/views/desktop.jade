@@ -214,7 +214,7 @@ script(src='js/desktop.js')
 						tr
 							td.apps-td(colspan='4', valign='top', align="center")
 								script#docket-template(type='text/template')
-									.docket
+									.docket(data-id!="<%= _id %>")
 										img.icon(src!='img/<%= icon %>')
 										.docket_title <%= name %>
 						tr.pager(align='center')

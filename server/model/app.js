@@ -153,6 +153,17 @@ module.exports = (function () {
 			});
 		},
 
+		uninstall: function (userId, appId, responseCallback) {
+			private.AppsUsersModel.remove({
+
+					app: appId,
+					user: userId
+
+				}, function (error, removedCount) {
+					responseCallback(error || undefined, removedCount.result.n);
+				});
+		},
+
 		set: function (id, options, callback) {
 
 			console.log(util.inspect(options, false, null));
