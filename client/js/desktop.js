@@ -1,3 +1,11 @@
+window.onbeforeunload = function(e) {
+
+	var dialogText = "Warning! You're about to leave! Some of your unsaved data might be lost! Are you sure?";
+	e.returnValue = dialogText;
+	return dialogText;
+
+};
+
 $(window).ready(function() {
 
 	var debugMode = false;
@@ -464,6 +472,7 @@ $(window).ready(function() {
 	});
 
 	$('.dropables td').droppable({
+
 		over: function (event, ui) {
 			$(event.target).css("background", "rgba(103, 227, 252,0.3)");
 		},
@@ -476,9 +485,11 @@ $(window).ready(function() {
 			//$(ui.helper).remove();
 			
 		}
+
 	});
 
 	$('.dropables td:has(.to_bin)').droppable({
+
 		over: function (event, ui) {
 			$(event.target).css("background", "rgba(252,80,80,0.5)");
 		},
@@ -510,6 +521,7 @@ $(window).ready(function() {
 			});
 
 		}
+
 	});
 
 	var $pagination = $("#menu .left-part table tr.pager li");

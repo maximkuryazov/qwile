@@ -159,9 +159,9 @@ module.exports = (function () {
 					app: appId,
 					user: userId
 
-				}, function (error, removedCount) {
-					responseCallback(error || undefined, removedCount.result.n);
-				});
+			}, function (error, removedCount) {
+				responseCallback(error || undefined, removedCount.result.n);
+			});
 		},
 
 		set: function (id, options, callback) {

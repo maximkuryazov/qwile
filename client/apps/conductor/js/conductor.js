@@ -43,7 +43,7 @@ $table.delegate("tr.docket", "click", function() {
 	}
 }).delegate("tr.docket", "dblclick", function(e) {
 
-	alert("It will be opened by application.");
+	alert("It will be opened by an application.");
 	// if (this.type !== "folder") {	// or 1 : 0 Boolean
 	// 	var instanseApp = new AppController(this.assignedApp, this.url);
 	// 	instanseApp.run();
