@@ -59,7 +59,8 @@
     "imagemin-pngquant": "*",
     "jshint": "^2.9.4",
     "jshint-stylish": "^2.2.1",
-    "pump": "^1.0.2"
+    "pump": "^1.0.2",
+    "validator": "^8.2.0"
   },
   "repository": {
     "type": "git",
