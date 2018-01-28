@@ -144,15 +144,17 @@ module.exports = function (app, user, models) {
 						user.create(userData);
 
 						let mail = require("../mail.js");
+                        var fs = require("fs");
 
-						var options = {
-							to:         userData.email,
-							from:       "Qwile OS <admin@qwile.com>",
-							subject:    "Qwile: Account was created!",
-							html:       'Your registration had been done. To activate your profile, click on the link below.<br /> \
-                                            <a href="' + defaultDomain + '/user/activate?code=' + userData.activationCode
-							+ '&mail=' + userData.email + '">Activate your profile</a>'
-						};
+                        var options = {
+                            to:         userData.email,
+                            from:       "Qwile OS <admin@qwile.com>",
+                            subject:    "Qwile: Account was created!",
+                            html:		fs.readFileSync('client/letters/verify.html', 'utf8')
+										.replace(/#\{code\}/, userData.activationCode)
+										.replace(/#\{email\}/, userData.email)
+										.replace(/#\{domain\}/, defaultDomain)
+                        };
 
 						mail.send(options, function (info) {
 							res.send(JSON.stringify({

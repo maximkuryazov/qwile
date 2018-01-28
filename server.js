@@ -1,6 +1,9 @@
 ﻿(function() {
 
-    global.defaultDomain = "http://95.31.9.74";
+    const port = process.argv[2] === "https" ? 443 : process.argv[3] || 80;
+
+    global.protocol = port === 443 ? "https" : "http";
+    global.defaultDomain = protocol + "://95.31.9.74";
 
     const util = require('util');
     const mongoose = require('mongoose');
@@ -18,8 +21,6 @@
     const https = require('https');
     const favicon = require('express-favicon');
     const fs = require('fs');
-
-    const port = process.argv[2] == "https" ? 443 : process.argv[3] || 80;
 
     // Static and dynamic server in one
 
