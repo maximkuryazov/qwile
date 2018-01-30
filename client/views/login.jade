@@ -63,7 +63,7 @@ a.bubble-toggle(href='#') Bubbles Off
 				label(for='remember') Remember me
 				span.reglink Registration
 				footer.login
-					| &copy 2015 Qwile.com
+					| &copy 2015 — #{new Date().getFullYear()} Qwile.com
 					br
 					| All rights reserved.
 			form#register(name="register")
@@ -94,10 +94,10 @@ a.bubble-toggle(href='#') Bubbles Off
 							input#capture-input(type='text', name="capture", maxlength="4")
 						td.check
 							img(style='margin-left:5px;', src='img/incorrect.png')
-				button#registration.btn.btn-primary.regbutton(type="submit") Sign in
+				button#registration.btn.btn-primary.regbutton(type="submit") Sign up
 				button#back.btn.btn-warning.regbutton Back
 				footer.register
-					| &copy 2015 Qwile.com
+					| &copy 2015 — #{new Date().getFullYear()} Qwile.com
 					br
 					| All rights reserved.
 // Modal

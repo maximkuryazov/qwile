@@ -263,6 +263,9 @@ $(window).ready(function() {
 
 						$(".dialog-content .exit").click(function() {
 							$.ajax({
+								beforeSend: function () {
+									window.onbeforeunload = undefined;
+								},
 								method: "GET",
 								url: "/user/logout",
 								crossDomain: true,
