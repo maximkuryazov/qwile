@@ -40,11 +40,12 @@
 			"jquery-transform": "lib/jquery.transform2d",
 			"howler":			"lib/howler",
 			"socketio":         "lib/socket.io.min",
-			"slick": 			"lib/slick.min"
+			"slick": 			"lib/slick.min",
+			"waves":			"lib/waves.min"
 		}
 	});
 
-	require(["jquery", "underscore", "tipped", "jquery-form", "jquery-ui", "jquery-cookie", "slick"], function($, _, Tipped) {
+	require(["jquery", "underscore", "tipped", "jquery-form", "jquery-ui", "jquery-cookie", "slick", "waves"], function($, _, Tipped) {
 
 		window.Tipped = Tipped;
 		

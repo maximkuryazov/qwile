@@ -81,11 +81,45 @@ body {
 #login input[type="password"]:focus {
 	border-right: 0px !important;
 }
-#enter, #registration {
+awesomeButton = @block {
+  	text-transform: uppercase;
+	font: bold 9px verdana;
+	line-height: 18px;
+	border-radius: 8px;
+	transition: all 0.33s ease 0s;
+}
+#enter, #registration
 	outline: none;
 	margin-top: 10px;
 	width: 224px;
 	font: bold 12px verdana;
+	background: #17a2b8;
+	&.btn
+		{awesomeButton}
+
+#enter.btn {
+	transition: all 0.33s ease 0s;
+	border-radius: 8px;
+	font-weight: bold;
+	border: 0px;
+	outline: none;
+	background: #17a2b8;
+	text-transform: uppercase;
+	font: bold 9px verdana;
+	line-height: 18px;
+}
+.btn-info:hover {
+	background: #33b5e5 !important;
+}
+.btn-info:active {
+	background: #3071A9 !important;
+}
+.btn-warning:hover {
+  	background: #f4d941 !important;
+}
+.btn-warning:active {
+	background-color: #ec971f !important;
+	border-color: #d58512;
 }
 #captcha {
   cursor: pointer !important;
@@ -127,7 +161,7 @@ footer.login {
 	color: #383838;
 	margin-top: 78px;
 	/* margin-left: 42px; */
-	width: 200px;
+	width: 220px;
 }
 #forgot {
 	float: right;
@@ -160,6 +194,8 @@ footer.login {
 	display: none;
 	.btn {
 		margin: 0px 3px;
+		border: 0px;
+		transition: all 0.33s ease 0s;
 	}
 }
 table {
@@ -201,7 +237,9 @@ footer.register {
 	width: 114px !important;
 	outline: none;
 	margin-top: 10px;
-	font: bold 12px verdana;
+	&.btn {
+		{awesomeButton}
+	}
 }
 buttons {
 	float: left;

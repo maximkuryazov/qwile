@@ -1,5 +1,9 @@
 (function() {
 
+    Waves.attach('.button');
+    Waves.init();
+    Waves.displayEffect();
+
 	// this file needs serious refactor! :)
 
 	var Blue = '#0287a9';
@@ -11,7 +15,15 @@
 		}
 	});
 
-	$('#circle').animate({ transform: 'scale(1)' }, 1000);
+	$('#circle').animate({ transform: 'scale(1)' }, 1000, function () {
+        /* Waves mouseover effect
+        $('.btn').mouseover(function() {
+            Waves.ripple(this, {wait: null});
+        }).mouseleave(function() {
+            Waves.calm(this);
+        });
+        */
+    });
 	$('.reglink').click(function() {
 		$('#circle').stop().css('transform', 'rotate(0deg)').animate({
 			marginLeft: '-1200px',
@@ -343,5 +355,29 @@
 			 e.preventDefault();
 		 }
 	});
+	/* They still use waves.js 2 years old. I've finally dropped waves.js from my package and replace it with this code, shorter and stable -
+    $(document).on('click', '.waves-effect', function(e){
 
+        var ink, d, x, y;
+
+        if ($(this).find(".ink").length === 0)
+        {
+            $(this).prepend("<span class='ink'></span>");
+        }
+
+        ink = $(this).find(".ink");
+        ink.removeClass("animate");
+
+        if (!ink.height() && !ink.width())
+        {
+            d = Math.max($(this).outerWidth(), $(this).outerHeight());
+            ink.css({height: d, width: d});
+        }
+
+        x = e.pageX - $(this).offset().left - ink.width()/2;
+        y = e.pageY - $(this).offset().top - ink.height()/2;
+
+        ink.css({top: y+'px', left: x+'px'}).addClass("animate");
+    });
+	*/
 })();
