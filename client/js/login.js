@@ -53,7 +53,7 @@
 	}
 
 	var restoreHTML = '<div onclick="$(this).remove();" class="shadow"><div class="inner-shadow"> \
-	<form id="restore-form"><input name="email" id="restore-input" onclick="event.stopPropagation()" type="text" placeholder="Type your E-Mail address here"></input><button onclick="event.stopPropagation()" class="btn btn-primary" type="submit" id="restore-button">Restore</button></form></div></div>';
+	<form id="restore-form"><input name="email" id="restore-input" onclick="event.stopPropagation()" type="text" placeholder="Type your E-Mail address here"></input><button onclick="event.stopPropagation()" class="btn btn-info waves-effect" type="submit" id="restore-button">Restore</button></form></div></div>';
 	$('#forgot').tooltip().click(function() {
 
 		$(restoreHTML).appendTo('body').fadeIn();
