@@ -109,6 +109,10 @@ $(window).ready(function() {
 
 								Qwile.initInstalledWidgets();
 
+                                Waves.attach('.button', ['waves-circle', 'waves-float']);
+                                Waves.init();
+                                Waves.displayEffect();
+
 							});
 
 						});
@@ -319,6 +323,10 @@ $(window).ready(function() {
 						Tipped.create('#start', function(element) {
 							return '<span class="tooptip-text">Qwile basic menu is here</span>';
 						}, { position: 'bottom' });
+
+                        Tipped.create("td.photo", function (element) {
+                            return '<span class="tooptip-text">Click on the image to change your profile photo!</span>'
+                        }, { position: 'left' });
 						
 						setTimeout(function(){
 							$('#start').mouseover();

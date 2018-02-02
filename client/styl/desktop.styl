@@ -25,6 +25,14 @@ box-shadow()
 	box-shadow arguments
 	-moz-box-shadow arguments
 
+awesomeButton = @block {
+  	text-transform: uppercase;
+	font: bold 9px verdana !important;
+	line-height: 18px;
+	border-radius: 8px;
+	transition: all 0.33s ease 0s;
+	border: 0;
+}
 html {
 	height: 100%;
 	margin: 0;
@@ -1156,11 +1164,10 @@ aside#leftpanel .lock {
 #show-more {
 	display: block;
   	margin: 0 auto;
-  	bottom: 40px;
+  	bottom: 5px;
   	width: 90%;
   	right: 2%;
-  	font: 12px Verdana;
-  	text-transform: uppercase;
+	{awesomeButton}
 }
 
 #widget_select {
@@ -1235,20 +1242,22 @@ aside#leftpanel .lock {
 
 }
 .widgets_list .title {
-  height: 20px;
-  padding-top: 3px;
-  font: bold 11px Verdana;
-  text-align: center;
-  background: linear-gradient(to bottom, rgba(0, 3 ,4, 0.8) 0%, rgba(41, 137, 216, 0.8) 100%, rgba(0, 43, 63, 0.8) 100%);
-  width: 130px;
-  color: white;
-  border-radius: 5px;
-  cursor: default;
-  text-align: center;
-  overflow: hidden;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 5px;
+	height: 25px;
+	padding-top: 3px;
+	text-align: center;
+	background: linear-gradient(to bottom, rgba(0, 3 ,4, 0.8) 0%, rgba(41, 137, 216, 0.8) 100%, rgba(0, 43, 63, 0.8) 100%);
+	width: 130px;
+	color: white;
+	border-radius: 5px;
+	cursor: default;
+	text-align: center;
+	overflow: hidden;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 5px;
+	font: bold 9px tahoma;
+	text-transform: uppercase;
+	line-height: 2;
 }
 .widgets_list .mark {
   width: 35px;
@@ -1388,11 +1397,29 @@ aside#leftpanel .lock {
   width: 97%;
 }
 .dialog-content .buttons .btn-warning {
-  color: black;
+	color: black;
+	border: 0;
+	margin-right: 5px;
+	width: 80px;
+	&:hover {
+		background: #f4d941 !important;
+	}
+	&:active {
+		background-color: #ec971f !important;
+		border-color: #d58512;
+	}
 }
-.dialog-content .buttons button {
-  margin-right: 2px;
-  font: bold 12px Verdana;
+.dialog-content .buttons, body {
+	.btn-info {
+		width: 80px;
+		background: #17a2b8;
+	}
+	.btn-info:hover {
+		background: #33b5e5 !important;
+	}
+	.btn-info:active {
+		background: #3071A9 !important;
+	}
 }
 .dialog-close {
   margin-top: 3px;
@@ -1425,7 +1452,12 @@ aside#leftpanel .lock {
 .modal-content {
   background: rgba(999, 999, 999, 0.7) !important;
 }
-
+.btn {
+	{awesomeButton}
+}
+.button.waves-circle {
+	transition: none !important;
+}
 .tooptip-text {
   font: bold 10px Verdana;
 }
