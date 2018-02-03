@@ -86,11 +86,30 @@ body {
 #update input[type="password"]:focus {
 	/*border-right: 0px !important;*/
 }
+awesomeButton = @block {
+  	text-transform: uppercase;
+	font: bold 9px verdana !important;
+	line-height: 18px;
+	border-radius: 8px;
+	transition: all 0.33s ease 0s;
+	border: 0;
+}
+.btn-info {
+	width: 80px;
+	background: #17a2b8;
+}
+.btn-info:hover {
+	background: #33b5e5 !important;
+}
+.btn-info:active {
+	background: #3071A9 !important;
+}
 #enter {
 	outline: none;
 	margin-top: 10px;
 	width: 224px;
-	font: bold 12px verdana;
+	height: 30px;
+	{awesomeButton}
 }
 input.wrong {
   border: 1px solid red !important;

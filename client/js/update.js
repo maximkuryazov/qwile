@@ -69,7 +69,7 @@
 			crossDomain: true,
 			success: function (data) {
 				if (data.success) {
-					showModal(blue, "Password have been restored.", true);
+					showModal(blue, "Password has been successfully restored!", true);
 				} else {
 					showModal('#970101', data.error, false);
 				}
@@ -121,5 +121,9 @@
 		$('.bubbles').empty();
 		bubbles();
 	}
+
+    Waves.attach('.button', ['waves-circle', 'waves-float']);
+    Waves.init();
+    Waves.displayEffect();
 
 })();

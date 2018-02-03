@@ -144,7 +144,7 @@ module.exports = function (app, user, models) {
 						user.create(userData);
 
 						let mail = require("../mail.js");
-                        var fs = require("fs");
+						let fs = require("fs");
 
                         var options = {
                             to:         userData.email,
@@ -297,15 +297,19 @@ module.exports = function (app, user, models) {
 
 				var restoreCode = Math.round((Math.random() * 100000));
 				let mail = require("../mail.js");
+                let fs = require("fs");
+
 				var options = {
 
 					to:         req.body.email,
 					from:       "Qwile OS <admin@qwile.com>",
-					subject:    "Qwile: Account restore",
-					html:       'To restore your account, please, follow this link: <br /><a href="http://95.31.9.74/user/changePassword?code='
-					+ restoreCode + '&email=' + req.body.email +'">Restore your password</a>'
+					subject:    "Qwile: Account restore request",
+                    html:		fs.readFileSync('client/letters/restore.html', 'utf8')
+								.replace(/#\{code\}/, restoreCode)
+								.replace(/#\{email\}/, req.body.email)
+								.replace(/#\{domain\}/, defaultDomain)
 
-				};
+                };
 
 				user.set(document._id, { restoreCode: restoreCode }, function(info, error) {
 					if (!error) {
