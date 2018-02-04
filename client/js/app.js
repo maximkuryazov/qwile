@@ -59,7 +59,14 @@ define(["backbone", "socketio"], function (Backbone, io) {
 				this.$tab.on("dblclick", function (event) {
 					event.stopImmediatePropagation();
 				});
-				this.$tab.find(".close").on("click", _.bind(this.close, this));
+                this.$tab.find(".close").on({
+
+                    click: _.bind(this.close, this),
+                    mousedown: function (event) {
+                        event.stopPropagation();
+                    }
+
+                });
 
 			},
 

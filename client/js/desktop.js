@@ -179,10 +179,10 @@ $(window).ready(function() {
 										} else {
 											console.log("Error: ", data.error);
 										}
-										$("#shadow").fadeOut("fast");
 
 									});
 								}
+                                $("#shadow").fadeOut("fast");
 								
 							});
 						});
