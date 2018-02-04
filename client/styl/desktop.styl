@@ -50,7 +50,7 @@ html {
 	height: 50px;
 	background: url('../img/toppanel.png');
 	position: relative;
-	z-index: 3;
+	z-index: 1001 !important; /*3;*/
 	top: -50px;
 }
 .wrapper {
@@ -461,7 +461,17 @@ aside#profile .area td .profile-interest-row {
 			color: white;
 	  }
 	}
+
+	&:active {
+		background: rgba(000,000,000,0.4);
+		cursor: pointer;
+		color: deepskyblue;
+		span.value {
+			color: white;
+		}
+	}
 }
+
 #profile-email-field {
 	cursor: default;
 	&:hover {

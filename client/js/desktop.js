@@ -351,7 +351,11 @@ $(window).ready(function() {
 								return '<span class="tooptip-text">Click to edit your information</span>';
 							}, { position: "left" });
 
-						});
+						}).mouseover(function() {
+                            Waves.ripple(this, { wait: null });
+                        }).mouseleave(function() {
+                            Waves.calm(this);
+                        });
 
 						var $soundTab = $("aside#leftpanel .sound");
 						$soundTab.on("click tap", function() {

@@ -15,15 +15,8 @@
 		}
 	});
 
-	$('#circle').animate({ transform: 'scale(1)' }, 1000, function () {
-        /* Waves mouseover effect
-        $('.btn').mouseover(function() {
-            Waves.ripple(this, {wait: null});
-        }).mouseleave(function() {
-            Waves.calm(this);
-        });
-        */
-    });
+	$('#circle').animate({ transform: 'scale(1)' }, 1000);
+
 	$('.reglink').click(function() {
 		$('#circle').stop().css('transform', 'rotate(0deg)').animate({
 			marginLeft: '-1200px',
