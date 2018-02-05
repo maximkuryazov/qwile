@@ -132,10 +132,6 @@ $(window).ready(function() {
 
 						$('#leftpanel').mouseleave(hideLeftPanel).mouseover(showLeftPanel);
 
-						$('#quit').click(function() {
-							$('#cover').show();
-						});
-
 						var isProfileVisible = true;
 						$('#photo').click(function() {
 							$('#profile').animate({
@@ -247,12 +243,16 @@ $(window).ready(function() {
 						/* Exit modal */
 
 						$('#quit').click(function() {
-							$('#shadow').fadeIn('fast');
+                            $('.wrapper').addClass('blurred');
+							$('#shadow').fadeIn('fast', function () {
+
+                            });
 							$("#shadow .dialog-content").show();
 						});
 
 						$('#shadow').click(function(e) {
 							$(this).fadeOut('fast');
+                            $('.wrapper').removeClass('blurred');
 							$("#shadow .dialog-content").hide();
 							e.stopImmediatePropagation();
 						});
@@ -263,6 +263,7 @@ $(window).ready(function() {
 
 						$(".dialog-content .dialog-close, .dialog-content .cancel, .dialog-content .exit").click(function() {
 							$('#shadow').fadeOut('fast');
+                            $('.wrapper').removeClass('blurred');
 						});
 
 						$(".dialog-content .exit").click(function() {

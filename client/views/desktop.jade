@@ -22,6 +22,15 @@ script(src='js/desktop.js')
 				button.btn.btn-sm.btn-info.cancel.waves-effect Cancel
 // //////////// SYSTEM BLOCKS END /////////////////////////
 .wrapper
+	// ***************** LOGO LOAD START *************
+	table.logo
+		tr
+			td
+				img#logo-mono(src='img/logo-mono.png', alt='logo')
+				#logo-stereo
+				#digits Loading
+				img#untitled(src='img/title.png')
+	// ///////////// LOGO LOAD END ///////////////////
 	#toppanel
 		table
 			tr
@@ -255,15 +264,6 @@ script(src='js/desktop.js')
 						.title= widget.title
 	// ///////////// WIDGET SELECT END ///////////////////
 	.footer-push
-// ***************** LOGO LOAD START *************
-table.logo
-	tr
-		td
-			img#logo-mono(src='img/logo-mono.png', alt='logo')
-			#logo-stereo
-			#digits Loading
-			img#untitled(src='img/title.png')
-// ///////////// LOGO LOAD END ///////////////////
 footer
 	script#task-view(type='text/template')
 		.task(data-app-name!="<%= name %>")
