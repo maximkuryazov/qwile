@@ -160,7 +160,8 @@ $(window).ready(function() {
 							
 							var self = this;
 							$("#shadow").fadeIn("fast", function() {
-								
+
+                                $('.wrapper').addClass('blurred');
 								var value = prompt("Enter a new value: ", $(self).find(".value").text());
 								if (value) {
 									$.post("/user/set", { 
@@ -179,7 +180,8 @@ $(window).ready(function() {
 									});
 								}
                                 $("#shadow").fadeOut("fast");
-								
+                                $('.wrapper').removeClass('blurred');
+
 							});
 						});
 
@@ -243,17 +245,16 @@ $(window).ready(function() {
 						/* Exit modal */
 
 						$('#quit').click(function() {
-                            $('.wrapper').addClass('blurred');
-							$('#shadow').fadeIn('fast', function () {
-
-                            });
+							$('#shadow').fadeIn('fast', function() {
+                                $('.wrapper').addClass('blurred');
+							});
 							$("#shadow .dialog-content").show();
 						});
 
 						$('#shadow').click(function(e) {
 							$(this).fadeOut('fast');
+                            $("#shadow .dialog-content").hide();
                             $('.wrapper').removeClass('blurred');
-							$("#shadow .dialog-content").hide();
 							e.stopImmediatePropagation();
 						});
 
@@ -264,6 +265,7 @@ $(window).ready(function() {
 						$(".dialog-content .dialog-close, .dialog-content .cancel, .dialog-content .exit").click(function() {
 							$('#shadow').fadeOut('fast');
                             $('.wrapper').removeClass('blurred');
+                            $("#shadow .dialog-content").hide();
 						});
 
 						$(".dialog-content .exit").click(function() {
@@ -294,11 +296,13 @@ $(window).ready(function() {
 
 						$('#settings').click(function() {
 							$('#shadow').fadeIn('fast');
+                            $('.wrapper').addClass('blurred');
 						});
 
 						$('#announce .glyphicon').click(function() {
 							$('#shadow').fadeIn('fast');
 							$(this).parent().find("span.new").hide();
+                            $('.wrapper').addClass('blurred');
 						});
 
 						Tipped.create('#quit', function(element) {
@@ -437,11 +441,7 @@ $(window).ready(function() {
 		if (data.success) {
 			var tpl = _.template($("#docket-template").html());
 			data.apps.forEach(function (item, index) {
-				$("#menu td.apps-td").append(tpl(item)).sortable({
-					start: function (event, ui) {
-						//$(ui.helper).css("opacity", 0.5);
-					}
-				});
+				$("#menu td.apps-td").append(tpl(item)).sortable();
 			});
 		}
 	});
@@ -462,6 +462,7 @@ $(window).ready(function() {
 					// append to menu block
 					var tpl = _.template($("#docket-template").html());
 					$(tpl(data.app)).hide().appendTo("#menu td.apps-td").end().show("slow");
+					$("#menu td.apps-td").sortable();
 
 				}
 			},
@@ -518,6 +519,7 @@ $(window).ready(function() {
 		},
 		drop: function (event, ui) {
 
+			var $self = $(this);
 			$(this).css("background", "rgba(255,255,255,0.1)");
 			$.ajax({
 
@@ -529,7 +531,7 @@ $(window).ready(function() {
 				success: function (data) {
 					if (data.success) {
 
-						$(ui.helper).remove();
+                        $(ui.helper).remove();
 						$("li.application.added[data-app-id='" + $(ui.helper).data("id") + "']").removeClass("added");
 
 					}
