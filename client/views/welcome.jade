@@ -1,0 +1,139 @@
+html
+    head
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+        meta(http-equiv='x-ua-compatible', content='ie=edge')
+        title Welcome to Qwile!
+        link(href='/css/lib/bootstrap.3.3.7.min.css', rel='stylesheet')
+        link(href='/css/lib/mdb.min.css', rel='stylesheet')
+        link(href='/css/lib/waves.min.css', rel='stylesheet')
+        link(href='/img/favicon.ico', rel='shortcut icon')
+        script(src='/js/lib/waves.min.js')
+        style.
+            @import url('/img/wave.jpg');
+            body {
+                background: url('/img/wave.jpg') no-repeat center center fixed;
+                background-size: cover;
+            }
+            .blur {
+                background: url('http://eskipaper.com/images/cool-ocean-waves-wallpaper-1.jpg') no-repeat center  center fixed;
+                background-size: cover;
+                overflow: hidden;
+                filter: blur(10px);
+                filter: blur(20px);
+                position: absolute;
+                height: 300px;
+                top: -50px;
+                left: -50px;
+                right: -50px;
+                bottom: -50px;
+            }
+            .widget {
+                border-top: 2px solid rgba(255, 255, 255, .5);
+                border-bottom: 2px solid rgba(255, 255, 255, .5);
+                height: 200px;
+                height: 260px;
+                width: 100%;
+                overflow: hidden;
+                box-shadow: 0 5px 20px rgba(255, 255, 255, 0.8);
+            }
+            .center {
+                position: absolute;
+                margin: auto;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+            /*  NOT REQUIRED  */
+            .text {
+                height: 200px;
+                width: 100%;
+            }
+            .text h1 {
+                text-align: center;
+                text-shadow: 1px 1px rgba(0, 0, 0, .9);
+                color: #ffffff;
+                margin-top: 57px;
+                margin-top: 12px;
+                font-weight: 700;
+                font-size: 38px;
+                text-transform: uppercase;
+                font-family: 'Encode Sans Expanded', sans-serif;
+            }
+            .text p {
+                text-align: center;
+                color: #ffffff;
+                color: rgba(0, 0, 0, .9);
+                text-shadow: 1px 1px rgba(0, 0, 0, .9);
+                text-shadow: 1px 1px rgba(255, 255, 255, .3);
+                margin-top: 0px;
+                margin-top: -15px;
+                font-weight: 400;
+                font-size: 22px;
+                font-size: 25px;
+                font-family: 'Encode Sans Expanded', sans-serif;
+            }
+            .btn {
+                font-size: 1rem;
+                padding: .85rem 2.13rem;
+                border: 0;
+                -webkit-transition: .2s ease-out;
+                transition: .2s ease-out;
+                cursor: pointer;
+                font-weight: bold;
+                margin-left: auto;
+                margin-right:auto;
+                margin-top:5px;
+                border-radius:25px;
+                box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12) !important;
+                background-color: #00b8d4 !important;
+                color: #fff !important;
+                width: 250px;
+                padding-top: 10px;
+            }
+            .btn:hover {
+                background-color: #00e5ff !important;
+            }
+            img {
+                margin: 30px;
+                box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12) !important;
+                border-radius: 100px;
+            }
+            #number {
+                width: 25px !important;
+                display: inline-block;
+                text-align: center;
+                margin-left: 5px;
+            }
+    body
+        img(src='/img/logo.png', width='100')
+        .widget.center
+            .blur
+            .text.center
+                h1 Congratulations!
+                p(style='text-shadow: 1px 1px rgba(255, 255, 255, .6);') Your account has been succesfully activated!
+                p(style='text-shadow: 1px 1px rgba(255, 255, 255, .6);font-size:18px;')
+                    | You will be redirected in
+                    // a few
+                    span#number 30
+                    |  seconds. If you don&apos;t wanna wait, just click to the button below!
+                center
+                    button#redirect.btn.btn-info.waves-effect.btn-small ENTER THE DESKTOP
+            script.
+                var seconds = 30;
+                var interval = setInterval(function () {
+                    if (seconds) {
+                        seconds--;
+                        document.getElementById("number").innerHTML = seconds;
+                    } else {
+                        clearInterval(interval);
+                        location.href = "/";
+                    }
+                }, 1000);
+                Waves.init();
+                document.getElementById("redirect").onclick = function () {
+                    setTimeout(function() {
+                        location.href = "/";
+                    }, 500);
+                }

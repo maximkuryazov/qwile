@@ -202,8 +202,8 @@ module.exports = function (app, user, models) {
 				}, function() {
 
 					res.setHeader("Content-type", "text/html; charset=utf-8");
-					res.render("views/activationComplete", {
-						domain: defaultDomain
+                    res.render("views/welcome", {
+						// domain: defaultDomain
 					});
 
 				});
