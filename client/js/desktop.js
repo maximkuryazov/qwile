@@ -8,7 +8,7 @@ window.onbeforeunload = function(e) {
 
 $(window).ready(function() {
 
-	var debugMode = false;
+	var debugMode = true;
 
 	if (debugMode) {
 
@@ -519,28 +519,32 @@ $(window).ready(function() {
 		},
 		drop: function (event, ui) {
 
-			var $self = $(this);
-			$(this).css("background", "rgba(255,255,255,0.1)");
-			$.ajax({
+			if (confirm("Remove that item from your desktop menu?")) {
 
-				url: "/app/uninstall",
-				type: "DELETE",
-				data: {
-					id: $(ui.helper).data("id")
-				},
-				success: function (data) {
-					if (data.success) {
+                var $self = $(this);
+                $.ajax({
 
-                        $(ui.helper).remove();
-						$("li.application.added[data-app-id='" + $(ui.helper).data("id") + "']").removeClass("added");
+                    url: "/app/uninstall",
+                    type: "DELETE",
+                    data: {
+                        id: $(ui.helper).data("id")
+                    },
+                    success: function (data) {
+                        if (data.success) {
 
-					}
-				},
-				error: function (data) {
-					console.log("Error in uninstall application: ", data.error);
-				}
+                            $(ui.helper).remove();
+                            $("li.application.added[data-app-id='" + $(ui.helper).data("id") + "']").removeClass("added");
 
-			});
+                        }
+                    },
+                    error: function (data) {
+                        console.log("Error in uninstall application: ", data.error);
+                    }
+
+                });
+
+            }
+            $(this).css("background", "rgba(255,255,255,0.1)");
 
 		}
 

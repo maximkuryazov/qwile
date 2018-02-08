@@ -93,19 +93,23 @@ script(src='js/desktop.js')
 			tr.area
 				td.info
 					.profile-personal-row.profile-row.waves-effect.waves-block
+						i.fa.fa-user &nbsp;
 						span.name Firstname:
-						i.fa.fa-camera-retro
 						span.value #{user.firstname || "unknown"}
 					.profile-personal-row.profile-row.waves-effect.waves-block
+						i.far.fa-user &nbsp;
 						span.name Lastname:
 						span.value #{user.lastname || "unknown"}
 					.profile-personal-row.profile-row.waves-effect.waves-block
+						i.fas.fa-user-circle &nbsp;
 						span.name Middlename:
 						span.value #{user.middlename || "unknown"}
 					.profile-personal-row.profile-row.waves-effect.waves-block
+						i.fas.fa-birthday-cake &nbsp;
 						span.name Age:
 						span.value #{user.age || "unknown"}
 					.profile-personal-row.profile-row.waves-effect.waves-block
+						i.fa.fa-neuter &nbsp;
 						span.name Gender:
 						span.value #{user.gender || "unknown"}
 			tr
@@ -114,15 +118,19 @@ script(src='js/desktop.js')
 			tr.area
 				td.link
 					.profile-link-row.profile-row.waves-effect.waves-block
+						i.fa.fa-mobile-alt &nbsp;
 						span.name Mobile:
 						span.value #{user.mobile || "unknown"}
 					.profile-link-row.profile-row.waves-effect.waves-block
+						i.fab.fa-rocketchat &nbsp;
 						span.name Jabber:
 						span.value #{user.jabber || "unknown"}
 					.profile-link-row.profile-row.waves-effect.waves-block
+						i.fab.fa-skype &nbsp;
 						span.name Skype:
 						span.value #{user.skype || "unknown"}
 					.profile-link-row#profile-email-field
+						i.fa.fa-envelope &nbsp;
 						span.name Email:
 						span.value #{user.email}
 			tr
@@ -131,15 +139,19 @@ script(src='js/desktop.js')
 			tr.area
 				td.adress
 					.profile-adress-row.profile-row.waves-effect.waves-block
+						i.fa.fa-flag &nbsp;
 						span.name Country:
 						span.value #{user.country || "unknown"}
 					.profile-adress-row.profile-row.waves-effect.waves-block
+						i.fas.fa-building &nbsp;
 						span.name City:
 						span.value #{user.city || "unknown"}
 					.profile-adress-row.profile-row.waves-effect.waves-block
+						i.far.fa-address-card &nbsp;
 						span.name Street:
 						span.value #{user.street || "unknown"}
 					.profile-adress-row.profile-row.waves-effect.waves-block
+						i.fas.fa-map-marker &nbsp;
 						span.name House
 						span.value #{user.house || "unknown"}
 			tr
@@ -148,15 +160,19 @@ script(src='js/desktop.js')
 			tr.area
 				td.iterests
 					.profile-interest-row.profile-row.waves-effect.waves-block
+						i.fas.fa-desktop &nbsp;
 						span.name Occupation:
 						span.value #{user.occupation || "unknown"}
 					.profile-interest-row.profile-row.waves-effect.waves-block
+						i.fas.fa-registered &nbsp;
 						span.name Company:
 						span.value #{user.company || "unknown"}
 					.profile-interest-row.profile-row.waves-effect.waves-block
+						i.fas.fa-quidditch &nbsp;
 						span.name Position:
 						span.value #{user.position || "unknown"}
 					.profile-interest-row.profile-row.waves-effect.waves-block
+						i.fa.fa-camera-retro &nbsp;
 						span.name Hobbies:
 						div.value #{user.hobbies.toString().replace(",", ", ")}
 	// //////////////// USER END ///////////////
@@ -263,6 +279,7 @@ script(src='js/desktop.js')
 						.img(data-name!="#{widget.name}", data-id!="#{widget._id}", style!="background-image:url(#{widget.image})", title="Click to add this widget on Desktop.")
 							if widget.added
 								.mark
+									i.fas.fa-chevron-down
 						.title= widget.title
 	// ///////////// WIDGET SELECT END ///////////////////
 	.footer-push

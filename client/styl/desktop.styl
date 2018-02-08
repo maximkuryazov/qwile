@@ -465,13 +465,24 @@ aside#profile .area td .profile-interest-row {
   	color: white;
 	cursor: default;
 
+	.fa, .far, .fal, .fas, .fab {
+		color: silver;
+		margin-right: 10px;
+		width: 10px;
+	}
+
   	&:hover {
-	  background: rgba(000,000,000,0.6);
-	  cursor: pointer;
-	  color: deepskyblue;
-	  span.value {
+		background: rgba(000,000,000,0.6);
+		cursor: pointer;
+		color: deepskyblue;
+		span.value {
 			color: white;
-	  }
+		}
+		.fa, .far, .fal, .fas, .fab {
+			color: white;
+			margin-right: 10px;
+			width: 10px;
+		}
 	}
 
 	&:active {
@@ -1283,14 +1294,20 @@ aside#leftpanel .lock {
 	line-height: 2;
 }
 .widgets_list .mark {
-  width: 35px;
-  height: 35px;
-  background: url('../img/installed.png') no-repeat rgba(999, 999, 999, 0.8) center;
-  float: right;
-  position: relative;
-  right: 0px;
-  z-index: 1;
-  border: 1px solid deepskyblue;
+	width: 35px;
+	height: 35px;
+	background: url('../img/installed.png') no-repeat rgba(999, 999, 999, 0.8) center;
+	/*background: rgba(999, 999, 999, 0.8) center;*/
+	float: right;
+	position: relative;
+	right: 0px;
+	z-index: 1;
+	border: 1px solid deepskyblue;
+	.fas {
+		color: #0D47A1;
+		font-size: 33px;
+		display: none;
+	}
 }
 .widgets_list div.img:hover, .widgets_list div.img.focus {
   opacity: 1;
