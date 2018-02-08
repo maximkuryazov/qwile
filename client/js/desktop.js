@@ -8,7 +8,7 @@ window.onbeforeunload = function(e) {
 
 $(window).ready(function() {
 
-	var debugMode = true;
+	var debugMode = false;
 
 	if (debugMode) {
 
