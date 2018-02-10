@@ -38,7 +38,9 @@ module.exports = (function () {
 
 			app: String,
 			user: String,
-			voted: Number
+			voted: Number,
+			menuIndex: Number,
+			desktopIndex: Number	// null - means not added to desktop
 
 		});
 		private.AppsUsersModel = private.mongoose.model("Apps-user", appsUsersSchema);
@@ -136,7 +138,8 @@ module.exports = (function () {
 						var relationship = new private.AppsUsersModel({
 
 							app: appId,
-							user: userId
+							user: userId,
+							menuIndex: 1
 
 						});
 						self.getAppById(appId, function (app) {
