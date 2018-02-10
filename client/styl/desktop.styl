@@ -405,6 +405,24 @@ aside#profile .header {
 	border-bottom: 1px solid #154d54;
 	border-radius: 2px;
 	/* Qwile is the awesomest OS that will change your life forever! */
+
+	.fas.fa-angle-down, .fas.fa-angle-up {
+		margin-right: 15px;
+		display: block;
+		float: right;
+		font-size: 12px;
+		line-height: 20px;
+		text-align: center;
+		width: 18px;
+		height: 18px;
+		background: #e8e8e8;
+		border-radius: 50px;
+	}
+	&.profile-opened-header {
+		.fas.fa-angle-down, .fas.fa-angle-up {
+			transform: rotate(90deg);
+		}
+	}
 }
 aside#profile .header:hover {
 	background: linear-gradient(to bottom, white 21%, grey 100%);
