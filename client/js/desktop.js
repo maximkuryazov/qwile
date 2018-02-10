@@ -65,7 +65,9 @@ $(window).ready(function() {
 				$('div#digits').remove();
 				$('#untitled').animate({ opacity: 1 }, logoAnimateTime, function() {
 
-					$("#logo-stereo").animate({ opacity: 0.5 }, 0, 1200);
+					$("#logo-stereo").animate({ opacity: 0.5 }, 0, 1200, function () {
+						$(this).addClass("transparent");
+					});
 					$("#untitled").animate({ opacity: 0.7 }, 0, 1200, function() {
 
 						$('#toppanel').animate({ top: '0px' }, 'slow');
