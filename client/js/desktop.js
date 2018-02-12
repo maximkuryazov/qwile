@@ -8,7 +8,7 @@ window.onbeforeunload = function(e) {
 
 $(window).ready(function() {
 
-	var debugMode = false;
+	var debugMode = true;
 
 	if (debugMode) {
 
@@ -443,7 +443,11 @@ $(window).ready(function() {
 		if (data.success) {
 			var tpl = _.template($("#docket-template").html());
 			data.apps.forEach(function (item, index) {
-				$("#menu td.apps-td").append(tpl(item)).sortable();
+				$("#menu td.apps-td").append(tpl(item)).sortable({
+					stop: function (event, ui) {
+						$.get("/app/sort?index=" + $(ui.item).index() + "&id=" + $(ui.item).data("id"));
+                    }
+				});
 			});
 		}
 	});
@@ -464,7 +468,11 @@ $(window).ready(function() {
 					// append to menu block
 					var tpl = _.template($("#docket-template").html());
 					$(tpl(data.app)).hide().appendTo("#menu td.apps-td").end().show("slow");
-					$("#menu td.apps-td").sortable();
+					$("#menu td.apps-td").sortable({
+                        stop: function (event, ui) {
+							$.get("/app/sorted/?index=" + $(ui.item).index() + "&id=" + $(ui.item).data("id"));
+						}
+					});
 
 				}
 			},
@@ -505,8 +513,8 @@ $(window).ready(function() {
 		drop: function (event, ui) {
 
 			$(this).css("background", "rgba(255,255,255,0.1)");
-			//$(ui.helper).remove();
-			
+			$(ui.helper).remove();
+
 		}
 
 	});

@@ -68,6 +68,14 @@ module.exports = function (app, mongoose, db) {
 		});
 	});
 
+    app.get('/app/sort', function (req, res) {
+        appModel.getRelation(req.query.id, req.session.currentUserId, function (error, relation) {
+			if (!error && relation) {
+				// menuIndex: req.query.index
+			}
+        });
+    });
+
 	app.put('/app/add', function (req, res) {
 
 		console.log("App ID: ", req.body.id);
