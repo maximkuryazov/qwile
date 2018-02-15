@@ -470,7 +470,7 @@ $(window).ready(function() {
 					$(tpl(data.app)).hide().appendTo("#menu td.apps-td").end().show("slow");
 					$("#menu td.apps-td").sortable({
                         stop: function (event, ui) {
-							$.get("/app/sorted/?index=" + $(ui.item).index() + "&id=" + $(ui.item).data("id"));
+							$.get("/app/sort/?index=" + $(ui.item).index() + "&id=" + $(ui.item).data("id"));
 						}
 					});
 

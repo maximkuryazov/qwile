@@ -69,11 +69,36 @@ module.exports = function (app, mongoose, db) {
 	});
 
     app.get('/app/sort', function (req, res) {
-        appModel.getRelation(req.query.id, req.session.currentUserId, function (error, relation) {
-			if (!error && relation) {
-				// menuIndex: req.query.index
-			}
+
+        res.status(200).send(JSON.stringify({ success: true }));
+
+        /*
+
+        appModel.getRelationByIndex(relation.menuIndex, req.session.currentUserId, function (error, prevAppRelation) {
+            appModel.setRelationProperty(prevAppRelation.app, req.session.currentUserId, {
+                menuIndex: relation.menuIndex
+            }, function (affected) {
+
+
+                console.log(affected);
+
+            });
         });
+
+        appModel.getRelation(req.query.id, req.session.currentUserId, function (error, relation) {
+            appModel.setRelationProperty(req.query.id, req.session.currentUserId, {
+                menuIndex: req.query.index
+            }, function (affected) {
+
+                console.log(affected);
+                res.status(200).send(JSON.stringify({ success: true }));
+
+            });
+
+        });
+
+        */
+
     });
 
 	app.put('/app/add', function (req, res) {

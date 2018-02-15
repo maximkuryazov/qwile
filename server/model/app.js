@@ -81,7 +81,7 @@ module.exports = (function () {
 							});
 
 							var _ = require("underscore-node");
-							documents =_.sortBy(documents, function(object) { return object.added; });
+							documents = _.sortBy(documents, function(object) { return object.added; });
 
 							if (!error) callback.call(this, documents);
 							else {
@@ -111,12 +111,20 @@ module.exports = (function () {
 						"_id": {
 							$in: ids
 						}
-					}, function (error, apps) {
-						callback(apps, error);
-					});
+					}).sort("menuIndex").exec(function (error, apps) {
+                        callback(apps, error);
+                    });
 
 				}
 			});
+		},
+
+		getInstalledLength: function (currentUserId, callback) {
+            private.AppsUsersModel.find({
+                user: currentUserId
+            }).count(function(err, count){
+                callback(count);
+            });
 		},
 
 		add: function (userId, appId, callback) {
@@ -135,21 +143,25 @@ module.exports = (function () {
 						callback(document, "Document already exists.");
 					} else {
 
-						var relationship = new private.AppsUsersModel({
+                        self.getInstalledLength(userId, function (count) {
 
-							app: appId,
-							user: userId,
-							menuIndex: 1
+                            var relationship = new private.AppsUsersModel({
 
-						});
-						self.getAppById(appId, function (app) {
-							relationship.save(function (error, document) {
+                                app: appId,
+                                user: userId,
+                                menuIndex: count + 1
 
-								if (!error) callback(document, undefined, app);
-								else callback(document, error);
+                            });
+                            self.getAppById(appId, function (app) {
+                                relationship.save(function (error, document) {
 
-							});
-						});
+                                    if (!error) callback(document, undefined, app);
+                                    else callback(document, error);
+
+                                });
+                            });
+
+                        });
 
 					}
 				}
@@ -187,6 +199,15 @@ module.exports = (function () {
 			}, callback);
 		},
 
+        getRelationByIndex: function (index, userId, callback) {
+            private.AppsUsersModel.findOne({
+
+                menuIndex: index,
+                user: userId
+
+            }, callback);
+        },
+
 		setRelationProperty: function (app, user, options, callback) {
 			private.AppsUsersModel.update({ 
 				
@@ -194,7 +215,7 @@ module.exports = (function () {
 				user: user
 				
 			}, {
-				$set: options,
+				$set: options
 			}, function (error, affected) {
 				callback(affected, error);
 			});
