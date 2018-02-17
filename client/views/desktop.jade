@@ -9,7 +9,10 @@ link(rel='stylesheet', type='text/css', href='css/lib/waves.min.css')
 link(rel='stylesheet', type='text/css', href='css/lib/fontawesome-all.min.css')
 link(rel='stylesheet', type='text/css', href='css/desktop.css')
 script(src='js/desktop.js')
-
+style
+	| body {
+	|	background: url(#{user.settings[0].wallpaper || "img/bg.jpg"}) no-repeat bottom center fixed;
+	| }
 // ********************** SYSTEM BLOCKS *******************
 #shadow
 	.inner-shadow

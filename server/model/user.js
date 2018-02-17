@@ -96,24 +96,32 @@ module.exports = (function() {
 	Constructor.prototype = {
 
 		getByMail: function (email, callback) {
-			private.UserModel.findOne({ email: email }, function (error, doc) {
+			private.UserModel.findOne({ email: email }).populate("settings").exec(function (error, user) {
+                if (!error) {
 
-				if (!error) callback(doc);
-				else console.log("Error " + error + " occurred.");
+                    callback(user);
+                    console.log("Populated user: ", user);
 
-			});
-		},
+                } else {
+                    console.log("Error " + error + " occurred.");
+                }
+            });
+        },
 
-		getById: function (id, callback) {
-			private.UserModel.findOne({ _id: id }, function (error, doc) {
+        // TODO: need refactor! (Two similar pieces of code)
 
-				if (!error) callback(doc);
-				else console.log("Error " + error + " occurred.");
+        getById: function (id, callback) {
+            private.UserModel.findOne({ _id: id }).populate("settings").exec(function (error, user) {
+                if (!error) {
 
-			}).populate("settings").exec(function (error, user) {
-				console.log("Populated user: ", user);
-			});
-		},
+                    callback(user);
+                    console.log("Populated user: ", user);
+
+                } else {
+                    console.log("Error " + error + " occurred.");
+                }
+            });
+        },
 
 		remove: function (id, callback) {
 			private.UserModel.remove({ "_id": id }, function (error) {
