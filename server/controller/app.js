@@ -70,34 +70,52 @@ module.exports = function (app, mongoose, db) {
 
     app.get('/app/sort', function (req, res) {
 
-        res.status(200).send(JSON.stringify({ success: true }));
+        function responseError (responseText) {
+            res.status(400).send(JSON.stringify({
 
-        /*
+                success: false,
+                message: responseText
 
-        appModel.getRelationByIndex(relation.menuIndex, req.session.currentUserId, function (error, prevAppRelation) {
-            appModel.setRelationProperty(prevAppRelation.app, req.session.currentUserId, {
-                menuIndex: relation.menuIndex
-            }, function (affected) {
+            }));
+        }
 
+    	if (!req.query.id || !req.query.index) {
+            responseError("Missing parameters.");
+		} else {
 
-                console.log(affected);
+            appModel.getRelation(req.query.id, req.session.currentUserId, function (error, relation) {
+
+            	if (!relation) {
+
+            		responseError("No such relation.");
+            		return;
+
+                }
+
+                appModel.getRelationByIndex(req.query.index, req.session.currentUserId, function (error, prevAppRelation) {
+                    appModel.setRelationProperty(prevAppRelation.app, req.session.currentUserId, {
+                        menuIndex: relation.menuIndex
+                    }, function (affected) {
+
+                        console.log("Old index: ", relation.menuIndex);
+                    	console.log("App ID by old index: ", prevAppRelation.app);
+                    	console.log("New index: ", relation.menuIndex);
+
+                    	console.log(affected);
+                        appModel.setRelationProperty(req.query.id, req.session.currentUserId, {
+                            menuIndex: req.query.index
+                        }, function (affected) {
+
+                            console.log(affected);
+                            res.status(200).send(JSON.stringify({ success: true }));
+
+                        });
+                    });
+                });
 
             });
-        });
 
-        appModel.getRelation(req.query.id, req.session.currentUserId, function (error, relation) {
-            appModel.setRelationProperty(req.query.id, req.session.currentUserId, {
-                menuIndex: req.query.index
-            }, function (affected) {
-
-                console.log(affected);
-                res.status(200).send(JSON.stringify({ success: true }));
-
-            });
-
-        });
-
-        */
+    	}
 
     });
 
