@@ -1,5 +1,12 @@
 ﻿(function() {
 
+    process.on('uncaughtException', function(error) {
+
+        console.log(new Date());
+        console.log('Caught exception: ' + error);
+
+    });
+
     const port = process.argv[2] === "https" ? 443 : process.argv[3] || 80;
 
     global.protocol = port === 443 ? "https" : "http";
