@@ -1,0 +1,2 @@
+127.0.0.1 - - [05/Jul/2018:20:29:29 +0000] "GET /templateController?template=login HTTP/1.1" 200 - "http://localhost/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.170 Safari/537.36 OPR/53.0.2907.110"
+127.0.0.1 - - [05/Jul/2018:20:29:30 +0000] "GET /captcha?cache=0.415601612231997 HTTP/1.1" 200 - "http://localhost/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.170 Safari/537.36 OPR/53.0.2907.110"

@@ -32,6 +32,8 @@
     // Static and dynamic server in one
 
     var express = require('express');
+    var morgan = require('morgan');
+    var rfs = require('rotating-file-stream');
     var path = require('path');
     var bodyParser = require('body-parser');
     var timeout = require('connect-timeout');
@@ -81,6 +83,22 @@
     };
     app.use(RewriteMiddleware(RewriteOptions));
     app.use(favicon(__dirname + '/img/favicon.ico'));
+
+    // logging
+    var logDirectory = path.join(__dirname, 'logs');
+
+    // ensure log directory exists
+    fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+    // create a rotating write stream
+    var accessLogStream = rfs('access.log', {
+
+        interval: '1d',     // rotate daily
+        path: logDirectory
+
+    });
+
+    // setup the logger
+    app.use(morgan('combined', { stream: accessLogStream }));
 
     db.once('open', function () {
 
