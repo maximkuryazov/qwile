@@ -160,7 +160,7 @@ module.exports = (function() {
 				visible: true,
 				security: true,
 				popups: true,
-				wallpaper: true,
+				wallpaper: "",
 				_owner: private.mongoose.Types.ObjectId(0)
 
 			});

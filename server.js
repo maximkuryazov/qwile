@@ -39,6 +39,8 @@
     var timeout = require('connect-timeout');
     var compression = require('compression');
     var MongoStore = require('connect-mongo')(session);
+    var dotenv = require('dotenv');
+    dotenv.load();
 
     var app = express();
     app.use(cookieParser());
