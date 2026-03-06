@@ -1,2 +1,2 @@
 # qwile
-OS that changes your life!
+Browser web desktop.
